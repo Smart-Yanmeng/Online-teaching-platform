@@ -3,26 +3,73 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.system.mapper.online.IBannerMapper">
+    <select id="countBanner" resultType="java.lang.Long">
+        SELECT COUNT(*)
+        FROM ms_banner
+    </select>
+
+    <select id="checkRelease" parameterType="java.lang.Long" resultType="java.lang.Long">
+        SELECT is_release
+        FROM ms_banner
+        <where>banner_id = #{bannerId}</where>
+    </select>
+
     <select id="selectBanner"
             resultType="com.ruoyi.system.domain.entity.BBannerEntity">
         SELECT *
         FROM ms_banner
-        ORDER BY banner_sort DESC
+        ORDER BY banner_sort ASC
     </select>
 
-    <select id="queryBannerBuCondition"
-            parameterType="com.ruoyi.system.domain.vo.banner.BannerAddVo"
+    <select id="queryBannerByCondition"
+            parameterType="com.ruoyi.system.domain.vo.banner.BannerSearchVo"
             resultType="com.ruoyi.system.domain.entity.BBannerEntity">
         SELECT *
         FROM ms_banner
         <where>
-            <if test="bannerTitle != null and bannerTitle != ''">
-                AND banner_title = #{bannerTitle}
-            </if>
-            <if test="isRelease != null and isRelease != ''">
-                AND is_release = #{isRelease}
-            </if>
+            <if test="bannerTitle != null and bannerTitle != ''">AND banner_title = #{bannerTitle}</if>
+            <if test="isRelease != null and isRelease != ''">AND is_release = #{isRelease}</if>
         </where>
-        ORDER BY banner_sort DESC
+        ORDER BY banner_sort ASC
     </select>
+
+    <insert id="insertBannerByCondition" parameterType="com.ruoyi.system.domain.entity.BBannerEntity">
+        INSERT INTO ms_banner(banner_id, banner_title, banner_url, banner_sort, link, is_release, del_flag, create_by,
+                              create_time, update_by, update_time, remark)
+        VALUES (#{bannerId}, #{bannerTitle}, #{bannerUrl}, #{bannerSort}, #{link}, #{isRelease}, #{delFlag},
+                #{createBy}, #{createTime}, #{updateBy}, #{updateTime}, #{remark})
+    </insert>
+
+    <update id="updateBannerByCondition" parameterType="com.ruoyi.system.domain.vo.banner.BannerUpdateVo">
+        UPDATE ms_banner
+        <set>
+            <if test="bannerTitle != null and bannerTitle != ''">banner_title = #{bannerTitle},</if>
+            <if test="bannerUrl != null and bannerUrl != ''">banner_url = #{bannerUrl},</if>
+            <if test="link != null and link != ''">link = #{link},</if>
+            <if test="bannerSort != null and bannerSort != ''">banner_sort = #{bannerSort},</if>
+            <if test="isRelease != null and isRelease != ''">is_release = #{isRelease},</if>
+            <if test="remark != null and remark != ''">remark = #{remark},</if>
+            <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+            <if test="updateTime != null and updateTime != ''">update_time = #{updateTime}</if>
+        </set>
+        <where>banner_id = #{bannerId}</where>
+    </update>
+
+    <delete id="deleteBannerByCondition" parameterType="java.lang.Long">
+        DELETE
+        FROM ms_banner
+        <where>banner_id = #{bannerId}</where>
+    </delete>
+
+    <update id="unReleaseBanner">
+        UPDATE ms_banner
+        <set>is_release = 0</set>
+        <where>banner_id = #{bannerId}</where>
+    </update>
+
+    <update id="releaseBanner">
+        UPDATE ms_banner
+        <set>is_release = 1</set>
+        <where>banner_id = #{bannerId}</where>
+    </update>
 </mapper>
