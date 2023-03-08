@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.online.IBannerMapper">
+    <select id="selectBanner"
+            resultType="com.ruoyi.system.domain.entity.BBannerEntity">
+        SELECT *
+        FROM ms_banner
+        ORDER BY banner_sort DESC
+    </select>
+
+    <select id="queryBannerBuCondition"
+            parameterType="com.ruoyi.system.domain.vo.banner.BannerAddVo"
+            resultType="com.ruoyi.system.domain.entity.BBannerEntity">
+        SELECT *
+        FROM ms_banner
+        <where>
+            <if test="bannerTitle != null and bannerTitle != ''">
+                AND banner_title = #{bannerTitle}
+            </if>
+            <if test="isRelease != null and isRelease != ''">
+                AND is_release = #{isRelease}
+            </if>
+        </where>
+        ORDER BY banner_sort DESC
+    </select>
+</mapper>
