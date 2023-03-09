@@ -16,7 +16,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/manager/banner")
+@RequestMapping("/homePageManage/banner")
 @Api(tags = "Banner")
 public class BBannerController {
 
