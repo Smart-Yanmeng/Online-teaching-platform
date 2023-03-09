@@ -23,8 +23,8 @@ public class BannerInfoView {
     private String remark;
 
     // entity -> view
-    public BannerInfoView transfer(BBannerEntity entity) {
-        BeanUtils.copyProperties(entity, this);
+    public BannerInfoView transfer(BBannerEntity bannerEntity) {
+        BeanUtils.copyProperties(bannerEntity, this);
 
         return this;
     }

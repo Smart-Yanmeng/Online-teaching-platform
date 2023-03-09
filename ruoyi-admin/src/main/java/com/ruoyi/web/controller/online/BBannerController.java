@@ -19,7 +19,6 @@ import java.util.List;
 @RequestMapping("/homePageManage/banner")
 @Api(tags = "Banner")
 public class BBannerController {
-
     @Autowired
     private BannerService bannerService;
 
