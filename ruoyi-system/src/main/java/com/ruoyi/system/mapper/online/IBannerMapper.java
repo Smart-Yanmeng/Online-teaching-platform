@@ -11,7 +11,7 @@ public interface IBannerMapper {
     Long countBanner();
 
     // 检查 banner 是否发布
-    Long checkRelease(Long banner);
+    Long checkRelease(Long bannerId);
 
     List<BBannerEntity> selectBanner();
 

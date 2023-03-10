@@ -3,8 +3,72 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.system.mapper.online.IActivityMapper">
+    <select id="countActivity" resultType="java.lang.Long">
+        SELECT COUNT(*)
+        FROM ms_activity
+    </select>
+
+    <select id="checkRelease" resultType="java.lang.Long">
+        SELECT is_release
+        FROM ms_activity
+        <where>activity_id = #{activityId}</where>
+    </select>
+
     <select id="selectActivity" resultType="com.ruoyi.system.domain.entity.BActivityEntity">
         SELECT *
         FROM ms_activity
     </select>
+
+    <select id="queryByCondition" parameterType="com.ruoyi.system.domain.vo.activity.ActivitySearchVo"
+            resultType="com.ruoyi.system.domain.entity.BActivityEntity">
+        SELECT *
+        FROM ms_activity
+        WHERE activity_title LIKE CONCAT('%', #{activityTitle}, '%')
+          AND is_release = #{isRelease}
+    </select>
+
+    <insert id="insertActivityByCondition" parameterType="com.ruoyi.system.domain.entity.BActivityEntity">
+        INSERT INTO ms_activity(activity_id, activity_title, activity_introduce, activity_content, activity_sign,
+                                cover_url, is_release, is_link, link, del_flag, create_by, create_time, update_by,
+                                update_time, remark)
+        VALUES (#{activityId}, #{activityTitle}, #{activityIntroduce}, #{activityContent}, #{activitySign}, #{coverUrl},
+                #{isRelease}, #{isLink}, #{link}, #{delFlag}, #{createBy}, #{createTime}, #{updateBy}, #{updateTime},
+                #{remark})
+    </insert>
+
+    <update id="    updateActivityByCondition" parameterType="com.ruoyi.system.domain.vo.activity.ActivityUpdateVo">
+        UPDATE ms_activity
+        <set>
+            <if test="activityTitle != null and activityTitle != ''">activity_title = #{activityTitle},</if>
+            <if test="activityIntroduce != null and activityIntroduce != ''">activity_introduce = #{activityIntroduce},</if>
+            <if test="activityContent != null and activityContent != ''">activity_content = #{activityContent},</if>
+            <if test="activitySign != null and activitySign != ''">activity_sign = #{activitySign},</if>
+            <if test="coverUrl != null and coverUrl != ''">cover_url = #{coverUrl},</if>
+            <if test="isRelease != null and isRelease != ''">is_release = #{isRelease},</if>
+            <if test="isLink != null and isLink != ''">is_link = #{isLink},</if>
+            <if test="link != null and link != ''">link = #{link},</if>
+            <if test="remark != null and remark != ''">remark = #{remark},</if>
+            <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+            <if test="updateTime != null and updateTime != ''">update_time = #{updateTime}</if>
+        </set>
+        <where>activity_id = #{activityId}</where>
+    </update>
+
+    <delete id="deleteActivityByCondition" parameterType="java.lang.Long">
+        DELETE
+        FROM ms_activity
+        <where>activity_id = #{activityId}</where>
+    </delete>
+
+    <update id="unReleaseActivity">
+        UPDATE ms_activity
+        <set>is_release = 0</set>
+        <where>activity_id = #{activityId}</where>
+    </update>
+
+    <update id="releaseBanner" parameterType="java.lang.Long">
+        UPDATE ms_activity
+        <set>is_release = 1</set>
+        <where>activity_id = #{activityId}</where>
+    </update>
 </mapper>

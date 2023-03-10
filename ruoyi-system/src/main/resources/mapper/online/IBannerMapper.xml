@@ -26,10 +26,8 @@
             resultType="com.ruoyi.system.domain.entity.BBannerEntity">
         SELECT *
         FROM ms_banner
-        <where>
-            <if test="bannerTitle != null and bannerTitle != ''">AND banner_title = #{bannerTitle}</if>
-            <if test="isRelease != null and isRelease != ''">AND is_release = #{isRelease}</if>
-        </where>
+        WHERE banner_title LIKE CONCAT('%', #{bannerTitle}, '%')
+          AND is_release = #{isRelease}
         ORDER BY banner_sort ASC
     </select>
 

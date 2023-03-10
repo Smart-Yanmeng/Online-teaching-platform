@@ -1,5 +1,6 @@
 package com.ruoyi.web.controller.online;
 
+import com.github.pagehelper.PageHelper;
 import com.ruoyi.system.domain.view.BannerInfoView;
 import com.ruoyi.system.domain.view.ResultView;
 import com.ruoyi.system.domain.vo.banner.BannerAddVo;
@@ -24,9 +25,10 @@ public class BBannerController {
 
     @ApiOperation("刷新轮播图列表")
     @GetMapping()
-    public ResultView<List<BannerInfoView>> bannerInfo() {
+    public ResultView<List<BannerInfoView>> bannerInfo(@RequestParam @Valid Integer pageNum, @RequestParam @Valid Integer pageSize) {
         List<BannerInfoView> bannerInfoViews = bannerService.selectBannerList();
 
+        PageHelper.startPage(pageNum, pageSize);
         ResultView<List<BannerInfoView>> resultView = new ResultView<>();
         resultView.setData(bannerInfoViews);
 
