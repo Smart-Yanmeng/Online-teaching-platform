@@ -18,12 +18,14 @@ public class ActivityService {
     @Autowired
     IActivityMapper activityMapper;
 
+    // 刷新 - 重置活动信息
     public List<ActivityInfoView> selectActivityList() {
         List<BActivityEntity> activityEntities = activityMapper.selectActivity();
 
         return activityEntities.stream().map(item -> new ActivityInfoView().transfer(item)).collect(Collectors.toList());
     }
 
+    // 查询活动
     public List<ActivityInfoView> queryActivityList(ActivitySearchVo activitySearchVo) {
         List<BActivityEntity> activityEntities = activityMapper.queryByCondition(activitySearchVo);
 

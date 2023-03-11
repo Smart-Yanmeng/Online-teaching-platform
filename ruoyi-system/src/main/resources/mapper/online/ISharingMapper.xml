@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.online.ISharingMapper">
+    <select id="countSharing" resultType="java.lang.Long">
+        SELECT COUNT(*)
+        FROM ms_knowledge_sharing
+    </select>
+
+    <select id="checkRelease" resultType="java.lang.Long">
+        SELECT is_release
+        FROM ms_knowledge_sharing
+        <where>sharing_id = #{activityId}</where>
+    </select>
+
+    <select id="selectSharing" resultType="com.ruoyi.system.domain.entity.BSharingEntity">
+        SELECT *
+        FROM ms_knowledge_sharing
+    </select>
+
+    <select id="querySharingByCondition" parameterType="com.ruoyi.system.domain.vo.sharing.SharingSearchVo"
+            resultType="com.ruoyi.system.domain.entity.BSharingEntity">
+        SELECT *
+        FROM ms_knowledge_sharing
+        WHERE sharing_title LIKE CONCAT('%', #{sharingTitle}, '%')
+          AND sharing_subtitle LIKE CONCAT('%', #{sharingSubtitle}, '%')
+          AND honoured_guest LIKE CONCAT('%', #{honouredGuest}, '%')
+          AND is_release = #{isRelease}
+          AND is_link = #{isLink}
+    </select>
+
+    <insert id="insertSharingByCondition" parameterType="com.ruoyi.system.domain.vo.sharing.SharingAddVo">
+        INSERT INTO ms_knowledge_sharing(sharing_id, sharing_title, sharing_subtitle, sharing_introduce,
+                                         sharing_content, sharing_sign, cover_url, honoured_guest, is_release, is_link,
+                                         link, author)
+        VALUES (#{sharingId}, #{sharingTitle}, #{sharingSubtitle}, #{sharingIntroduce}, #{sharingContent},
+                #{sharingSign}, #{coverUrl}, #{honouredGuest}, #{isRelease}, #{isLink}, #{link}, #{author})
+    </insert>
+
+    <update id="updateSharingByCondition" parameterType="com.ruoyi.system.domain.vo.sharing.SharingUpdateVo">
+        UPDATE ms_knowledge_sharing
+        <set>
+            <if test="sharingTitle != null and sharingTitle != ''">sharing_title = #{sharingTitle},</if>
+            <if test="sharingSubtitle != null and sharingSubtitle != ''">sharing_subtitle = #{sharingSubtitle},</if>
+            <if test="sharingIntroduce != null and sharingIntroduce != ''">sharing_introduce = #{sharingIntroduce},</if>
+            <if test="sharingContent != null and sharingContent != ''">sharing_content = #{sharingContent},</if>
+            <if test="sharingSign != null and sharingSign != ''">sharing_sign = #{sharingSign},</if>
+            <if test="coverUrl != null and coverUrl != ''">cover_url = #{coverUrl},</if>
+            <if test="honouredGuest != null and honouredGuest != ''">honoured_guest = #{honouredGuest},</if>
+            <if test="isRelease != null and isRelease != ''">is_release = #{isRelease},</if>
+            <if test="isLink != null and isLink != ''">is_link = #{isLink},</if>
+            <if test="author != null and author != ''">author = #{author},</if>
+            <if test="link != null and link != ''">link = #{link},</if>
+            <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+            <if test="updateTime != null and updateTime != ''">update_time = #{updateTime}</if>
+        </set>
+        WHERE sharing_id = #{sharingId}
+    </update>
+
+    <delete id="deleteSharingByCondition" parameterType="java.lang.Long">
+        DELETE
+        FROM ms_knowledge_sharing
+        <where>sharing_id = #{sharingId}</where>
+    </delete>
+
+    <update id="unReleaseSharing" parameterType="java.lang.Long">
+        UPDATE ms_knowledge_sharing
+        <set>is_release = 0</set>
+        <where>sharing_id = #{sharingId}</where>
+    </update>
+
+    <update id="releaseSharing" parameterType="java.lang.Long">
+        UPDATE ms_knowledge_sharing
+        <set>is_release = 1</set>
+        <where>sharing_id = #{sharingId}</where>
+    </update>
+</mapper>

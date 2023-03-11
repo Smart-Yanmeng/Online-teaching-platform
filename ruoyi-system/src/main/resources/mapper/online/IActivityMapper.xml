@@ -36,11 +36,13 @@
                 #{remark})
     </insert>
 
-    <update id="    updateActivityByCondition" parameterType="com.ruoyi.system.domain.vo.activity.ActivityUpdateVo">
+    <update id="updateActivityByCondition" parameterType="com.ruoyi.system.domain.vo.activity.ActivityUpdateVo">
         UPDATE ms_activity
         <set>
             <if test="activityTitle != null and activityTitle != ''">activity_title = #{activityTitle},</if>
-            <if test="activityIntroduce != null and activityIntroduce != ''">activity_introduce = #{activityIntroduce},</if>
+            <if test="activityIntroduce != null and activityIntroduce != ''">
+                activity_introduce = #{activityIntroduce},
+            </if>
             <if test="activityContent != null and activityContent != ''">activity_content = #{activityContent},</if>
             <if test="activitySign != null and activitySign != ''">activity_sign = #{activitySign},</if>
             <if test="coverUrl != null and coverUrl != ''">cover_url = #{coverUrl},</if>
