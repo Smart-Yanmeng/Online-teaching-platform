@@ -55,7 +55,7 @@
             <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
             <if test="updateTime != null and updateTime != ''">update_time = #{updateTime}</if>
         </set>
-        WHERE sharing_id = #{sharingId}
+        <where>sharing_id = #{sharingId}</where>
     </update>
 
     <delete id="deleteSharingByCondition" parameterType="java.lang.Long">

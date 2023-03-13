@@ -18,7 +18,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/homePageManage/activity")
-@Api(tags = "activity")
+@Api(tags = "Activity")
 public class BActivityController {
     @Autowired
     ActivityService activityService;

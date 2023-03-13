@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.online.IStudentMapper">
+    <select id="countUser" resultType="java.lang.Long">
+        SELECT COUNT(*)
+        FROM sys_user
+    </select>
+
+    <select id="selectClazzId" parameterType="java.lang.String" resultType="java.lang.Long">
+        SELECT class_id
+        FROM ms_class
+        <where>class_name = #{clazzName}</where>
+    </select>
+
+    <select id="selectClazzName" parameterType="java.lang.Long" resultType="java.lang.String">
+        SELECT class_name
+        FROM ms_class
+        WHERE class_id = #{clazzId}
+    </select>
+
+    <select id="selectStudent" parameterType="com.ruoyi.system.domain.entity.BStudentEntity"
+            resultType="com.ruoyi.system.domain.view.StudentInfoView">
+        SELECT su.nick_name,
+               su.user_name,
+               mc.class_name,
+               ms.birthday,
+               ms.grade,
+               ms.school,
+               ms.major,
+               ms.direction,
+               ms.graduation,
+               ms.worked,
+               ms.remark
+        FROM ms_student AS ms
+                 LEFT JOIN sys_user AS su ON ms.user_id = su.user_id
+                 LEFT JOIN ms_student_class msc ON ms.user_id = msc.user_id
+                 LEFT JOIN ms_class mc on ms.class_id = mc.class_id
+    </select>
+
+    <select id="queryStudentByCondition" parameterType="com.ruoyi.system.domain.vo.student.StudentSearchVo"
+            resultType="com.ruoyi.system.domain.view.StudentInfoView">
+        SELECT su.nick_name,
+               su.user_name,
+               mc.class_name,
+               ms.birthday,
+               ms.grade,
+               ms.school,
+               ms.major,
+               ms.direction,
+               ms.graduation,
+               ms.worked,
+               ms.remark
+        FROM ms_student AS ms
+                 LEFT JOIN sys_user AS su ON ms.user_id = su.user_id
+                 LEFT JOIN ms_student_class msc ON ms.user_id = msc.user_id
+                 LEFT JOIN ms_class mc on ms.class_id = mc.class_id
+        WHERE nick_name LIKE CONCAT('%', #{nickName}, '%')
+          AND user_name LIKE CONCAT('%', #{userName}, '%')
+          AND grade LIKE CONCAT('%', #{grade}, '%')
+          AND school LIKE CONCAT('%', #{school}, '%')
+          AND major LIKE CONCAT('%', #{major}, '%')
+          AND direction LIKE CONCAT('%', #{direction}, '%')
+    </select>
+
+    <insert id="addStudent" parameterType="com.ruoyi.system.domain.entity.BStudentEntity">
+        INSERT INTO ms_student(user_id, class_id, birthday, grade, school, major, direction, graduation, worked, prov,
+                               city, home_address, current_address, create_by, create_time, update_by, update_time,
+                               remark)
+        VALUES (#{userId}, #{clazzId}, #{birthday}, #{grade}, #{school}, #{major}, #{direction}, #{graduation},
+                #{worked}, #{prov}, #{city}, #{homeAddress}, #{currentAddress}, #{createBy}, #{createTime}, #{updateBy},
+                #{updateTime}, #{remark})
+    </insert>
+
+    <insert id="addUser" parameterType="com.ruoyi.system.domain.entity.BUserEntity">
+        INSERT INTO sys_user(user_id, dept_id, user_name, nick_name, user_type, email, phonenumber, sex, avatar,
+                             password, status, del_flag, login_ip, login_date, create_by, create_time, update_by,
+                             update_time, remark)
+        VALUES (#{userId}, #{deptId}, #{userName}, #{nickName}, #{userType}, #{email}, #{phonenumber}, #{sex},
+                #{avatar}, #{password}, #{status}, #{delFlag}, #{loginIp}, #{loginDate}, #{createBy}, #{createTime},
+                #{updateBy}, #{updateTime}, #{remark})
+    </insert>
+
+    <insert id="addStudentClazz" parameterType="com.ruoyi.system.domain.entity.BStudentClazzEntity">
+        INSERT INTO ms_student_class(user_id, class_id, status, create_time)
+        VALUES (#{userId}, #{clazzId}, #{status}, #{createTime})
+    </insert>
+
+    <update id="updateStudent" parameterType="com.ruoyi.system.domain.vo.student.StudentUpdateVo">
+        UPDATE ms_student
+        <set>
+            <if test="birthday != null and birthday != ''">birthday = #{birthday},</if>
+            <if test="grade != null and grade != ''">grade = #{grade},</if>
+            <if test="school != null and school != ''">school = #{school},</if>
+            <if test="major != null and major != ''">major = #{major},</if>
+            <if test="direction != null and direction != ''">direction = #{direction},</if>
+            <if test="graduation != null and graduation != ''">graduation = #{graduation},</if>
+            <if test="worked != null and worked != ''">worked = #{worked},</if>
+            <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+            <if test="updateTime != null and updateTime != ''">update_time = #{updateTime},</if>
+            <if test="remark != null and remark != ''">remark = #{remark}</if>
+        </set>
+        <where>user_id = #{userId}</where>
+    </update>
+
+    <update id="updateUser" parameterType="com.ruoyi.system.domain.vo.student.StudentUpdateVo">
+        UPDATE sys_user
+        <set>
+            <if test="userName != null and userName != ''">user_name = #{userName},</if>
+            <if test="nickName != null and nickName != ''">nick_name = #{nickName},</if>
+            <if test="email != null and email != ''">email = #{email},</if>
+            <if test="phonenumber != null and phonenumber != ''">phonenumber = #{phonenumber},</if>
+            <if test="sex != null and sex != ''">sex = #{sex},</if>
+            <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+            <if test="updateTime != null and updateTime != ''">update_time = #{updateTime},</if>
+            <if test="remark != null and remark != ''">remark = #{remark}</if>
+        </set>
+        <where>user_id = #{userId}</where>
+    </update>
+    
+    <update id="updateStudentClazz" parameterType="java.lang.Long">
+        UPDATE ms_student_class
+        <set>
+            <if test="clazzId != null adn clazzId != ''">clazz_id = #{clazzId}</if>
+        </set>
+    </update>
+</mapper>
