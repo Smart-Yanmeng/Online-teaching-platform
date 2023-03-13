@@ -1,8 +1,10 @@
 package com.ruoyi.web.controller.online;
 
 import com.github.pagehelper.PageHelper;
+import com.ruoyi.system.domain.view.EmploymentInfoView;
 import com.ruoyi.system.domain.view.ResultView;
 import com.ruoyi.system.domain.view.StudentInfoView;
+import com.ruoyi.system.domain.vo.student.EmploymentUpdateVo;
 import com.ruoyi.system.domain.vo.student.StudentAddVo;
 import com.ruoyi.system.domain.vo.student.StudentSearchVo;
 import com.ruoyi.system.domain.vo.student.StudentUpdateVo;
@@ -71,6 +73,35 @@ public class BStudentController {
     @Transactional(rollbackFor = Exception.class)
     public ResultView<Object> studentUpdate(@RequestBody StudentUpdateVo studentUpdateVo) {
         studentService.updateStudent(studentUpdateVo);
+
+        return new ResultView<>();
+    }
+
+    @ApiOperation("删除学生")
+    @DeleteMapping("/delete")
+    public ResultView<Object> studentDelete(@RequestParam Long userId) {
+        studentService.deleteStudent(userId);
+
+        return new ResultView<>();
+    }
+
+    @ApiOperation("刷新就业信息")
+    @GetMapping("/list/{userId}")
+    public ResultView<EmploymentInfoView> employmentInfo(@PathVariable Long userId) {
+        EmploymentInfoView employmentInfoView = studentService.selectEmploymentInfo(userId);
+
+        ResultView<EmploymentInfoView> resultView = new ResultView<>();
+        resultView.setData(employmentInfoView);
+
+        return resultView;
+    }
+
+    @ApiOperation("修改就业信息")
+    @PutMapping("/update/{userId}")
+    @Transactional(rollbackFor = Exception.class)
+    public ResultView<Object> employmentUpdate(@PathVariable Long userId, @RequestBody EmploymentUpdateVo employmentUpdateVo) {
+        employmentUpdateVo.setUserId(userId);
+        studentService.updateEmployment(employmentUpdateVo);
 
         return new ResultView<>();
     }

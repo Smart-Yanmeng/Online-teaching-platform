@@ -5,10 +5,9 @@ import com.ruoyi.common.utils.SecurityUtils;
 import com.ruoyi.system.domain.entity.BStudentClazzEntity;
 import com.ruoyi.system.domain.entity.BStudentEntity;
 import com.ruoyi.system.domain.entity.BUserEntity;
+import com.ruoyi.system.domain.view.EmploymentInfoView;
 import com.ruoyi.system.domain.view.StudentInfoView;
-import com.ruoyi.system.domain.vo.student.StudentAddVo;
-import com.ruoyi.system.domain.vo.student.StudentSearchVo;
-import com.ruoyi.system.domain.vo.student.StudentUpdateVo;
+import com.ruoyi.system.domain.vo.student.*;
 import com.ruoyi.system.mapper.online.IStudentMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -59,6 +58,8 @@ public class StudentService {
         Long clazzId = studentMapper.selectClazzId(studentAddVo.getClazzName());
         // 加密密码
         String password = SecurityUtils.encryptPassword(studentAddVo.getPassword());
+        // 获取 employmentId
+        Long employmentId = studentMapper.countEmployment() + 1;
 
         // 插入 ms_student 表
         BStudentEntity studentEntity = studentAddVo.transferToStudentEntity(new BStudentEntity());
@@ -92,8 +93,22 @@ public class StudentService {
         studentClazzEntity.setCreateTime(createTime);
 
         studentMapper.addStudentClazz(studentClazzEntity);
+
+        // 插入 ms_employment_info 表
+        EmploymentAddVo employmentAddVo = new EmploymentAddVo();
+        employmentAddVo.setEmploymentId(employmentId);
+        employmentAddVo.setUserId(userId);
+        employmentAddVo.setCreateBy(createBy);
+        employmentAddVo.setCreateTime(createTime);
+
+        studentMapper.addEmploymentInfo(employmentAddVo);
     }
 
+    /**
+     * 修改学生信息
+     *
+     * @param studentUpdateVo
+     */
     public void updateStudent(StudentUpdateVo studentUpdateVo) {
         // 获取更新时间
         String updateTime = DateUtils.getTime();
@@ -114,5 +129,42 @@ public class StudentService {
         if (studentUpdateVo.getClazzName() != studentMapper.selectClazzName(studentUpdateVo.getUserId())) {
             studentMapper.updateStudentClazz(studentMapper.selectClazzId(studentUpdateVo.getClazzName()));
         }
+    }
+
+    /**
+     * 删除学生
+     *
+     * @param userId
+     */
+    public void deleteStudent(Long userId) {
+        // 移出学生
+        studentMapper.moveOutStudent(userId);
+
+        // 修改 sys_user 表中的删除标志
+        studentMapper.changeUserDelFlag(userId);
+
+        // 修改 ms_employment_info 表中的删除标志
+        studentMapper.changeEmploymentInfoDelFlag(userId);
+    }
+
+    /**
+     * 刷新结业信息
+     *
+     * @param userId
+     * @return
+     */
+    public EmploymentInfoView selectEmploymentInfo(Long userId) {
+        studentMapper.selectEmployment(userId);
+
+        return new EmploymentInfoView();
+    }
+
+    /**
+     * 修改就业信息
+     *
+     * @param employmentUpdateVo
+     */
+    public void updateEmployment(EmploymentUpdateVo employmentUpdateVo) {
+        studentMapper.updateEmployment(employmentUpdateVo);
     }
 }

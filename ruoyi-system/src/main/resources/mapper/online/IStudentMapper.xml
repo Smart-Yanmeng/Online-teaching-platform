@@ -20,6 +20,11 @@
         WHERE class_id = #{clazzId}
     </select>
 
+    <select id="countEmployment" resultType="java.lang.Long">
+        SELECT COUNT(*)
+        FROM ms_employment_info
+    </select>
+
     <select id="selectStudent" parameterType="com.ruoyi.system.domain.entity.BStudentEntity"
             resultType="com.ruoyi.system.domain.view.StudentInfoView">
         SELECT su.nick_name,
@@ -37,6 +42,7 @@
                  LEFT JOIN sys_user AS su ON ms.user_id = su.user_id
                  LEFT JOIN ms_student_class msc ON ms.user_id = msc.user_id
                  LEFT JOIN ms_class mc on ms.class_id = mc.class_id
+        WHERE su.del_flag = 0
     </select>
 
     <select id="queryStudentByCondition" parameterType="com.ruoyi.system.domain.vo.student.StudentSearchVo"
@@ -87,6 +93,11 @@
         VALUES (#{userId}, #{clazzId}, #{status}, #{createTime})
     </insert>
 
+    <insert id="addEmploymentInfo" parameterType="com.ruoyi.system.domain.vo.student.EmploymentAddVo">
+        INSERT INTO ms_employment_info(employment_id, user_id, create_by, create_time)
+        VALUES (#{employmentId}, #{userId}, #{createBy}, #{createTime})
+    </insert>
+
     <update id="updateStudent" parameterType="com.ruoyi.system.domain.vo.student.StudentUpdateVo">
         UPDATE ms_student
         <set>
@@ -118,11 +129,50 @@
         </set>
         <where>user_id = #{userId}</where>
     </update>
-    
+
     <update id="updateStudentClazz" parameterType="java.lang.Long">
         UPDATE ms_student_class
         <set>
             <if test="clazzId != null adn clazzId != ''">clazz_id = #{clazzId}</if>
         </set>
+    </update>
+
+    <update id="moveOutStudent" parameterType="java.lang.Long">
+        UPDATE ms_student_class
+        <set>status = 1</set>
+        <where>user_id = #{userId}</where>
+    </update>
+
+    <update id="changeUserDelFlag" parameterType="java.lang.Long">
+        UPDATE sys_user
+        <set>del_flag = 2</set>
+        <where>user_id = #{userId}</where>
+    </update>
+
+    <update id="changeEmploymentInfoDelFlag" parameterType="java.lang.Long">
+        UPDATE ms_employment_info
+        <set>del_flag = 2</set>
+        <where>user_id = #{userId}</where>
+    </update>
+
+    <select id="selectEmployment" parameterType="java.lang.Long"
+            resultType="com.ruoyi.system.domain.view.EmploymentInfoView">
+        SELECT su.nick_name, mei.city, mei.company, mei.salary, mei.position, mei.remark
+        FROM sys_user AS su,
+             ms_employment_info AS mei
+        WHERE su.user_id = #{userId}
+          AND mei.user_id = #{userId}
+    </select>
+
+    <update id="updateEmployment" parameterType="com.ruoyi.system.domain.vo.student.EmploymentUpdateVo">
+        UPDATE ms_employment_info
+        <set>
+            <if test="city != null and city != ''">city = #{city},</if>
+            <if test="company != null and company != ''">company = #{company},</if>
+            <if test="salary != null and salary != ''">salary = #{salary},</if>
+            <if test="position != null and position != ''">position = #{position},</if>
+            <if test="remark != null and remark != ''">remark = #{remark}</if>
+        </set>
+        <where>user_id = #{userId}</where>
     </update>
 </mapper>

@@ -25,7 +25,7 @@ public class BBannerController {
 
     @ApiOperation("刷新轮播图列表")
     @GetMapping()
-    public ResultView<List<BannerInfoView>> bannerInfo(@RequestParam @Valid Integer pageNum, @RequestParam @Valid Integer pageSize) {
+    public ResultView<List<BannerInfoView>> bannerInfoList(@RequestParam @Valid Integer pageNum, @RequestParam @Valid Integer pageSize) {
         List<BannerInfoView> bannerInfoViews = bannerService.selectBannerList();
 
         PageHelper.startPage(pageNum, pageSize);
