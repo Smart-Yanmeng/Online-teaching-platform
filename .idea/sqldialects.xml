@@ -3,6 +3,7 @@
   <component name="SqlDialectMappings">
     <file url="file://$PROJECT_DIR$/Online-teaching-platform/ruoyi-system/src/main/resources/mapper/online/IActivityMapper.xml" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/Online-teaching-platform/ruoyi-system/src/main/resources/mapper/online/IBannerMapper.xml" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/Online-teaching-platform/ruoyi-system/src/main/resources/mapper/online/IClazzMapper.xml" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/Online-teaching-platform/ruoyi-system/src/main/resources/mapper/online/IComplaintMapper.xml" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/Online-teaching-platform/ruoyi-system/src/main/resources/mapper/online/ISharingMapper.xml" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/Online-teaching-platform/ruoyi-system/src/main/resources/mapper/online/IStudentMapper.xml" dialect="MySQL" />
