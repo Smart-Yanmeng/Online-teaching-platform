@@ -79,9 +79,9 @@ public class BBannerController {
     }
 
     @ApiOperation("删除轮播图")
-    @DeleteMapping("/delete")
+    @DeleteMapping("/delete/{bannerId}")
     @Transactional(rollbackFor = Exception.class)
-    public ResultView<Object> bannerDelete(@RequestParam @Valid Long bannerId) {
+    public ResultView<Object> bannerDelete(@PathVariable Long bannerId) {
         bannerService.deleteBanner(bannerId);
 
         return new ResultView<>();

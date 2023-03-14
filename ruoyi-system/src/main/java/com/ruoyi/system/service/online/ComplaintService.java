@@ -6,7 +6,6 @@ import com.ruoyi.system.mapper.online.IComplaintMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -18,6 +17,12 @@ public class ComplaintService {
         List<ComplaintInfoView> complaintInfoViews = complaintMapper.selectComplaint();
 
         return complaintInfoViews;
+    }
+
+    public void deleteComplaintAll(Long[] complaintArr) {
+        for (Long item : complaintArr) {
+            complaintMapper.deleteComplaintByCondition(item);
+        }
     }
 
     public void deleteComplaint(Long complaintId) {

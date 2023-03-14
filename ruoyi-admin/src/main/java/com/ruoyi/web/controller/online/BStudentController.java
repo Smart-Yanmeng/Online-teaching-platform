@@ -78,8 +78,8 @@ public class BStudentController {
     }
 
     @ApiOperation("删除学生")
-    @DeleteMapping("/delete")
-    public ResultView<Object> studentDelete(@RequestParam Long userId) {
+    @DeleteMapping("/delete/{userId}")
+    public ResultView<Object> studentDelete(@PathVariable Long userId) {
         studentService.deleteStudent(userId);
 
         return new ResultView<>();

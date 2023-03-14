@@ -31,9 +31,17 @@ public class BComplaintController {
         return resultView;
     }
 
-    @ApiOperation("删除投诉")
+    @ApiOperation("批量删除投诉")
     @DeleteMapping("/delete")
-    public ResultView<Object> complaintsDelete(@RequestParam Long complaintId) {
+    public ResultView<Object> complaintDeleteAll(@RequestParam Long[] complaintIdArr) {
+        complaintService.deleteComplaintAll(complaintIdArr);
+
+        return new ResultView<>();
+    }
+
+    @ApiOperation("删除投诉")
+    @DeleteMapping("/delete/{complaintId}")
+    public ResultView<Object> complaintDelete(@PathVariable Long complaintId) {
         complaintService.deleteComplaint(complaintId);
 
         return new ResultView<>();

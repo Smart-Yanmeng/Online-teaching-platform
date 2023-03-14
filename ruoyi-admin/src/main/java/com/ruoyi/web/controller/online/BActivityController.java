@@ -79,9 +79,9 @@ public class BActivityController {
     }
 
     @ApiOperation("删除活动")
-    @DeleteMapping("/delete")
+    @DeleteMapping("/delete/{activityId}")
     @Transactional(rollbackFor = Exception.class)
-    public ResultView<Object> activityDelete(@RequestParam @Valid Long activityId) {
+    public ResultView<Object> activityDelete(@PathVariable Long activityId) {
         activityService.deleteActivity(activityId);
 
         return new ResultView<>();
