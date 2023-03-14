@@ -25,7 +25,8 @@ public class BBannerController {
 
     @ApiOperation("刷新轮播图列表")
     @GetMapping()
-    public ResultView<List<BannerInfoView>> bannerInfoList(@RequestParam @Valid Integer pageNum, @RequestParam @Valid Integer pageSize) {
+    public ResultView<List<BannerInfoView>> bannerInfoList(@RequestParam @Valid Integer pageNum,
+                                                           @RequestParam @Valid Integer pageSize) {
         List<BannerInfoView> bannerInfoViews = bannerService.selectBannerList();
 
         PageHelper.startPage(pageNum, pageSize);
@@ -37,7 +38,8 @@ public class BBannerController {
 
     @ApiOperation("查询轮播图")
     @GetMapping("/list")
-    public ResultView<List<BannerInfoView>> bannerInfoSearchList(@RequestParam("bannerTitle") String bannerTitle, @RequestParam("isRelease") Long isRelease) {
+    public ResultView<List<BannerInfoView>> bannerInfoSearchList(@RequestParam("bannerTitle") String bannerTitle,
+                                                                 @RequestParam("isRelease") Long isRelease) {
         BannerSearchVo bannerSearchVo = new BannerSearchVo();
         bannerSearchVo.setBannerTitle(bannerTitle);
         bannerSearchVo.setIsRelease(isRelease);

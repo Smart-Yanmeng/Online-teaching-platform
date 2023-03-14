@@ -18,21 +18,34 @@ public class BannerService {
     @Autowired
     private IBannerMapper bannerMapper;
 
-    // 刷新 - 重置轮播图信息
+    /**
+     * 刷新 - 重置轮播图信息
+     *
+     * @return
+     */
     public List<BannerInfoView> selectBannerList() {
         List<BBannerEntity> bannerEntities = bannerMapper.selectBanner();
 
         return bannerEntities.stream().map(item -> new BannerInfoView().transfer(item)).collect(Collectors.toList());
     }
 
-    // 查询轮播图
+    /**
+     * 查询轮播图
+     *
+     * @param bannerSearchVo
+     * @return
+     */
     public List<BannerInfoView> queryBannerList(BannerSearchVo bannerSearchVo) {
         List<BBannerEntity> bannerEntities = bannerMapper.queryBannerByCondition(bannerSearchVo);
 
         return bannerEntities.stream().map(item -> new BannerInfoView().transfer(item)).collect(Collectors.toList());
     }
 
-    // 插入轮播图
+    /**
+     * 插入轮播图
+     *
+     * @param bannerAddVo
+     */
     public void insertBanner(BannerAddVo bannerAddVo) {
         BBannerEntity bannerEntity = new BBannerEntity();
         bannerEntity = bannerAddVo.transfer(bannerEntity);
@@ -41,7 +54,11 @@ public class BannerService {
         bannerMapper.insertBannerByCondition(bannerEntity);
     }
 
-    // 修改数据
+    /**
+     * 修改轮播图数据
+     *
+     * @param bannerUpdateVo
+     */
     public void updateBanner(BannerUpdateVo bannerUpdateVo) {
 //        bannerUpdateVo.setUpdateBy(SecurityUtils.getUsername());
         bannerUpdateVo.setUpdateBy("admin");
@@ -50,7 +67,11 @@ public class BannerService {
         bannerMapper.updateBannerByCondition(bannerUpdateVo);
     }
 
-    // 删除数据
+    /**
+     * 删除轮播图
+     *
+     * @param bannerId
+     */
     public void deleteBanner(Long bannerId) {
         bannerMapper.deleteBannerByCondition(bannerId);
     }

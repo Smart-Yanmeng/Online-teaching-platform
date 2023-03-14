@@ -8,6 +8,7 @@ import com.ruoyi.system.service.online.ComplaintService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -41,6 +42,7 @@ public class BComplaintController {
 
     @ApiOperation("删除投诉")
     @DeleteMapping("/delete/{complaintId}")
+    @Transactional(rollbackFor = Exception.class)
     public ResultView<Object> complaintDelete(@PathVariable Long complaintId) {
         complaintService.deleteComplaint(complaintId);
 
