@@ -8,6 +8,16 @@
         FROM ms_class
     </select>
 
+    <select id="countChapter" resultType="java.lang.Long">
+        SELECT COUNT(*)
+        FROM ms_chapter
+    </select>
+
+    <select id="countCatalogue" resultType="java.lang.Long">
+        SELECT COUNT(*)
+        FROM ms_catalogue
+    </select>
+
     <select id="selectClazz" resultType="com.ruoyi.system.domain.view.ClazzInfoView">
         SELECT mc.class_cover,
                tn.nick_name AS teacher_name,
@@ -134,11 +144,80 @@
         SELECT chapter_id, chapter_name
         FROM ms_chapter
         <where>class_id = #{clazzId}</where>
+        ORDER BY chapter_sort DESC
     </select>
 
     <select id="selectCatalogueByCondition" parameterType="java.lang.Long" resultType="java.lang.String">
         SELECT catalogue_name
         FROM ms_catalogue
         <where>chapter_id = #{chapterId}</where>
+        ORDER BY catalogue_sort DESC
+    </select>
+
+    <select id="selectCoursewareByCondition" parameterType="java.lang.Long"
+            resultType="com.ruoyi.system.domain.view.CoursewareInfoView">
+        SELECT catalogue_name, play_url, courseware_url, catalogue_sort, last
+        FROM ms_catalogue
+        <where>catalogue_id = #{catalogueId}</where>
+    </select>
+
+    <update id="updateClazzCatalogueByCondition"
+            parameterType="com.ruoyi.system.domain.vo.clazz.ClazzCatalogueUpdateVo">
+        UPDATE ms_catalogue
+        <set>
+            <if test="catalogueName != null and catalogueName != ''">catalogue_name = #{catalogueName},</if>
+            <if test="playName != null and playName != ''">play_name = #{playName},</if>
+            <if test="playUrl != null and playUrl != ''">play_url = #{playUrl},</if>
+            <if test="playLength != null and playLength != ''">play_length = #{playLength},</if>
+            <if test="coursewareName != null and coursewareName != ''">courseware_name = #{coursewareName},</if>
+            <if test="coursewareUrl != null and coursewareUrl != ''">courseware_url = #{coursewareUrl},</if>
+            <if test="catalogueSort != null and catalogueSort != ''">catalogue_sort = #{catalogueSort},</if>
+            <if test="last != null and last != ''">last = #{last},</if>
+            update_by = #{updateBy},
+            update_time = #{updateTime}
+        </set>
+        <where>catalogue_id = #{catalogueId}</where>
+    </update>
+
+    <insert id="insertChapterByCondition" parameterType="com.ruoyi.system.domain.vo.clazz.ClazzChapterAddVo">
+        INSERT INTO ms_chapter(chapter_id, class_id, chapter_name, chapter_sort, del_flag, create_by, create_time,
+                               update_by, update_time, remark)
+        VALUES (#{chapterId}, #{clazzId}, #{chapterName}, #{chapterSort}, #{delFlag}, #{createBy}, #{createTime},
+                #{updateBy}, #{updateTime}, #{remark})
+    </insert>
+
+    <insert id="insertCatalogueByCondition" parameterType="com.ruoyi.system.domain.vo.clazz.ClazzCatalogueAddVo">
+        INSERT INTO ms_catalogue(catalogue_id, chapter_id, catalogue_name, catalogue_sort, create_by, create_time,
+                                 update_by, update_time)
+        VALUES (#{catalogueId}, #{chapterId}, #{catalogueName}, #{catalogueSort}, #{createBy}, #{createTime},
+                #{updateBy}, #{updateTime})
+    </insert>
+
+    <update id="deleteChapterByCondition" parameterType="java.lang.Long">
+        UPDATE ms_chapter
+        <set>del_flag = 2</set>
+        <where>chapter_id = #{chapterId}</where>
+    </update>
+
+    <update id="deleteCatalogueByCondition" parameterType="java.lang.Long">
+        UPDATE ms_catalogue
+        <set>del_flag = 2</set>
+        <where>catalogue_id = #{catalogueId}</where>
+    </update>
+
+    <update id="insertTaskByCondition" parameterType="com.ruoyi.system.domain.vo.clazz.ClazzCatalogueTaskAddVo">
+        UPDATE ms_catalogue
+        <set>
+            <if test="task != null and task != ''">task = #{task},</if>
+            has_task = 1
+        </set>
+        <where>catalogue_id = #{catalogueId}</where>
+    </update>
+
+    <select id="selectTaskByCondition" parameterType="java.lang.Long"
+            resultType="com.ruoyi.system.domain.view.TaskSubmitInfoView">
+        SELECT su.nick_name, mts.file_name, mts.pass, mts.comment
+        FROM ms_task_submit mts
+                 LEFT JOIN sys_user su ON mts.user_id = su.user_id
     </select>
 </mapper>

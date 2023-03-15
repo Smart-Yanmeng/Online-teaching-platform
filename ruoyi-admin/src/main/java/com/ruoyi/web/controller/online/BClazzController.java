@@ -1,12 +1,8 @@
 package com.ruoyi.web.controller.online;
 
 import com.github.pagehelper.PageHelper;
-import com.ruoyi.system.domain.view.ClazzDetailInfoView;
-import com.ruoyi.system.domain.view.ClazzInfoView;
-import com.ruoyi.system.domain.view.ResultView;
-import com.ruoyi.system.domain.vo.clazz.ClazzAddVo;
-import com.ruoyi.system.domain.vo.clazz.ClazzSearchVo;
-import com.ruoyi.system.domain.vo.clazz.ClazzUpdateVo;
+import com.ruoyi.system.domain.view.*;
+import com.ruoyi.system.domain.vo.clazz.*;
 import com.ruoyi.system.service.online.ClazzService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -15,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -124,7 +119,7 @@ public class BClazzController {
     }
 
     @ApiOperation("获取班级详情")
-    @GetMapping("/{clazzId}/Detail")
+    @GetMapping("/{clazzId}/detail")
     public ResultView<List<ClazzDetailInfoView>> clazzDetailInfoList(@PathVariable Long clazzId) {
         List<ClazzDetailInfoView> clazzDetailInfoViews = clazzService.selectChapterList(clazzId);
 
@@ -133,4 +128,109 @@ public class BClazzController {
 
         return resultView;
     }
+
+    @ApiOperation("获取目录课件")
+    @GetMapping("/{clazzId}/detail/{catalogueId}")
+    public ResultView<CoursewareInfoView> clazzCatalogueInfo(@PathVariable Long clazzId,
+                                                             @PathVariable Long catalogueId) {
+        CoursewareInfoView coursewareInfoView = clazzService.selectCourseware(catalogueId);
+
+        ResultView<CoursewareInfoView> resultView = new ResultView<>();
+        resultView.setData(coursewareInfoView);
+
+        return resultView;
+    }
+
+    @ApiOperation("修改目录课件")
+    @PutMapping("/{clazzId}/detail/{chapterId}/{catalogueId}")
+    public ResultView<Object> clazzCatalogueUpdate(@PathVariable Long chapterId,
+                                                   @PathVariable Long clazzId,
+                                                   @PathVariable Long catalogueId,
+                                                   @RequestBody ClazzCatalogueUpdateVo clazzCatalogueUpdateVo) {
+        clazzCatalogueUpdateVo.setCatalogueId(catalogueId);
+        clazzService.updateClazzCatalogue(clazzCatalogueUpdateVo);
+
+        return new ResultView<>();
+    }
+
+    @ApiOperation("新增章")
+    @PostMapping("/{clazzId}/detail/add")
+    @Transactional(rollbackFor = Exception.class)
+    public ResultView<Object> clazzChapterAdd(@PathVariable Long clazzId,
+                                              @RequestBody ClazzChapterAddVo clazzChapterAddVo) {
+        clazzChapterAddVo.setClazzId(clazzId);
+        clazzService.insertChapter(clazzChapterAddVo);
+
+        return new ResultView<>();
+    }
+
+    @ApiOperation("新增节")
+    @PostMapping("/{clazzId}/detail/{chapterId}/add")
+    @Transactional(rollbackFor = Exception.class)
+    public ResultView<Object> clazzCatalogueAdd(@PathVariable Long clazzId,
+                                                @PathVariable Long chapterId,
+                                                @RequestBody ClazzCatalogueAddVo clazzCatalogueAddVo) {
+        clazzCatalogueAddVo.setChapterId(chapterId);
+        clazzService.insertCatalogue(clazzCatalogueAddVo);
+
+        return new ResultView<>();
+    }
+
+    @ApiOperation("删除章")
+    @DeleteMapping("/{clazzId}/detail/{chapterId}")
+    @Transactional(rollbackFor = Exception.class)
+    public ResultView<Object> clazzChapterDelete(@PathVariable Long clazzId,
+                                                 @PathVariable Long chapterId) {
+        clazzService.deleteChapter(chapterId);
+
+        return new ResultView<>();
+    }
+
+    @ApiOperation("删除节")
+    @DeleteMapping("/{clazzId}/detail/{chapterId}/{catalogueId}")
+    @Transactional(rollbackFor = Exception.class)
+    public ResultView<Object> clazzCatalogueDelete(@PathVariable Long clazzId,
+                                                   @PathVariable Long chapterId,
+                                                   @PathVariable Long catalogueId) {
+        clazzService.deleteCatalogue(catalogueId);
+
+        return new ResultView<>();
+    }
+
+    @ApiOperation("发布作业")
+    @PostMapping("/{clazzId}/detail/{chapterId}/{catalogueId}/addTask")
+    @Transactional(rollbackFor = Exception.class)
+    public ResultView<Object> clazzCatalogueTaskAdd(@PathVariable Long clazzId,
+                                                    @PathVariable Long chapterId,
+                                                    @PathVariable Long catalogueId,
+                                                    @RequestBody ClazzCatalogueTaskAddVo clazzCatalogueTaskAddVo) {
+        clazzCatalogueTaskAddVo.setCatalogueId(catalogueId);
+        clazzService.insertTask(clazzCatalogueTaskAddVo);
+
+        return new ResultView<>();
+    }
+
+    @ApiOperation("刷新作业提交列表")
+    @GetMapping("/{clazzId}/detail/{chapterId}/{catalogueId}/task")
+    public ResultView<List<TaskSubmitInfoView>> taskInfoList(@PathVariable Long clazzId,
+                                                             @PathVariable Long chapterId,
+                                                             @PathVariable Long catalogueId) {
+        List<TaskSubmitInfoView> taskSubmitInfoViews = clazzService.selectTaskList(catalogueId);
+
+        ResultView<List<TaskSubmitInfoView>> resultView = new ResultView<>();
+        resultView.setData(taskSubmitInfoViews);
+
+        return resultView;
+    }
+
+    @ApiOperation("下载学生作业")
+    @GetMapping()
+    public ResultView<Object> taskDownload(@RequestParam String fileName,
+                                           @RequestParam String fileUrl) {
+        clazzService.downloadTask(fileName, fileUrl);
+
+        return new ResultView<>();
+    }
+
+
 }
