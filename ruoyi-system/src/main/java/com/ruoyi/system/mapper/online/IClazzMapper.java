@@ -2,10 +2,7 @@ package com.ruoyi.system.mapper.online;
 
 import com.ruoyi.system.domain.entity.BChapterEntity;
 import com.ruoyi.system.domain.entity.BClazzEntity;
-import com.ruoyi.system.domain.view.ClazzDetailInfoView;
-import com.ruoyi.system.domain.view.ClazzInfoView;
-import com.ruoyi.system.domain.view.CoursewareInfoView;
-import com.ruoyi.system.domain.view.TaskSubmitInfoView;
+import com.ruoyi.system.domain.view.*;
 import com.ruoyi.system.domain.vo.clazz.ClazzCatalogueAddVo;
 import com.ruoyi.system.domain.vo.clazz.ClazzCatalogueTaskAddVo;
 import com.ruoyi.system.domain.vo.clazz.ClazzCatalogueUpdateVo;
@@ -20,7 +17,11 @@ public interface IClazzMapper {
     // 查询 chapter 数量
     Long countChapter();
 
+    // 查询 catalogue 数量
     Long countCatalogue();
+
+    // 查询是否有子评论
+    Long countComment(Long commentId);
 
     List<ClazzInfoView> selectClazz();
 
@@ -53,4 +54,14 @@ public interface IClazzMapper {
     void insertTaskByCondition(ClazzCatalogueTaskAddVo clazzCatalogueTaskAddVo);
 
     List<TaskSubmitInfoView> selectTaskByCondition(Long catalogueId);
+
+    String selectTaskFileUrlByCondition(Long taskId);
+
+    String selectTaskFileNameByCondition(Long taskId);
+
+    List<CommentInfoView> selectParentCommentByCondition(Long catalogueId);
+
+    List<CommentInfoView> selectChildrenCommentByCondition(Long commentId);
+
+    void deleteCommentByCondition(Long commentId);
 }

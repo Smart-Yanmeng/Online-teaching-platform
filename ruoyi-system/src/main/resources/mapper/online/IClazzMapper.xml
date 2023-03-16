@@ -18,6 +18,12 @@
         FROM ms_catalogue
     </select>
 
+    <select id="countComment" parameterType="java.lang.Long" resultType="java.lang.Long">
+        SELECT COUNT(*)
+        FROM ms_comment
+        WHERE parent_id = #{commentId}
+    </select>
+
     <select id="selectClazz" resultType="com.ruoyi.system.domain.view.ClazzInfoView">
         SELECT mc.class_cover,
                tn.nick_name AS teacher_name,
@@ -220,4 +226,41 @@
         FROM ms_task_submit mts
                  LEFT JOIN sys_user su ON mts.user_id = su.user_id
     </select>
+
+    <select id="selectTaskFileUrlByCondition" parameterType="java.lang.Long" resultType="java.lang.String">
+        SELECT file_url
+        FROM ms_task_submit
+        <where>task_id = #{taskId}</where>
+    </select>
+
+    <select id="selectTaskFileNameByCondition" parameterType="java.lang.Long" resultType="java.lang.String">
+        SELECT file_name
+        FROM ms_task_submit
+        <where>task_id = #{taskId}</where>
+    </select>
+
+    <select id="selectParentCommentByCondition" parameterType="java.lang.Long"
+            resultType="com.ruoyi.system.domain.view.CommentInfoView">
+        SELECT mc.comment_id, su.user_name, su.nick_name, mc.comment_content, mc.create_time
+        FROM ms_comment mc
+                 LEFT JOIN sys_user su ON mc.user_id = su.user_id
+        WHERE catalogue_id = #{catalogueId}
+          AND comment_id = ancestry_id
+          AND mc.del_flag = 0
+    </select>
+
+    <select id="selectChildrenCommentByCondition" parameterType="java.lang.Long"
+            resultType="com.ruoyi.system.domain.view.CommentInfoView">
+        SELECT mc.comment_id, su.user_name, su.nick_name, mc.comment_content, mc.create_time
+        FROM ms_comment mc
+                 LEFT JOIN sys_user su ON mc.user_id = su.user_id
+        WHERE parent_id = #{commentId}
+          AND mc.del_flag = 0
+    </select>
+
+    <update id="deleteCommentByCondition" parameterType="java.lang.Long">
+        UPDATE ms_comment
+        SET del_flag = 2
+        WHERE comment_id = #{commentId}
+    </update>
 </mapper>

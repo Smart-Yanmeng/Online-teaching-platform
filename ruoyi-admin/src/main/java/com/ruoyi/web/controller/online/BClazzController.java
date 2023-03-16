@@ -224,13 +224,37 @@ public class BClazzController {
     }
 
     @ApiOperation("下载学生作业")
-    @GetMapping()
-    public ResultView<Object> taskDownload(@RequestParam String fileName,
-                                           @RequestParam String fileUrl) {
-        clazzService.downloadTask(fileName, fileUrl);
+    @GetMapping("/{clazzId}/detail/{chapterId}/{catalogueId}/{taskId}")
+    public ResultView<Object> taskDownload(@PathVariable Long clazzId,
+                                           @PathVariable Long chapterId,
+                                           @PathVariable Long catalogueId,
+                                           @PathVariable Long taskId) {
+        clazzService.downloadTask(taskId);
 
         return new ResultView<>();
     }
 
+    @ApiOperation("获取评论列表")
+    @GetMapping("/{clazzId}/detail/{chapterId}/{catalogueId}/comment")
+    public ResultView<List<CommentInfoView>> commentInfoList(@PathVariable Long clazzId,
+                                                             @PathVariable Long chapterId,
+                                                             @PathVariable Long catalogueId) {
+        List<CommentInfoView> commentInfoViews = clazzService.selectComment(catalogueId);
 
+        ResultView<List<CommentInfoView>> resultView = new ResultView<>();
+        resultView.setData(commentInfoViews);
+
+        return resultView;
+    }
+
+    @ApiOperation("删除评论")
+    @DeleteMapping("/{clazzId}/detail/{chapterId}/{catalogueId}/{commentId}")
+    public ResultView<Object> commentDelete(@PathVariable Long clazzId,
+                                            @PathVariable Long chapterId,
+                                            @PathVariable Long catalogueId,
+                                            @PathVariable Long commentId) {
+        clazzService.deleteComment(commentId);
+
+        return new ResultView<>();
+    }
 }

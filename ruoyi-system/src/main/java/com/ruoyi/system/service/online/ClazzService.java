@@ -1,26 +1,18 @@
 package com.ruoyi.system.service.online;
 
 import com.ruoyi.common.utils.DateUtils;
-import com.ruoyi.common.utils.SecurityUtils;
-import com.ruoyi.system.domain.entity.BCatalogueEntity;
 import com.ruoyi.system.domain.entity.BChapterEntity;
 import com.ruoyi.system.domain.entity.BClazzEntity;
-import com.ruoyi.system.domain.view.ClazzDetailInfoView;
-import com.ruoyi.system.domain.view.ClazzInfoView;
-import com.ruoyi.system.domain.view.CoursewareInfoView;
-import com.ruoyi.system.domain.view.TaskSubmitInfoView;
+import com.ruoyi.system.domain.view.*;
 import com.ruoyi.system.domain.vo.clazz.*;
 import com.ruoyi.system.mapper.online.IClazzMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -225,11 +217,12 @@ public class ClazzService {
     /**
      * 下载学生作业
      *
-     * @param fileName
-     * @param fileUrl
+     * @param taskId
      */
-    public void downloadTask(String fileName, String fileUrl) {
+    public void downloadTask(Long taskId) {
         String saveDir = "C:\\Downloads\\";
+        String fileUrl = clazzMapper.selectTaskFileUrlByCondition(taskId);
+        String fileName = clazzMapper.selectTaskFileNameByCondition(taskId);
 
         try {
             URL url = new URL(fileUrl);
@@ -260,5 +253,41 @@ public class ClazzService {
             System.out.println("Error while downloading file: " + e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 查询评论信息
+     *
+     * @param catalogueId
+     * @return
+     */
+    public List<CommentInfoView> selectComment(Long catalogueId) {
+        // 原始评论
+        List<CommentInfoView> commentInfoViews = clazzMapper.selectParentCommentByCondition(catalogueId);
+        // 添加子评论
+        addChildren(commentInfoViews);
+
+        return commentInfoViews;
+    }
+
+    public void addChildren(List<CommentInfoView> parentComment) {
+        for (CommentInfoView item : parentComment) {
+            Long parentCommentId = item.getCommentId();
+            if (clazzMapper.countComment(parentCommentId) == 0) break;
+            else {
+                List<CommentInfoView> childrenComment = clazzMapper.selectChildrenCommentByCondition(parentCommentId);
+
+                item.setChildren(childrenComment);
+            }
+        }
+    }
+
+    /**
+     * 删除评论
+     *
+     * @param commentId
+     */
+    public void deleteComment(Long commentId) {
+        clazzMapper.deleteCommentByCondition(commentId);
     }
 }
