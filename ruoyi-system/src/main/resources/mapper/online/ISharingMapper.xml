@@ -58,11 +58,11 @@
         <where>sharing_id = #{sharingId}</where>
     </update>
 
-    <delete id="deleteSharingByCondition" parameterType="java.lang.Long">
-        DELETE
-        FROM ms_knowledge_sharing
+    <update id="deleteSharingByCondition" parameterType="java.lang.Long">
+        UPDATE ms_knowledge_sharing
+        <set>del_flag = 2</set>
         <where>sharing_id = #{sharingId}</where>
-    </delete>
+    </update>
 
     <update id="unReleaseSharing" parameterType="java.lang.Long">
         UPDATE ms_knowledge_sharing

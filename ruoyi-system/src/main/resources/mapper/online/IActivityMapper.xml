@@ -8,7 +8,7 @@
         FROM ms_activity
     </select>
 
-    <select id="checkRelease" resultType="java.lang.Long">
+    <select id="checkRelease" parameterType="java.lang.Long" resultType="java.lang.Long">
         SELECT is_release
         FROM ms_activity
         <where>activity_id = #{activityId}</where>
@@ -25,6 +25,7 @@
         FROM ms_activity
         WHERE activity_title LIKE CONCAT('%', #{activityTitle}, '%')
           AND is_release = #{isRelease}
+          AND del_flag = 0
     </select>
 
     <insert id="insertActivityByCondition" parameterType="com.ruoyi.system.domain.entity.BActivityEntity">
@@ -56,13 +57,13 @@
         <where>activity_id = #{activityId}</where>
     </update>
 
-    <delete id="deleteActivityByCondition" parameterType="java.lang.Long">
-        DELETE
-        FROM ms_activity
+    <update id="deleteActivityByCondition" parameterType="java.lang.Long">
+        UPDATE ms_activity
+        <set>del_flag = 2</set>
         <where>activity_id = #{activityId}</where>
-    </delete>
+    </update>
 
-    <update id="unReleaseActivity">
+    <update id="unReleaseActivity" parameterType="java.lang.Long">
         UPDATE ms_activity
         <set>is_release = 0</set>
         <where>activity_id = #{activityId}</where>

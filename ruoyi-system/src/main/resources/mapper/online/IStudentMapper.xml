@@ -17,7 +17,7 @@
     <select id="selectClazzName" parameterType="java.lang.Long" resultType="java.lang.String">
         SELECT class_name
         FROM ms_class
-        WHERE class_id = #{clazzId}
+        <where>class_id = #{clazzId}</where>
     </select>
 
     <select id="countEmployment" resultType="java.lang.Long">
@@ -28,21 +28,21 @@
     <select id="selectStudent" parameterType="com.ruoyi.system.domain.entity.BStudentEntity"
             resultType="com.ruoyi.system.domain.view.StudentInfoView">
         SELECT su.nick_name,
-               su.user_name,
-               mc.class_name,
-               ms.birthday,
-               ms.grade,
-               ms.school,
-               ms.major,
-               ms.direction,
-               ms.graduation,
-               ms.worked,
-               ms.remark
+        su.user_name,
+        mc.class_name,
+        ms.birthday,
+        ms.grade,
+        ms.school,
+        ms.major,
+        ms.direction,
+        ms.graduation,
+        ms.worked,
+        ms.remark
         FROM ms_student AS ms
-                 LEFT JOIN sys_user AS su ON ms.user_id = su.user_id
-                 LEFT JOIN ms_student_class msc ON ms.user_id = msc.user_id
-                 LEFT JOIN ms_class mc on ms.class_id = mc.class_id
-        WHERE su.del_flag = 0
+        LEFT JOIN sys_user AS su ON ms.user_id = su.user_id
+        LEFT JOIN ms_student_class msc ON ms.user_id = msc.user_id
+        LEFT JOIN ms_class mc on ms.class_id = mc.class_id
+        <where>su.del_flag = 0</where>
     </select>
 
     <select id="queryStudentByCondition" parameterType="com.ruoyi.system.domain.vo.student.StudentSearchVo"
@@ -159,9 +159,11 @@
             resultType="com.ruoyi.system.domain.view.EmploymentInfoView">
         SELECT su.nick_name, mei.city, mei.company, mei.salary, mei.position, mei.remark
         FROM sys_user AS su,
-             ms_employment_info AS mei
-        WHERE su.user_id = #{userId}
-          AND mei.user_id = #{userId}
+        ms_employment_info AS mei
+        <where>
+            su.user_id = #{userId},
+            mei.user_id = #{userId}
+        </where>
     </select>
 
     <update id="updateEmployment" parameterType="com.ruoyi.system.domain.vo.student.EmploymentUpdateVo">

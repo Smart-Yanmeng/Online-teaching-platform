@@ -15,7 +15,7 @@
         <where>complaint_id = #{complaintId}</where>
     </update>
 
-    <update id="updateComplaint">
+    <update id="updateComplaint" parameterType="java.lang.Long">
         UPDATE ms_complaint
         <set>remark = #{remark}</set>
         <where>complaint_id = #{complaintId}</where>

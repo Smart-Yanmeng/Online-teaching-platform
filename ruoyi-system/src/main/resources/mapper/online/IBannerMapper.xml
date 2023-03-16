@@ -28,6 +28,7 @@
         FROM ms_banner
         WHERE banner_title LIKE CONCAT('%', #{bannerTitle}, '%')
           AND is_release = #{isRelease}
+          AND del_flag = 0
         ORDER BY banner_sort ASC
     </select>
 
@@ -54,18 +55,18 @@
     </update>
 
     <delete id="deleteBannerByCondition" parameterType="java.lang.Long">
-        DELETE
-        FROM ms_banner
+        UPDATE ms_banner
+        <set>del_flag = 2</set>
         <where>banner_id = #{bannerId}</where>
     </delete>
 
-    <update id="unReleaseBanner">
+    <update id="unReleaseBanner" parameterType="java.lang.Long">
         UPDATE ms_banner
         <set>is_release = 0</set>
         <where>banner_id = #{bannerId}</where>
     </update>
 
-    <update id="releaseBanner">
+    <update id="releaseBanner" parameterType="java.lang.Long">
         UPDATE ms_banner
         <set>is_release = 1</set>
         <where>banner_id = #{bannerId}</where>

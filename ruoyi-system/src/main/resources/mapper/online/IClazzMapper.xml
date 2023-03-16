@@ -21,23 +21,23 @@
     <select id="countComment" parameterType="java.lang.Long" resultType="java.lang.Long">
         SELECT COUNT(*)
         FROM ms_comment
-        WHERE parent_id = #{commentId}
+        <where>parent_id = #{commentId}</where>
     </select>
 
     <select id="selectClazz" resultType="com.ruoyi.system.domain.view.ClazzInfoView">
         SELECT mc.class_cover,
-               tn.nick_name AS teacher_name,
-               hn.nick_name AS headmaster_name,
-               mc.class_name,
-               mc.class_type,
-               mc.start_time,
-               mc.finish_time,
-               mc.finish,
-               mc.remark
+        tn.nick_name AS teacher_name,
+        hn.nick_name AS headmaster_name,
+        mc.class_name,
+        mc.class_type,
+        mc.start_time,
+        mc.finish_time,
+        mc.finish,
+        mc.remark
         FROM ms_class mc
-                 LEFT JOIN sys_user tn ON mc.teacher_id = tn.user_id
-                 LEFT JOIN sys_user hn ON mc.headmaster_id = hn.user_id
-        WHERE mc.del_flag = 0
+        LEFT JOIN sys_user tn ON mc.teacher_id = tn.user_id
+        LEFT JOIN sys_user hn ON mc.headmaster_id = hn.user_id
+        <where>mc.del_flag = 0</where>
     </select>
 
     <select id="queryClazzListByCondition" parameterType="com.ruoyi.system.domain.vo.clazz.ClazzSearchVo"
@@ -69,57 +69,32 @@
             <if test="startTime != null and startTime != ''">AND start_time = #{startTime}</if>
             <if test="finishTime != null and finishTime != ''">AND finish_time = #{finishTime}</if>
             <if test="finish != null and finish != ''">AND finish = #{finish}</if>
+            AND del_flag = 0
         </where>
     </select>
 
     <insert id="insertClazzByCondition" parameterType="com.ruoyi.system.domain.vo.clazz.ClazzAddVo">
-        INSERT INTO ms_class(class_id,
-                             teacher_id,
-                             headmaster_id,
-                             class_name,
-                             class_cover,
-                             class_type,
-                             start_time,
-                             finish_time,
-                             finish,
-                             del_flag,
-                             create_by,
-                             create_time,
-                             update_by,
-                             update_time,
-                             remark)
-        VALUES (#{clazzId},
-                #{teacherId},
-                #{headmasterId},
-                #{clazzName},
-                #{clazzCover},
-                #{clazzType},
-                #{startTime},
-                #{finishTime},
-                #{finish},
-                #{delFlag},
-                #{createBy},
-                #{createTime},
-                #{updateBy},
-                #{updateTime},
-                #{remark})
+        INSERT INTO ms_class(class_id, teacher_id, headmaster_id, class_name, class_cover, class_type, start_time,
+                             finish_time, finish, del_flag, create_by, create_time, update_by, update_time, remark)
+        VALUES (#{clazzId}, #{teacherId}, #{headmasterId}, #{clazzName}, #{clazzCover}, #{clazzType}, #{startTime},
+                #{finishTime}, #{finish}, #{delFlag}, #{createBy}, #{createTime}, #{updateBy}, #{updateTime}, #{remark})
     </insert>
 
     <select id="queryClazzByCondition" parameterType="java.lang.Long"
             resultType="com.ruoyi.system.domain.view.ClazzInfoView">
         SELECT mc.class_cover AS clazz_cover,
-               tn.nick_name   AS teacher_name,
-               hn.nick_name   AS headmaster_name,
-               mc.class_name  AS clazz_name,
-               mc.class_type  AS clazz_type,
-               mc.start_time,
-               mc.finish_time,
-               mc.finish,
-               mc.remark
+        tn.nick_name AS teacher_name,
+        hn.nick_name AS headmaster_name,
+        mc.class_name AS clazz_name,
+        mc.class_type AS clazz_type,
+        mc.start_time,
+        mc.finish_time,
+        mc.finish,
+        mc.remark
         FROM ms_class mc
-                 LEFT JOIN sys_user tn ON mc.teacher_id = tn.user_id
-                 LEFT JOIN sys_user hn ON mc.headmaster_id = hn.user_id
-        WHERE mc.class_id = #{clazzId}
+        LEFT JOIN sys_user tn ON mc.teacher_id = tn.user_id
+        LEFT JOIN sys_user hn ON mc.headmaster_id = hn.user_id
+        <where>mc.class_id = #{clazzId}</where>
     </select>
 
     <update id="updateClazzByCondition" parameterType="com.ruoyi.system.domain.entity.BClazzEntity">
@@ -224,7 +199,8 @@
             resultType="com.ruoyi.system.domain.view.TaskSubmitInfoView">
         SELECT su.nick_name, mts.file_name, mts.pass, mts.comment
         FROM ms_task_submit mts
-                 LEFT JOIN sys_user su ON mts.user_id = su.user_id
+        LEFT JOIN sys_user su ON mts.user_id = su.user_id
+        <where>mts.del_flag = 0</where>
     </select>
 
     <select id="selectTaskFileUrlByCondition" parameterType="java.lang.Long" resultType="java.lang.String">
@@ -243,24 +219,28 @@
             resultType="com.ruoyi.system.domain.view.CommentInfoView">
         SELECT mc.comment_id, su.user_name, su.nick_name, mc.comment_content, mc.create_time
         FROM ms_comment mc
-                 LEFT JOIN sys_user su ON mc.user_id = su.user_id
-        WHERE catalogue_id = #{catalogueId}
-          AND comment_id = ancestry_id
-          AND mc.del_flag = 0
+        LEFT JOIN sys_user su ON mc.user_id = su.user_id
+        <where>
+            catalogue_id = #{catalogueId},
+            comment_id = ancestry_id,
+            mc.del_flag = 0
+        </where>
     </select>
 
     <select id="selectChildrenCommentByCondition" parameterType="java.lang.Long"
             resultType="com.ruoyi.system.domain.view.CommentInfoView">
         SELECT mc.comment_id, su.user_name, su.nick_name, mc.comment_content, mc.create_time
         FROM ms_comment mc
-                 LEFT JOIN sys_user su ON mc.user_id = su.user_id
-        WHERE parent_id = #{commentId}
-          AND mc.del_flag = 0
+        LEFT JOIN sys_user su ON mc.user_id = su.user_id
+        <where>
+            parent_id = #{commentId},
+            mc.del_flag = 0
+        </where>
     </select>
 
     <update id="deleteCommentByCondition" parameterType="java.lang.Long">
         UPDATE ms_comment
-        SET del_flag = 2
-        WHERE comment_id = #{commentId}
+        <set>del_flag = 2</set>
+        <where>comment_id = #{commentId}</where>
     </update>
 </mapper>
