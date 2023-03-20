@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -17,7 +18,7 @@ import java.util.List;
 @RequestMapping("/homePageManage/clazz")
 @Api(tags = "Clazz")
 public class BClazzController {
-    @Autowired
+    @Resource
     ClazzService clazzService;
 
     @ApiOperation("刷新班级列表")

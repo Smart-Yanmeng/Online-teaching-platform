@@ -10,12 +10,13 @@ import com.ruoyi.system.mapper.online.IActivityMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class ActivityService {
-    @Autowired
+    @Resource
     IActivityMapper activityMapper;
 
     // 刷新 - 重置活动信息

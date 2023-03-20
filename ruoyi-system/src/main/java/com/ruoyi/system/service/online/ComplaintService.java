@@ -6,11 +6,12 @@ import com.ruoyi.system.mapper.online.IComplaintMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 @Service
 public class ComplaintService {
-    @Autowired
+    @Resource
     IComplaintMapper complaintMapper;
 
     public List<ComplaintInfoView> selectComplaintList() {

@@ -11,13 +11,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 @RestController
 @RequestMapping("/homePageManage/complaint")
 @Api(tags = "Complaint")
 public class BComplaintController {
-    @Autowired
+    @Resource
     private ComplaintService complaintService;
 
     @ApiOperation("刷新投诉列表")

@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -22,7 +23,7 @@ import java.util.List;
 @RequestMapping("/homePageManage/student")
 @Api(tags = "Student")
 public class BStudentController {
-    @Autowired
+    @Resource
     StudentService studentService;
 
     @ApiOperation("刷新学生列表")

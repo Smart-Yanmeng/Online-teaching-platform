@@ -10,12 +10,13 @@ import com.ruoyi.system.mapper.online.ISharingMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class SharingService {
-    @Autowired
+    @Resource
     ISharingMapper sharingMapper;
 
     // 刷新 - 重置分享信息

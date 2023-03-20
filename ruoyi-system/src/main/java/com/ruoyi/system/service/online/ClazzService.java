@@ -9,6 +9,7 @@ import com.ruoyi.system.mapper.online.IClazzMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -17,7 +18,7 @@ import java.util.List;
 
 @Service
 public class ClazzService {
-    @Autowired
+    @Resource
     IClazzMapper clazzMapper;
 
     /**

@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -20,16 +21,16 @@ import java.util.List;
 @RequestMapping("/homePageManage/banner")
 @Api(tags = "Banner")
 public class BBannerController {
-    @Autowired
+    @Resource
     private BannerService bannerService;
 
     @ApiOperation("刷新轮播图列表")
     @GetMapping()
     public ResultView<List<BannerInfoView>> bannerInfoList(@RequestParam @Valid Integer pageNum,
                                                            @RequestParam @Valid Integer pageSize) {
-        List<BannerInfoView> bannerInfoViews = bannerService.selectBannerList();
-
         PageHelper.startPage(pageNum, pageSize);
+
+        List<BannerInfoView> bannerInfoViews = bannerService.selectBannerList();
         ResultView<List<BannerInfoView>> resultView = new ResultView<>();
         resultView.setData(bannerInfoViews);
 
