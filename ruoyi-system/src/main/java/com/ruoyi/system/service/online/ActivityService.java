@@ -7,7 +7,6 @@ import com.ruoyi.system.domain.vo.activity.ActivityAddVo;
 import com.ruoyi.system.domain.vo.activity.ActivitySearchVo;
 import com.ruoyi.system.domain.vo.activity.ActivityUpdateVo;
 import com.ruoyi.system.mapper.online.IActivityMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -33,7 +32,7 @@ public class ActivityService {
         return activityEntities.stream().map(item -> new ActivityInfoView().transfer(item)).collect(Collectors.toList());
     }
 
-    // 插入活动
+    // 插入活动。
     public void insertActivity(ActivityAddVo activityAddVo) {
         BActivityEntity activityEntity = new BActivityEntity();
         activityEntity = activityAddVo.transfer(activityEntity);
