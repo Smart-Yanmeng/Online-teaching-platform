@@ -57,7 +57,7 @@
         <where>activity_id = #{activityId}</where>
     </update>
 
-    <update id="deleteActivityByCondition" parameterType="java.lang.Long">
+    <update id="patchActivityByCondition" parameterType="java.lang.Long">
         UPDATE ms_activity
         <set>del_flag = 2</set>
         <where>activity_id = #{activityId}</where>

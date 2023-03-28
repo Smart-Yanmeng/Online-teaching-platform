@@ -7,7 +7,6 @@ import com.ruoyi.system.domain.vo.banner.BannerUpdateVo;
 import com.ruoyi.system.mapper.online.IBannerMapper;
 import com.ruoyi.system.domain.entity.BBannerEntity;
 import com.ruoyi.system.domain.view.BannerInfoView;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -73,8 +72,8 @@ public class BannerService {
      *
      * @param bannerId
      */
-    public void deleteBanner(Long bannerId) {
-        bannerMapper.deleteBannerByCondition(bannerId);
+    public void patchBanner(Long bannerId) {
+        bannerMapper.patchBannerByCondition(bannerId);
     }
 
     public void releaseBanner(Long bannerId) {

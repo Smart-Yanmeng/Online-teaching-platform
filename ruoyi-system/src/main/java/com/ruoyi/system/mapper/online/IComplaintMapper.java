@@ -8,7 +8,7 @@ import java.util.List;
 public interface IComplaintMapper {
     List<ComplaintInfoView> selectComplaint();
 
-    void deleteComplaintByCondition(Long complaintId);
+    void patchComplaintByCondition(Long complaintId);
 
     void updateComplaint(ComplaintUpdateVo complaintUpdateVo);
 }

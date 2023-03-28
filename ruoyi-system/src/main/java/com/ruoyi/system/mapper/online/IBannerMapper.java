@@ -21,7 +21,7 @@ public interface IBannerMapper {
 
     void updateBannerByCondition(BannerUpdateVo bannerUpdateVo);
 
-    void deleteBannerByCondition(Long bannerId);
+    void patchBannerByCondition(Long bannerId);
 
     void unReleaseBanner(Long bannerId);
 

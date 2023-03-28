@@ -78,9 +78,9 @@ public class BStudentController {
     }
 
     @ApiOperation("删除学生")
-    @DeleteMapping("/delete/{userId}")
+    @PatchMapping("/{userId}")
     public ResultView<Object> studentDelete(@PathVariable Long userId) {
-        studentService.deleteStudent(userId);
+        studentService.patchStudent(userId);
 
         return new ResultView<>();
     }

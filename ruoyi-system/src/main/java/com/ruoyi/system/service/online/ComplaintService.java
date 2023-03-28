@@ -3,7 +3,6 @@ package com.ruoyi.system.service.online;
 import com.ruoyi.system.domain.view.ComplaintInfoView;
 import com.ruoyi.system.domain.vo.complaint.ComplaintUpdateVo;
 import com.ruoyi.system.mapper.online.IComplaintMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -20,14 +19,14 @@ public class ComplaintService {
         return complaintInfoViews;
     }
 
-    public void deleteComplaintAll(Long[] complaintArr) {
+    public void patchComplaintAll(Long[] complaintArr) {
         for (Long item : complaintArr) {
-            complaintMapper.deleteComplaintByCondition(item);
+            complaintMapper.patchComplaintByCondition(item);
         }
     }
 
     public void deleteComplaint(Long complaintId) {
-        complaintMapper.deleteComplaintByCondition(complaintId);
+        complaintMapper.patchComplaintByCondition(complaintId);
     }
 
     public void updateComplaint(ComplaintUpdateVo complaintUpdateVo) {

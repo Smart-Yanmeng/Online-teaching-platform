@@ -67,7 +67,7 @@ public class BActivityController {
     public ResultView<Object> bannerAdd(@RequestBody ActivityAddVo activityAddVo) {
         activityService.insertActivity(activityAddVo);
 
-        return new ResultView<>();
+        return ResultView.success("查询成功");
     }
 
     @ApiOperation("修改活动")
@@ -80,10 +80,10 @@ public class BActivityController {
     }
 
     @ApiOperation("删除活动")
-    @DeleteMapping("/delete/{activityId}")
+    @PatchMapping("/{activityId}")
     @Transactional(rollbackFor = Exception.class)
-    public ResultView<Object> activityDelete(@PathVariable Long activityId) {
-        activityService.deleteActivity(activityId);
+    public ResultView<Object> activityPatch(@PathVariable Long activityId) {
+        activityService.patchActivity(activityId);
 
         return new ResultView<>();
     }

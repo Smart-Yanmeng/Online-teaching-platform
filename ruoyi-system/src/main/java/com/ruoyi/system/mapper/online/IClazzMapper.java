@@ -33,7 +33,7 @@ public interface IClazzMapper {
 
     void updateClazzByCondition(BClazzEntity clazzEntity);
 
-    void deleteClazzByCondition(Long clazzId);
+    void patchClazzByCondition(Long clazzId);
 
     List<ClazzDetailInfoView> selectChapterByCondition(Long clazzId);
 

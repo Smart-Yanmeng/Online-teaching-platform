@@ -33,15 +33,15 @@ public class BComplaintController {
     }
 
     @ApiOperation("批量删除投诉")
-    @DeleteMapping("/delete")
-    public ResultView<Object> complaintDeleteAll(@RequestParam Long[] complaintIdArr) {
-        complaintService.deleteComplaintAll(complaintIdArr);
+    @PatchMapping
+    public ResultView<Object> complaintPatchAll(@RequestParam Long[] complaintIdArr) {
+        complaintService.patchComplaintAll(complaintIdArr);
 
         return new ResultView<>();
     }
 
     @ApiOperation("删除投诉")
-    @DeleteMapping("/delete/{complaintId}")
+    @PatchMapping("/{complaintId}")
     @Transactional(rollbackFor = Exception.class)
     public ResultView<Object> complaintDelete(@PathVariable Long complaintId) {
         complaintService.deleteComplaint(complaintId);

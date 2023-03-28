@@ -54,7 +54,7 @@
         <where>banner_id = #{bannerId}</where>
     </update>
 
-    <delete id="deleteBannerByCondition" parameterType="java.lang.Long">
+    <delete id="patchBannerByCondition" parameterType="java.lang.Long">
         UPDATE ms_banner
         <set>del_flag = 2</set>
         <where>banner_id = #{bannerId}</where>

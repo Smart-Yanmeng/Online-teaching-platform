@@ -6,7 +6,6 @@ import com.ruoyi.system.domain.entity.BClazzEntity;
 import com.ruoyi.system.domain.view.*;
 import com.ruoyi.system.domain.vo.clazz.*;
 import com.ruoyi.system.mapper.online.IClazzMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -89,8 +88,8 @@ public class ClazzService {
      *
      * @param clazzId
      */
-    public void deleteClazz(Long clazzId) {
-        clazzMapper.deleteClazzByCondition(clazzId);
+    public void patchClazz(Long clazzId) {
+        clazzMapper.patchClazzByCondition(clazzId);
     }
 
     /**
@@ -100,7 +99,7 @@ public class ClazzService {
      */
     public void deleteClazzAll(Long[] clazzIdArr) {
         for (Long item : clazzIdArr) {
-            clazzMapper.deleteClazzByCondition(item);
+            clazzMapper.patchClazzByCondition(item);
         }
     }
 

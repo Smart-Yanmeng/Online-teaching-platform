@@ -22,7 +22,7 @@ public interface ISharingMapper {
 
     void updateSharingByCondition(SharingUpdateVo sharingUpdateVo);
 
-    void deleteSharingByCondition(Long sharingId);
+    void patchSharingByCondition(Long sharingId);
 
     void unReleaseSharing(Long sharingId);
 

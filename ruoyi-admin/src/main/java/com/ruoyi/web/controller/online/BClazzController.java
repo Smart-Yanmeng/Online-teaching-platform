@@ -101,10 +101,10 @@ public class BClazzController {
     }
 
     @ApiOperation("删除班级")
-    @DeleteMapping("/delete/{clazzId}")
+    @PatchMapping("/{clazzId}")
     @Transactional(rollbackFor = Exception.class)
-    public ResultView<Object> clazzDelete(@PathVariable Long clazzId) {
-        clazzService.deleteClazz(clazzId);
+    public ResultView<Object> clazzPatch(@PathVariable Long clazzId) {
+        clazzService.patchClazz(clazzId);
 
         return new ResultView<>();
     }

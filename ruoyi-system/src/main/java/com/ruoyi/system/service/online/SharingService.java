@@ -7,7 +7,6 @@ import com.ruoyi.system.domain.vo.sharing.SharingAddVo;
 import com.ruoyi.system.domain.vo.sharing.SharingSearchVo;
 import com.ruoyi.system.domain.vo.sharing.SharingUpdateVo;
 import com.ruoyi.system.mapper.online.ISharingMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -52,8 +51,8 @@ public class SharingService {
     }
 
     // 删除数据
-    public void deleteSharing(Long sharingId) {
-        sharingMapper.deleteSharingByCondition(sharingId);
+    public void patchSharing(Long sharingId) {
+        sharingMapper.patchSharingByCondition(sharingId);
     }
 
     // 发布数据

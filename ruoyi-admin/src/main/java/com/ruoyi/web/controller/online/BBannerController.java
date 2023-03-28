@@ -81,10 +81,10 @@ public class BBannerController {
     }
 
     @ApiOperation("删除轮播图")
-    @DeleteMapping("/delete/{bannerId}")
+    @PatchMapping("/{bannerId}")
     @Transactional(rollbackFor = Exception.class)
-    public ResultView<Object> bannerDelete(@PathVariable Long bannerId) {
-        bannerService.deleteBanner(bannerId);
+    public ResultView<Object> bannerPatch(@PathVariable Long bannerId) {
+        bannerService.patchBanner(bannerId);
 
         return new ResultView<>();
     }

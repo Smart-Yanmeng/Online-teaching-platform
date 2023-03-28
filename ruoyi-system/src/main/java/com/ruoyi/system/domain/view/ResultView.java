@@ -21,6 +21,14 @@ public class ResultView<T> {
         return view;
     }
 
+    public static ResultView success(String msg) {
+        ResultView view = new ResultView();
+        view.setCode(200);
+        view.setMsg(msg);
+        
+        return view;
+    }
+
     public static ResultView fail(String msg) {
         ResultView view = new ResultView();
         view.setCode(500);

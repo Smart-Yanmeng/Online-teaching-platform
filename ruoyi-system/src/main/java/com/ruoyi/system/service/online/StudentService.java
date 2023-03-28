@@ -9,7 +9,6 @@ import com.ruoyi.system.domain.view.EmploymentInfoView;
 import com.ruoyi.system.domain.view.StudentInfoView;
 import com.ruoyi.system.domain.vo.student.*;
 import com.ruoyi.system.mapper.online.IStudentMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -137,7 +136,7 @@ public class StudentService {
      *
      * @param userId
      */
-    public void deleteStudent(Long userId) {
+    public void patchStudent(Long userId) {
         // 移出学生
         studentMapper.moveOutStudent(userId);
 

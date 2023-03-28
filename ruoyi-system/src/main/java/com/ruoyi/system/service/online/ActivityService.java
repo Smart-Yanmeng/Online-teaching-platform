@@ -32,7 +32,7 @@ public class ActivityService {
         return activityEntities.stream().map(item -> new ActivityInfoView().transfer(item)).collect(Collectors.toList());
     }
 
-    // 插入活动。
+    // 插入活动
     public void insertActivity(ActivityAddVo activityAddVo) {
         BActivityEntity activityEntity = new BActivityEntity();
         activityEntity = activityAddVo.transfer(activityEntity);
@@ -51,8 +51,8 @@ public class ActivityService {
     }
 
     // 删除数据
-    public void deleteActivity(Long activityId) {
-        activityMapper.deleteActivityByCondition(activityId);
+    public void patchActivity(Long activityId) {
+        activityMapper.patchActivityByCondition(activityId);
     }
 
     public void releaseActivity(Long activityId) {

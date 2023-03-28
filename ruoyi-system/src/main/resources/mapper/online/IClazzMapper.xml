@@ -114,7 +114,7 @@
         <where>class_id = #{clazzId}</where>
     </update>
 
-    <update id="deleteClazzByCondition" parameterType="java.lang.Long">
+    <update id="patchClazzByCondition" parameterType="java.lang.Long">
         UPDATE ms_class
         <set>del_flag = 2</set>
         <where>class_id = #{clazzId}</where>

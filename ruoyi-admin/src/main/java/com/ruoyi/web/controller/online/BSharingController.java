@@ -86,10 +86,10 @@ public class BSharingController {
     }
 
     @ApiOperation("删除分享")
-    @DeleteMapping("/delete/{sharingId}")
+    @PatchMapping("/{sharingId}")
     @Transactional(rollbackFor = Exception.class)
-    public ResultView<Object> sharingDelete(@PathVariable Long sharingId) {
-        sharingService.deleteSharing(sharingId);
+    public ResultView<Object> sharingPatch(@PathVariable Long sharingId) {
+        sharingService.patchSharing(sharingId);
 
         return new ResultView<>();
     }

@@ -21,7 +21,7 @@ public interface IActivityMapper {
 
     void updateActivityByCondition(ActivityUpdateVo activityUpdateVo);
 
-    void deleteActivityByCondition(Long activityId);
+    void patchActivityByCondition(Long activityId);
 
     void unReleaseActivity(Long activityId);
 
