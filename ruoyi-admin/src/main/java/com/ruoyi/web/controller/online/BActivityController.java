@@ -9,7 +9,6 @@ import com.ruoyi.system.domain.vo.activity.ActivityUpdateVo;
 import com.ruoyi.system.service.online.ActivityService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
