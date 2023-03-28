@@ -55,8 +55,18 @@ public class ActivityService {
         activityMapper.patchActivityByCondition(activityId);
     }
 
-    public void releaseActivity(Long activityId) {
-        if (activityMapper.checkRelease(activityId) == 1) activityMapper.unReleaseActivity(activityId);
-        else activityMapper.releaseBanner(activityId);
+    /**
+     * 发布 / 取消发布活动
+     *
+     * @param activityId
+     */
+    public boolean releaseActivity(Long activityId) {
+        if (activityMapper.checkRelease(activityId) == 1) {
+            activityMapper.unReleaseActivity(activityId);
+            return false;
+        } else {
+            activityMapper.releaseBanner(activityId);
+            return true;
+        }
     }
 }

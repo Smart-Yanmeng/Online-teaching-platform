@@ -18,21 +18,34 @@ public class SharingService {
     @Resource
     ISharingMapper sharingMapper;
 
-    // 刷新 - 重置分享信息
+    /**
+     * 刷新 - 重置分享
+     *
+     * @return
+     */
     public List<SharingInfoView> selectSharingList() {
         List<BSharingEntity> sharingEntities = sharingMapper.selectSharing();
 
         return sharingEntities.stream().map(item -> new SharingInfoView().transfer(item)).collect(Collectors.toList());
     }
 
-    // 查询分享
+    /**
+     * 查询分享
+     *
+     * @param sharingSearchVo
+     * @return
+     */
     public List<SharingInfoView> querySharingList(SharingSearchVo sharingSearchVo) {
         List<BSharingEntity> sharingEntities = sharingMapper.querySharingByCondition(sharingSearchVo);
 
         return sharingEntities.stream().map(item -> new SharingInfoView().transfer(item)).collect(Collectors.toList());
     }
 
-    // 插入数据
+    /**
+     * 新增分享
+     *
+     * @param sharingAddVo
+     */
     public void insertSharing(SharingAddVo sharingAddVo) {
         BSharingEntity sharingEntity = new BSharingEntity();
         sharingEntity = sharingAddVo.transfer(sharingEntity);
@@ -41,7 +54,22 @@ public class SharingService {
         sharingMapper.insertSharingByCondition(sharingEntity);
     }
 
-    // 修改数据
+    /**
+     * 批量删除分享
+     *
+     * @param sharingIdArr
+     */
+    public void patchSharingAll(Long[] sharingIdArr) {
+        for (Long item : sharingIdArr) {
+            sharingMapper.patchSharingByCondition(item);
+        }
+    }
+
+    /**
+     * 修改分享
+     *
+     * @param sharingUpdateVo
+     */
     public void updateSharing(SharingUpdateVo sharingUpdateVo) {
 //        sharingUpdateVo.setUpdateBy(SecurityUtils.getUsername());
         sharingUpdateVo.setUpdateBy("admin");
@@ -50,14 +78,27 @@ public class SharingService {
         sharingMapper.updateSharingByCondition(sharingUpdateVo);
     }
 
-    // 删除数据
+    /**
+     * 删除分享
+     *
+     * @param sharingId
+     */
     public void patchSharing(Long sharingId) {
         sharingMapper.patchSharingByCondition(sharingId);
     }
 
-    // 发布数据
-    public void releaseSharing(Long sharingId) {
-        if (sharingMapper.checkRelease(sharingId) == 1) sharingMapper.unReleaseSharing(sharingId);
-        else sharingMapper.releaseSharing(sharingId);
+    /**
+     * 发布分享
+     *
+     * @param sharingId
+     */
+    public Boolean releaseSharing(Long sharingId) {
+        if (sharingMapper.checkRelease(sharingId) == 1) {
+            sharingMapper.unReleaseSharing(sharingId);
+            return false;
+        } else {
+            sharingMapper.releaseSharing(sharingId);
+            return true;
+        }
     }
 }

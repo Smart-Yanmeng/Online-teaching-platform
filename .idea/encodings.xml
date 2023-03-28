@@ -1,20 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
-    <file url="file://$PROJECT_DIR$/Online-teaching-platform/ruoyi-admin/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/Online-teaching-platform/ruoyi-admin/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/Online-teaching-platform/ruoyi-common/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/Online-teaching-platform/ruoyi-common/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/Online-teaching-platform/ruoyi-framework/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/Online-teaching-platform/ruoyi-framework/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/Online-teaching-platform/ruoyi-generator/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/Online-teaching-platform/ruoyi-generator/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/Online-teaching-platform/ruoyi-quartz/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/Online-teaching-platform/ruoyi-quartz/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/Online-teaching-platform/ruoyi-system/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/Online-teaching-platform/ruoyi-system/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/Online-teaching-platform/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/Online-teaching-platform/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ruoyi-admin/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ruoyi-admin/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ruoyi-common/src/main/java" charset="UTF-8" />

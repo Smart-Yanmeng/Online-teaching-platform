@@ -68,6 +68,17 @@ public class BannerService {
     }
 
     /**
+     * 批量删除轮播图
+     *
+     * @param bannerIdArr
+     */
+    public void patchBannerAll(Long[] bannerIdArr) {
+        for (Long item : bannerIdArr) {
+            bannerMapper.patchBannerByCondition(item);
+        }
+    }
+
+    /**
      * 删除轮播图
      *
      * @param bannerId
@@ -76,8 +87,13 @@ public class BannerService {
         bannerMapper.patchBannerByCondition(bannerId);
     }
 
-    public void releaseBanner(Long bannerId) {
-        if (bannerMapper.checkRelease(bannerId) == 1) bannerMapper.unReleaseBanner(bannerId);
-        else bannerMapper.releaseBanner(bannerId);
+    public Boolean releaseBanner(Long bannerId) {
+        if (bannerMapper.checkRelease(bannerId) == 1) {
+            bannerMapper.unReleaseBanner(bannerId);
+            return false;
+        } else {
+            bannerMapper.releaseBanner(bannerId);
+            return true;
+        }
     }
 }

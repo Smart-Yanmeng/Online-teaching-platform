@@ -97,7 +97,7 @@ public class ClazzService {
      *
      * @param clazzIdArr
      */
-    public void deleteClazzAll(Long[] clazzIdArr) {
+    public void patchClazzAll(Long[] clazzIdArr) {
         for (Long item : clazzIdArr) {
             clazzMapper.patchClazzByCondition(item);
         }
@@ -188,8 +188,8 @@ public class ClazzService {
      *
      * @param catalogueId
      */
-    public void deleteCatalogue(Long catalogueId) {
-        clazzMapper.deleteCatalogueByCondition(catalogueId);
+    public void patchCatalogue(Long catalogueId) {
+        clazzMapper.patchCatalogueByCondition(catalogueId);
     }
 
     /**
@@ -287,7 +287,7 @@ public class ClazzService {
      *
      * @param commentId
      */
-    public void deleteComment(Long commentId) {
-        clazzMapper.deleteCommentByCondition(commentId);
+    public void patchComment(Long commentId) {
+        clazzMapper.patchCommentByCondition(commentId);
     }
 }

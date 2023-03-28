@@ -49,7 +49,7 @@ public interface IClazzMapper {
 
     void deleteChapterByCondition(Long chapterId);
 
-    void deleteCatalogueByCondition(Long catalogueId);
+    void patchCatalogueByCondition(Long catalogueId);
 
     void insertTaskByCondition(ClazzCatalogueTaskAddVo clazzCatalogueTaskAddVo);
 
@@ -63,5 +63,5 @@ public interface IClazzMapper {
 
     List<CommentInfoView> selectChildrenCommentByCondition(Long commentId);
 
-    void deleteCommentByCondition(Long commentId);
+    void patchCommentByCondition(Long commentId);
 }

@@ -2,7 +2,7 @@ package com.ruoyi.web.controller.online;
 
 import com.github.pagehelper.PageHelper;
 import com.ruoyi.system.domain.view.EmploymentInfoView;
-import com.ruoyi.system.domain.view.ResultView;
+import com.ruoyi.system.domain.view.common.ResultView;
 import com.ruoyi.system.domain.view.StudentInfoView;
 import com.ruoyi.system.domain.vo.student.EmploymentUpdateVo;
 import com.ruoyi.system.domain.vo.student.StudentAddVo;
@@ -27,45 +27,37 @@ public class BStudentController {
 
     @ApiOperation("刷新学生列表")
     @GetMapping()
-    public ResultView<List<StudentInfoView>> studentInfo(@RequestParam @Valid Integer pageNum, @RequestParam @Valid Integer pageSize) {
+    public ResultView studentInfo(@RequestParam @Valid Integer pageNum, @RequestParam @Valid Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+
         List<StudentInfoView> studentInfoViews = studentService.selectStudentList();
 
-        PageHelper.startPage(pageNum, pageSize);
-        ResultView<List<StudentInfoView>> resultView = new ResultView<>();
-        resultView.setData(studentInfoViews);
-
-        return resultView;
+        return ResultView.querySuccess(studentInfoViews);
     }
 
     @ApiOperation("查询学生")
     @GetMapping("/list")
-    public ResultView<List<StudentInfoView>> studentInfoSearchList(StudentSearchVo studentSearchVo) {
+    public ResultView studentInfoSearchList(StudentSearchVo studentSearchVo) {
         List<StudentInfoView> studentInfoViews = studentService.queryStudentList(studentSearchVo);
 
-        ResultView<List<StudentInfoView>> resultView = new ResultView<>();
-        resultView.setData(studentInfoViews);
-
-        return resultView;
+        return ResultView.querySuccess(studentInfoViews);
     }
 
     @ApiOperation("重置学生列表")
     @GetMapping("/reset")
-    public ResultView<List<StudentInfoView>> studentReset() {
+    public ResultView studentReset() {
         List<StudentInfoView> studentInfoViews = studentService.selectStudentList();
 
-        ResultView<List<StudentInfoView>> resultView = new ResultView<>();
-        resultView.setData(studentInfoViews);
-
-        return resultView;
+        return ResultView.querySuccess(studentInfoViews);
     }
 
     @ApiOperation("新增学生")
     @PostMapping("/add")
     @Transactional(rollbackFor = Exception.class)
-    public ResultView<Object> studentAdd(@RequestBody StudentAddVo studentAddVo) {
+    public ResultView studentAdd(@RequestBody StudentAddVo studentAddVo) {
         studentService.addStudent(studentAddVo);
 
-        return new ResultView<>();
+        return ResultView.insertSuccess(null);
     }
 
     @ApiOperation("修改学生")
@@ -74,35 +66,32 @@ public class BStudentController {
     public ResultView<Object> studentUpdate(@RequestBody StudentUpdateVo studentUpdateVo) {
         studentService.updateStudent(studentUpdateVo);
 
-        return new ResultView<>();
+        return ResultView.updateSuccess(null);
     }
 
     @ApiOperation("删除学生")
     @PatchMapping("/{userId}")
-    public ResultView<Object> studentDelete(@PathVariable Long userId) {
+    public ResultView studentPatch(@PathVariable Long userId) {
         studentService.patchStudent(userId);
 
-        return new ResultView<>();
+        return ResultView.deleteSuccess();
     }
 
     @ApiOperation("刷新就业信息")
     @GetMapping("/list/{userId}")
-    public ResultView<EmploymentInfoView> employmentInfo(@PathVariable Long userId) {
+    public ResultView employmentInfo(@PathVariable Long userId) {
         EmploymentInfoView employmentInfoView = studentService.selectEmploymentInfo(userId);
 
-        ResultView<EmploymentInfoView> resultView = new ResultView<>();
-        resultView.setData(employmentInfoView);
-
-        return resultView;
+        return ResultView.querySuccess(employmentInfoView);
     }
 
     @ApiOperation("修改就业信息")
     @PutMapping("/update/{userId}")
     @Transactional(rollbackFor = Exception.class)
-    public ResultView<Object> employmentUpdate(@PathVariable Long userId, @RequestBody EmploymentUpdateVo employmentUpdateVo) {
+    public ResultView employmentUpdate(@PathVariable Long userId, @RequestBody EmploymentUpdateVo employmentUpdateVo) {
         employmentUpdateVo.setUserId(userId);
         studentService.updateEmployment(employmentUpdateVo);
 
-        return new ResultView<>();
+        return ResultView.updateSuccess(null);
     }
 }

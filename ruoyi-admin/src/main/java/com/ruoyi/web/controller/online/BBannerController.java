@@ -2,7 +2,7 @@ package com.ruoyi.web.controller.online;
 
 import com.github.pagehelper.PageHelper;
 import com.ruoyi.system.domain.view.BannerInfoView;
-import com.ruoyi.system.domain.view.ResultView;
+import com.ruoyi.system.domain.view.common.ResultView;
 import com.ruoyi.system.domain.vo.banner.BannerAddVo;
 import com.ruoyi.system.domain.vo.banner.BannerSearchVo;
 import com.ruoyi.system.domain.vo.banner.BannerUpdateVo;
@@ -25,76 +25,77 @@ public class BBannerController {
 
     @ApiOperation("刷新轮播图列表")
     @GetMapping()
-    public ResultView<List<BannerInfoView>> bannerInfoList(@RequestParam @Valid Integer pageNum,
-                                                           @RequestParam @Valid Integer pageSize) {
+    public ResultView bannerInfoList(@RequestParam @Valid Integer pageNum,
+                                     @RequestParam @Valid Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
-
         List<BannerInfoView> bannerInfoViews = bannerService.selectBannerList();
-        ResultView<List<BannerInfoView>> resultView = new ResultView<>();
-        resultView.setData(bannerInfoViews);
 
-        return resultView;
+        return ResultView.querySuccess(bannerInfoViews);
     }
 
     @ApiOperation("查询轮播图")
     @GetMapping("/list")
-    public ResultView<List<BannerInfoView>> bannerInfoSearchList(@RequestParam("bannerTitle") String bannerTitle,
-                                                                 @RequestParam("isRelease") Long isRelease) {
+    public ResultView bannerInfoSearchList(@RequestParam("bannerTitle") String bannerTitle,
+                                           @RequestParam("isRelease") Long isRelease) {
         BannerSearchVo bannerSearchVo = new BannerSearchVo();
         bannerSearchVo.setBannerTitle(bannerTitle);
         bannerSearchVo.setIsRelease(isRelease);
         List<BannerInfoView> bannerInfoViews = bannerService.queryBannerList(bannerSearchVo);
 
-        ResultView<List<BannerInfoView>> resultView = new ResultView<>();
-        resultView.setData(bannerInfoViews);
-
-        return resultView;
+        return ResultView.querySuccess(bannerInfoViews);
     }
 
     @ApiOperation("重置轮播图列表")
     @GetMapping("/reset")
-    public ResultView<List<BannerInfoView>> bannerReset() {
+    public ResultView bannerReset() {
         List<BannerInfoView> bannerInfoViews = bannerService.selectBannerList();
 
-        ResultView<List<BannerInfoView>> resultView = new ResultView<>();
-        resultView.setData(bannerInfoViews);
-
-        return resultView;
+        return ResultView.querySuccess(bannerInfoViews);
     }
 
     @ApiOperation("新增轮播图")
     @PostMapping("/add")
     @Transactional(rollbackFor = Exception.class)
-    public ResultView<Object> bannerAdd(@RequestBody BannerAddVo bannerAddVo) {
+    public ResultView bannerAdd(@RequestBody BannerAddVo bannerAddVo) {
         bannerService.insertBanner(bannerAddVo);
 
-        return new ResultView<>();
+        return ResultView.insertSuccess(null);
+    }
+
+    @ApiOperation("批量删除轮播图")
+    @PatchMapping
+    @Transactional(rollbackFor = Exception.class)
+    public ResultView patchBannerAll(@RequestParam Long[] bannerIdArr) {
+        bannerService.patchBannerAll(bannerIdArr);
+
+        return ResultView.deleteSuccess();
     }
 
     @ApiOperation("修改轮播图")
     @PutMapping("/update")
     @Transactional(rollbackFor = Exception.class)
-    public ResultView<Object> bannerUpdate(@RequestBody BannerUpdateVo bannerUpdateVo) {
+    public ResultView bannerUpdate(@RequestBody BannerUpdateVo bannerUpdateVo) {
         bannerService.updateBanner(bannerUpdateVo);
 
-        return new ResultView<>();
+        return ResultView.updateSuccess(null);
     }
 
     @ApiOperation("删除轮播图")
     @PatchMapping("/{bannerId}")
     @Transactional(rollbackFor = Exception.class)
-    public ResultView<Object> bannerPatch(@PathVariable Long bannerId) {
+    public ResultView bannerPatch(@PathVariable Long bannerId) {
         bannerService.patchBanner(bannerId);
 
-        return new ResultView<>();
+        return ResultView.deleteSuccess();
     }
 
     @ApiOperation("是否发布")
     @PostMapping("/release")
     @Transactional(rollbackFor = Exception.class)
     public ResultView<Object> bannerIsRelease(@RequestParam @Valid Long bannerId) {
-        bannerService.releaseBanner(bannerId);
+        boolean flag = bannerService.releaseBanner(bannerId);
 
-        return new ResultView<>();
+        if (flag) return ResultView.success("发布成功", null);
+        else return ResultView.success("取消发表成功", null);
     }
 }

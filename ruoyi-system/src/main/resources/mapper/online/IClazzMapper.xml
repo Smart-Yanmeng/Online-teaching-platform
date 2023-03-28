@@ -180,7 +180,7 @@
         <where>chapter_id = #{chapterId}</where>
     </update>
 
-    <update id="deleteCatalogueByCondition" parameterType="java.lang.Long">
+    <update id="patchCatalogueByCondition" parameterType="java.lang.Long">
         UPDATE ms_catalogue
         <set>del_flag = 2</set>
         <where>catalogue_id = #{catalogueId}</where>
@@ -238,7 +238,7 @@
         </where>
     </select>
 
-    <update id="deleteCommentByCondition" parameterType="java.lang.Long">
+    <update id="patchCommentByCondition" parameterType="java.lang.Long">
         UPDATE ms_comment
         <set>del_flag = 2</set>
         <where>comment_id = #{commentId}</where>

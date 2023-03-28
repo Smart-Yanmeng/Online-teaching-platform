@@ -2,7 +2,7 @@ package com.ruoyi.web.controller.online;
 
 import com.github.pagehelper.PageHelper;
 import com.ruoyi.system.domain.view.ComplaintInfoView;
-import com.ruoyi.system.domain.view.ResultView;
+import com.ruoyi.system.domain.view.common.ResultView;
 import com.ruoyi.system.domain.vo.complaint.ComplaintUpdateVo;
 import com.ruoyi.system.service.online.ComplaintService;
 import io.swagger.annotations.Api;
@@ -22,39 +22,38 @@ public class BComplaintController {
 
     @ApiOperation("刷新投诉列表")
     @GetMapping
-    public ResultView<List<ComplaintInfoView>> complaintInfoList(@RequestParam Integer pageNum, @RequestParam Integer pageSize) {
+    public ResultView complaintInfoList(@RequestParam Integer pageNum, @RequestParam Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+
         List<ComplaintInfoView> complaintInfoViews = complaintService.selectComplaintList();
 
-        PageHelper.startPage(pageNum, pageSize);
-        ResultView<List<ComplaintInfoView>> resultView = new ResultView<>();
-        resultView.setData(complaintInfoViews);
-
-        return resultView;
+        return ResultView.querySuccess(complaintInfoViews);
     }
 
     @ApiOperation("批量删除投诉")
     @PatchMapping
-    public ResultView<Object> complaintPatchAll(@RequestParam Long[] complaintIdArr) {
+    @Transactional(rollbackFor = Exception.class)
+    public ResultView complaintPatchAll(@RequestParam Long[] complaintIdArr) {
         complaintService.patchComplaintAll(complaintIdArr);
 
-        return new ResultView<>();
+        return ResultView.deleteSuccess();
     }
 
     @ApiOperation("删除投诉")
     @PatchMapping("/{complaintId}")
     @Transactional(rollbackFor = Exception.class)
-    public ResultView<Object> complaintDelete(@PathVariable Long complaintId) {
+    public ResultView complaintDelete(@PathVariable Long complaintId) {
         complaintService.deleteComplaint(complaintId);
 
-        return new ResultView<>();
+        return ResultView.deleteSuccess();
     }
 
     @ApiOperation("修改备注")
     @PutMapping("/update/{complaintId}")
-    public ResultView<Object> complaintsUpdate(@PathVariable Long complaintId, @RequestBody ComplaintUpdateVo complaintUpdateVo) {
+    public ResultView complaintsUpdate(@PathVariable Long complaintId, @RequestBody ComplaintUpdateVo complaintUpdateVo) {
         complaintUpdateVo.setComplaintId(complaintId);
         complaintService.updateComplaint(complaintUpdateVo);
 
-        return new ResultView<>();
+        return ResultView.updateSuccess(null);
     }
 }
