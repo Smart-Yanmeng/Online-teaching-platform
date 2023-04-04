@@ -1,14 +1,13 @@
 package com.ruoyi.system.service.online;
 
-import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.system.domain.bo.activity.ActivityAddBo;
 import com.ruoyi.system.domain.bo.activity.ActivityUpdateBo;
 import com.ruoyi.system.domain.po.BActivityPo;
-import com.ruoyi.system.domain.po.convert.ActivityAddBOConvert;
-import com.ruoyi.system.domain.po.convert.ActivityUpdateBOConvert;
+import com.ruoyi.system.domain.bo.convert.ActivityAddBOConvert;
+import com.ruoyi.system.domain.bo.convert.ActivityUpdateBOConvert;
+import com.ruoyi.system.domain.po.convert.ActivityPOConvert;
 import com.ruoyi.system.domain.vo.online.ActivityInfoVo;
 import com.ruoyi.system.domain.bo.activity.ActivitySearchBo;
-import com.ruoyi.system.domain.dto.active.ActivityUpdateDto;
 import com.ruoyi.system.mapper.online.IActivityMapper;
 import org.springframework.stereotype.Service;
 
@@ -24,24 +23,24 @@ public class ActivityService {
     /**
      * 刷新 - 重置活动列表
      *
-     * @return
+     * @return List<ActivityInfoVo>
      */
     public List<ActivityInfoVo> selectActivityList() {
         List<BActivityPo> activityPos = activityMapper.selectActivity();
 
-        return activityPos.stream().map(item -> new ActivityInfoVo().transfer(item)).collect(Collectors.toList());
+        return activityPos.stream().map(item -> new ActivityPOConvert().convert(item)).collect(Collectors.toList());
     }
 
     /**
      * 查询活动
      *
      * @param activitySearchBo
-     * @return
+     * @return List<ActivityInfoVo>
      */
     public List<ActivityInfoVo> queryActivityList(ActivitySearchBo activitySearchBo) {
         List<BActivityPo> activityEntities = activityMapper.queryByCondition(activitySearchBo);
 
-        return activityEntities.stream().map(item -> new ActivityInfoVo().transfer(item)).collect(Collectors.toList());
+        return activityEntities.stream().map(item -> new ActivityPOConvert().convert(item)).collect(Collectors.toList());
     }
 
     /**

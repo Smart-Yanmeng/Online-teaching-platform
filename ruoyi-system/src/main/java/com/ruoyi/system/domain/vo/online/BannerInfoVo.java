@@ -1,12 +1,12 @@
 package com.ruoyi.system.domain.vo.online;
 
 import com.ruoyi.common.utils.bean.BeanUtils;
-import com.ruoyi.system.domain.po.BBannerEntity;
+import com.ruoyi.system.domain.po.BBannerPo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Data
-public class BannerInfoView {
+public class BannerInfoVo {
     @ApiModelProperty("轮播图标题")
     private String bannerTitle;
 
@@ -23,7 +23,7 @@ public class BannerInfoView {
     private String remark;
 
     // entity -> view
-    public BannerInfoView transfer(BBannerEntity bannerEntity) {
+    public BannerInfoVo transfer(BBannerPo bannerEntity) {
         BeanUtils.copyProperties(bannerEntity, this);
 
         return this;

@@ -1,4 +1,4 @@
-package com.ruoyi.system.domain.po.convert;
+package com.ruoyi.system.domain.bo.convert;
 
 import com.ruoyi.common.utils.bean.BeanUtils;
 import com.ruoyi.system.domain.bo.activity.ActivityAddBo;

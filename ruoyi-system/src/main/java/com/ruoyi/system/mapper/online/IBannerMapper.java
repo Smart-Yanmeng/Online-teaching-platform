@@ -1,6 +1,6 @@
 package com.ruoyi.system.mapper.online;
 
-import com.ruoyi.system.domain.po.BBannerEntity;
+import com.ruoyi.system.domain.po.BBannerPo;
 import com.ruoyi.system.domain.bo.banner.BannerSearchVo;
 import com.ruoyi.system.domain.bo.banner.BannerUpdateVo;
 
@@ -13,11 +13,11 @@ public interface IBannerMapper {
     // 检查 banner 是否发布
     Long checkRelease(Long bannerId);
 
-    List<BBannerEntity> selectBanner();
+    List<BBannerPo> selectBanner();
 
-    List<BBannerEntity> queryBannerByCondition(BannerSearchVo bannerSearchVo);
+    List<BBannerPo> queryBannerByCondition(BannerSearchVo bannerSearchVo);
 
-    void insertBannerByCondition(BBannerEntity bannerEntity);
+    void insertBannerByCondition(BBannerPo bannerEntity);
 
     void updateBannerByCondition(BannerUpdateVo bannerUpdateVo);
 

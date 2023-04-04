@@ -1,7 +1,7 @@
 package com.ruoyi.web.controller.online;
 
 import com.github.pagehelper.PageHelper;
-import com.ruoyi.system.domain.vo.online.BannerInfoView;
+import com.ruoyi.system.domain.vo.online.BannerInfoVo;
 import com.ruoyi.system.domain.vo.common.ResultVo;
 import com.ruoyi.system.domain.bo.banner.BannerAddVo;
 import com.ruoyi.system.domain.bo.banner.BannerSearchVo;
@@ -28,9 +28,9 @@ public class BBannerController {
     public ResultVo bannerInfoList(@RequestParam @Valid Integer pageNum,
                                    @RequestParam @Valid Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
-        List<BannerInfoView> bannerInfoViews = bannerService.selectBannerList();
+        List<BannerInfoVo> bannerInfoVos = bannerService.selectBannerList();
 
-        return ResultVo.querySuccess(bannerInfoViews);
+        return ResultVo.querySuccess(bannerInfoVos);
     }
 
     @ApiOperation("查询轮播图")
@@ -40,17 +40,17 @@ public class BBannerController {
         BannerSearchVo bannerSearchVo = new BannerSearchVo();
         bannerSearchVo.setBannerTitle(bannerTitle);
         bannerSearchVo.setIsRelease(isRelease);
-        List<BannerInfoView> bannerInfoViews = bannerService.queryBannerList(bannerSearchVo);
+        List<BannerInfoVo> bannerInfoVos = bannerService.queryBannerList(bannerSearchVo);
 
-        return ResultVo.querySuccess(bannerInfoViews);
+        return ResultVo.querySuccess(bannerInfoVos);
     }
 
     @ApiOperation("重置轮播图列表")
     @GetMapping("/reset")
     public ResultVo bannerReset() {
-        List<BannerInfoView> bannerInfoViews = bannerService.selectBannerList();
+        List<BannerInfoVo> bannerInfoVos = bannerService.selectBannerList();
 
-        return ResultVo.querySuccess(bannerInfoViews);
+        return ResultVo.querySuccess(bannerInfoVos);
     }
 
     @ApiOperation("新增轮播图")

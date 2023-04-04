@@ -15,7 +15,7 @@
     </select>
 
     <select id="selectBanner"
-            resultType="com.ruoyi.system.domain.po.BBannerEntity">
+            resultType="com.ruoyi.system.domain.po.BBannerPo">
         SELECT *
         FROM ms_banner
         ORDER BY banner_sort ASC
@@ -23,7 +23,7 @@
 
     <select id="queryBannerByCondition"
             parameterType="com.ruoyi.system.domain.bo.banner.BannerSearchVo"
-            resultType="com.ruoyi.system.domain.po.BBannerEntity">
+            resultType="com.ruoyi.system.domain.po.BBannerPo">
         SELECT *
         FROM ms_banner
         WHERE banner_title LIKE CONCAT('%', #{bannerTitle}, '%')
@@ -32,7 +32,7 @@
         ORDER BY banner_sort ASC
     </select>
 
-    <insert id="insertBannerByCondition" parameterType="com.ruoyi.system.domain.po.BBannerEntity">
+    <insert id="insertBannerByCondition" parameterType="com.ruoyi.system.domain.po.BBannerPo">
         INSERT INTO ms_banner(banner_id, banner_title, banner_url, banner_sort, link, is_release, del_flag, create_by,
                               create_time, update_by, update_time, remark)
         VALUES (#{bannerId}, #{bannerTitle}, #{bannerUrl}, #{bannerSort}, #{link}, #{isRelease}, #{delFlag},

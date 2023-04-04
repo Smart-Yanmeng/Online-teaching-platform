@@ -16,74 +16,61 @@ public class ResultVo<T> {
 
     /**
      * 新增
-     *
-     * @return
      */
     public static <K> ResultVo insertSuccess(K date) {
-        ResultVo view = new ResultVo();
-        view.setCode(200);
-        view.setData(date);
-        view.setMsg("插入成功");
+        ResultVo vo = new ResultVo();
+        vo.setCode(200);
+        vo.setData(date);
+        vo.setMsg("插入成功");
 
-        return view;
+        return vo;
     }
 
     /**
      * 删除
-     *
-     * @return
      */
-    public static <K> ResultVo deleteSuccess() {
-        ResultVo view = new ResultVo();
-        view.setCode(200);
-        view.setData(null);
-        view.setMsg("删除成功");
+    public static ResultVo deleteSuccess() {
+        ResultVo vo = new ResultVo();
+        vo.setCode(200);
+        vo.setData(null);
+        vo.setMsg("删除成功");
 
-        return view;
+        return vo;
     }
 
     /**
      * 修改
-     *
-     * @return
      */
-    public static <K> ResultVo updateSuccess(K date) {
-        ResultVo view = new ResultVo();
-        view.setCode(200);
-        view.setData(date);
-        view.setMsg("修改成功");
+    public static <K> ResultVo<Object> updateSuccess(K date) {
+        ResultVo<Object> vo = new ResultVo<>();
+        vo.setCode(200);
+        vo.setData(date);
+        vo.setMsg("修改成功");
 
-        return view;
+        return vo;
     }
 
     /**
      * 查询
-     *
-     * @return
      */
     public static <K> ResultVo querySuccess(K date) {
-        ResultVo view = new ResultVo();
-        view.setCode(200);
-        view.setData(date);
-        view.setMsg("查询成功");
+        ResultVo vo = new ResultVo();
+        vo.setCode(200);
+        vo.setData(date);
+        vo.setMsg("查询成功");
 
-        return view;
+        return vo;
     }
 
     /**
      * 自定义
-     *
-     * @param msg
-     * @param date
-     * @param <K>
-     * @return
      */
     public static <K> ResultVo success(String msg, K date) {
-        ResultVo view = new ResultVo();
-        view.setCode(200);
-        view.setData(date);
-        view.setMsg(msg);
+        ResultVo vo = new ResultVo();
+        vo.setCode(200);
+        vo.setData(date);
+        vo.setMsg(msg);
 
-        return view;
+        return vo;
     }
 }

@@ -2,7 +2,7 @@ package com.ruoyi.system.domain.bo.banner;
 
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.bean.BeanUtils;
-import com.ruoyi.system.domain.po.BBannerEntity;
+import com.ruoyi.system.domain.po.BBannerPo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -27,7 +27,7 @@ public class BannerAddVo {
     private String remark;
 
     // vo -> entity
-    public BBannerEntity transfer(BBannerEntity bannerEntity) {
+    public BBannerPo transfer(BBannerPo bannerEntity) {
         BeanUtils.copyProperties(this, bannerEntity);
         bannerEntity.setCreateTime(DateUtils.getTime());
         bannerEntity.setCreateBy("admin");

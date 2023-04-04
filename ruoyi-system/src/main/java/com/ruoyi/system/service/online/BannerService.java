@@ -5,8 +5,8 @@ import com.ruoyi.system.domain.bo.banner.BannerAddVo;
 import com.ruoyi.system.domain.bo.banner.BannerSearchVo;
 import com.ruoyi.system.domain.bo.banner.BannerUpdateVo;
 import com.ruoyi.system.mapper.online.IBannerMapper;
-import com.ruoyi.system.domain.po.BBannerEntity;
-import com.ruoyi.system.domain.vo.online.BannerInfoView;
+import com.ruoyi.system.domain.po.BBannerPo;
+import com.ruoyi.system.domain.vo.online.BannerInfoVo;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -23,10 +23,10 @@ public class BannerService {
      *
      * @return
      */
-    public List<BannerInfoView> selectBannerList() {
-        List<BBannerEntity> bannerEntities = bannerMapper.selectBanner();
+    public List<BannerInfoVo> selectBannerList() {
+        List<BBannerPo> bannerPos = bannerMapper.selectBanner();
 
-        return bannerEntities.stream().map(item -> new BannerInfoView().transfer(item)).collect(Collectors.toList());
+        return bannerPos.stream().map(item -> new BannerInfoVo().transfer(item)).collect(Collectors.toList());
     }
 
     /**
@@ -35,10 +35,10 @@ public class BannerService {
      * @param bannerSearchVo
      * @return
      */
-    public List<BannerInfoView> queryBannerList(BannerSearchVo bannerSearchVo) {
-        List<BBannerEntity> bannerEntities = bannerMapper.queryBannerByCondition(bannerSearchVo);
+    public List<BannerInfoVo> queryBannerList(BannerSearchVo bannerSearchVo) {
+        List<BBannerPo> bannerEntities = bannerMapper.queryBannerByCondition(bannerSearchVo);
 
-        return bannerEntities.stream().map(item -> new BannerInfoView().transfer(item)).collect(Collectors.toList());
+        return bannerEntities.stream().map(item -> new BannerInfoVo().transfer(item)).collect(Collectors.toList());
     }
 
     /**
@@ -47,7 +47,7 @@ public class BannerService {
      * @param bannerAddVo
      */
     public void insertBanner(BannerAddVo bannerAddVo) {
-        BBannerEntity bannerEntity = new BBannerEntity();
+        BBannerPo bannerEntity = new BBannerPo();
         bannerEntity = bannerAddVo.transfer(bannerEntity);
         bannerEntity.setBannerId(bannerMapper.countBanner() + 1);
 

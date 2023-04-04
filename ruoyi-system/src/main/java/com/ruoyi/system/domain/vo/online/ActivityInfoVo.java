@@ -33,11 +33,4 @@ public class ActivityInfoVo {
 
     @ApiModelProperty("备注信息")
     private String remark;
-
-    // entity -> view
-    public ActivityInfoVo transfer(BActivityPo activityEntity) {
-        BeanUtils.copyProperties(activityEntity, this);
-
-        return this;
-    }
 }

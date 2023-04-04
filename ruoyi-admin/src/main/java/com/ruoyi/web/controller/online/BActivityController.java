@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -29,7 +30,8 @@ public class BActivityController {
 
     @ApiOperation("获取活动列表")
     @GetMapping
-    public ResultVo activityInfoList(@RequestParam Integer pageNum, @RequestParam Integer pageSize) {
+    public ResultVo activityInfoList(@RequestParam @Valid Integer pageNum,
+                                     @RequestParam @Valid Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         List<ActivityInfoVo> activityInfoVos = activityService.selectActivityList();
 

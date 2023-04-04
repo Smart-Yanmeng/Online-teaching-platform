@@ -4,7 +4,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Data
-public class BBannerEntity {
+public class BBannerPo {
     @ApiModelProperty("轮播图ID")
     private Long bannerId;
     @ApiModelProperty("轮播图标题")
