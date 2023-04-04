@@ -1,14 +1,14 @@
 package com.ruoyi.system.mapper.online;
 
-import com.ruoyi.system.domain.entity.BStudentClazzEntity;
-import com.ruoyi.system.domain.entity.BStudentEntity;
-import com.ruoyi.system.domain.entity.BUserEntity;
-import com.ruoyi.system.domain.view.EmploymentInfoView;
-import com.ruoyi.system.domain.view.StudentInfoView;
-import com.ruoyi.system.domain.vo.student.EmploymentAddVo;
-import com.ruoyi.system.domain.vo.student.EmploymentUpdateVo;
-import com.ruoyi.system.domain.vo.student.StudentSearchVo;
-import com.ruoyi.system.domain.vo.student.StudentUpdateVo;
+import com.ruoyi.system.domain.po.BStudentClazzEntity;
+import com.ruoyi.system.domain.po.BStudentEntity;
+import com.ruoyi.system.domain.po.BUserEntity;
+import com.ruoyi.system.domain.vo.online.EmploymentInfoView;
+import com.ruoyi.system.domain.vo.online.StudentInfoView;
+import com.ruoyi.system.domain.bo.student.EmploymentAddVo;
+import com.ruoyi.system.domain.bo.student.EmploymentUpdateVo;
+import com.ruoyi.system.domain.bo.student.StudentSearchVo;
+import com.ruoyi.system.domain.bo.student.StudentUpdateVo;
 
 import java.util.List;
 

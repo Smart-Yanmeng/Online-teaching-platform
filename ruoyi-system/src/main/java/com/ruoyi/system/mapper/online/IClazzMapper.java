@@ -1,12 +1,12 @@
 package com.ruoyi.system.mapper.online;
 
-import com.ruoyi.system.domain.entity.BChapterEntity;
-import com.ruoyi.system.domain.entity.BClazzEntity;
-import com.ruoyi.system.domain.view.*;
-import com.ruoyi.system.domain.vo.clazz.ClazzCatalogueAddVo;
-import com.ruoyi.system.domain.vo.clazz.ClazzCatalogueTaskAddVo;
-import com.ruoyi.system.domain.vo.clazz.ClazzCatalogueUpdateVo;
-import com.ruoyi.system.domain.vo.clazz.ClazzSearchVo;
+import com.ruoyi.system.domain.po.BChapterEntity;
+import com.ruoyi.system.domain.po.BClazzEntity;
+import com.ruoyi.system.domain.bo.clazz.ClazzCatalogueAddVo;
+import com.ruoyi.system.domain.bo.clazz.ClazzCatalogueTaskAddVo;
+import com.ruoyi.system.domain.bo.clazz.ClazzCatalogueUpdateVo;
+import com.ruoyi.system.domain.bo.clazz.ClazzSearchVo;
+import com.ruoyi.system.domain.vo.online.*;
 
 import java.util.List;
 

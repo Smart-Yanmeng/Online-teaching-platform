@@ -1,8 +1,8 @@
 package com.ruoyi.system.mapper.online;
 
-import com.ruoyi.system.domain.entity.BBannerEntity;
-import com.ruoyi.system.domain.vo.banner.BannerSearchVo;
-import com.ruoyi.system.domain.vo.banner.BannerUpdateVo;
+import com.ruoyi.system.domain.po.BBannerEntity;
+import com.ruoyi.system.domain.bo.banner.BannerSearchVo;
+import com.ruoyi.system.domain.bo.banner.BannerUpdateVo;
 
 import java.util.List;
 

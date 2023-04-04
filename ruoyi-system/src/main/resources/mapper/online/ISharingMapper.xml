@@ -14,13 +14,13 @@
         <where>sharing_id = #{activityId}</where>
     </select>
 
-    <select id="selectSharing" resultType="com.ruoyi.system.domain.entity.BSharingEntity">
+    <select id="selectSharing" resultType="com.ruoyi.system.domain.po.BSharingEntity">
         SELECT *
         FROM ms_knowledge_sharing
     </select>
 
-    <select id="querySharingByCondition" parameterType="com.ruoyi.system.domain.vo.sharing.SharingSearchVo"
-            resultType="com.ruoyi.system.domain.entity.BSharingEntity">
+    <select id="querySharingByCondition" parameterType="com.ruoyi.system.domain.bo.sharing.SharingSearchVo"
+            resultType="com.ruoyi.system.domain.po.BSharingEntity">
         SELECT *
         FROM ms_knowledge_sharing
         WHERE sharing_title LIKE CONCAT('%', #{sharingTitle}, '%')
@@ -30,7 +30,7 @@
           AND is_link = #{isLink}
     </select>
 
-    <insert id="insertSharingByCondition" parameterType="com.ruoyi.system.domain.vo.sharing.SharingAddVo">
+    <insert id="insertSharingByCondition" parameterType="com.ruoyi.system.domain.bo.sharing.SharingAddVo">
         INSERT INTO ms_knowledge_sharing(sharing_id, sharing_title, sharing_subtitle, sharing_introduce,
                                          sharing_content, sharing_sign, cover_url, honoured_guest, is_release, is_link,
                                          link, author)
@@ -38,7 +38,7 @@
                 #{sharingSign}, #{coverUrl}, #{honouredGuest}, #{isRelease}, #{isLink}, #{link}, #{author})
     </insert>
 
-    <update id="updateSharingByCondition" parameterType="com.ruoyi.system.domain.vo.sharing.SharingUpdateVo">
+    <update id="updateSharingByCondition" parameterType="com.ruoyi.system.domain.bo.sharing.SharingUpdateVo">
         UPDATE ms_knowledge_sharing
         <set>
             <if test="sharingTitle != null and sharingTitle != ''">sharing_title = #{sharingTitle},</if>

@@ -1,11 +1,11 @@
 package com.ruoyi.system.service.online;
 
 import com.ruoyi.common.utils.DateUtils;
-import com.ruoyi.system.domain.entity.BSharingEntity;
-import com.ruoyi.system.domain.view.SharingInfoView;
-import com.ruoyi.system.domain.vo.sharing.SharingAddVo;
-import com.ruoyi.system.domain.vo.sharing.SharingSearchVo;
-import com.ruoyi.system.domain.vo.sharing.SharingUpdateVo;
+import com.ruoyi.system.domain.po.BSharingEntity;
+import com.ruoyi.system.domain.vo.online.SharingInfoView;
+import com.ruoyi.system.domain.bo.sharing.SharingAddVo;
+import com.ruoyi.system.domain.bo.sharing.SharingSearchVo;
+import com.ruoyi.system.domain.bo.sharing.SharingUpdateVo;
 import com.ruoyi.system.mapper.online.ISharingMapper;
 import org.springframework.stereotype.Service;
 

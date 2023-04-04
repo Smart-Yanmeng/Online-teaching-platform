@@ -2,12 +2,12 @@ package com.ruoyi.system.service.online;
 
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.SecurityUtils;
-import com.ruoyi.system.domain.entity.BStudentClazzEntity;
-import com.ruoyi.system.domain.entity.BStudentEntity;
-import com.ruoyi.system.domain.entity.BUserEntity;
-import com.ruoyi.system.domain.view.EmploymentInfoView;
-import com.ruoyi.system.domain.view.StudentInfoView;
-import com.ruoyi.system.domain.vo.student.*;
+import com.ruoyi.system.domain.po.BStudentClazzEntity;
+import com.ruoyi.system.domain.po.BStudentEntity;
+import com.ruoyi.system.domain.po.BUserEntity;
+import com.ruoyi.system.domain.vo.online.EmploymentInfoView;
+import com.ruoyi.system.domain.vo.online.StudentInfoView;
+import com.ruoyi.system.domain.bo.student.*;
 import com.ruoyi.system.mapper.online.IStudentMapper;
 import org.springframework.stereotype.Service;
 

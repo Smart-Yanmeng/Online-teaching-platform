@@ -1,11 +1,14 @@
 package com.ruoyi.system.service.online;
 
 import com.ruoyi.common.utils.DateUtils;
-import com.ruoyi.system.domain.entity.BActivityEntity;
-import com.ruoyi.system.domain.view.ActivityInfoView;
-import com.ruoyi.system.domain.vo.activity.ActivityAddVo;
-import com.ruoyi.system.domain.vo.activity.ActivitySearchVo;
-import com.ruoyi.system.domain.vo.activity.ActivityUpdateVo;
+import com.ruoyi.system.domain.bo.activity.ActivityAddBo;
+import com.ruoyi.system.domain.bo.activity.ActivityUpdateBo;
+import com.ruoyi.system.domain.po.BActivityPo;
+import com.ruoyi.system.domain.po.convert.ActivityAddBOConvert;
+import com.ruoyi.system.domain.po.convert.ActivityUpdateBOConvert;
+import com.ruoyi.system.domain.vo.online.ActivityInfoVo;
+import com.ruoyi.system.domain.bo.activity.ActivitySearchBo;
+import com.ruoyi.system.domain.dto.active.ActivityUpdateDto;
 import com.ruoyi.system.mapper.online.IActivityMapper;
 import org.springframework.stereotype.Service;
 
@@ -18,39 +21,57 @@ public class ActivityService {
     @Resource
     IActivityMapper activityMapper;
 
-    // 刷新 - 重置活动信息
-    public List<ActivityInfoView> selectActivityList() {
-        List<BActivityEntity> activityEntities = activityMapper.selectActivity();
+    /**
+     * 刷新 - 重置活动列表
+     *
+     * @return
+     */
+    public List<ActivityInfoVo> selectActivityList() {
+        List<BActivityPo> activityPos = activityMapper.selectActivity();
 
-        return activityEntities.stream().map(item -> new ActivityInfoView().transfer(item)).collect(Collectors.toList());
+        return activityPos.stream().map(item -> new ActivityInfoVo().transfer(item)).collect(Collectors.toList());
     }
 
-    // 查询活动
-    public List<ActivityInfoView> queryActivityList(ActivitySearchVo activitySearchVo) {
-        List<BActivityEntity> activityEntities = activityMapper.queryByCondition(activitySearchVo);
+    /**
+     * 查询活动
+     *
+     * @param activitySearchBo
+     * @return
+     */
+    public List<ActivityInfoVo> queryActivityList(ActivitySearchBo activitySearchBo) {
+        List<BActivityPo> activityEntities = activityMapper.queryByCondition(activitySearchBo);
 
-        return activityEntities.stream().map(item -> new ActivityInfoView().transfer(item)).collect(Collectors.toList());
+        return activityEntities.stream().map(item -> new ActivityInfoVo().transfer(item)).collect(Collectors.toList());
     }
 
-    // 插入活动
-    public void insertActivity(ActivityAddVo activityAddVo) {
-        BActivityEntity activityEntity = new BActivityEntity();
-        activityEntity = activityAddVo.transfer(activityEntity);
-        activityEntity.setActivityId(activityMapper.countActivity() + 1);
+    /**
+     * 新增活动
+     *
+     * @param activityAddBo
+     */
+    public void insertActivity(ActivityAddBo activityAddBo) {
+        BActivityPo activityPo = new ActivityAddBOConvert().convert(activityAddBo);
+        activityPo.setActivityId(activityMapper.countActivity() + 1);
 
-        activityMapper.insertActivityByCondition(activityEntity);
+        activityMapper.insertActivityByCondition(activityPo);
     }
 
-    // 修改数据
-    public void updateActivity(ActivityUpdateVo activityUpdateVo) {
-//        activityUpdateVo.setUpdateBy(SecurityUtils.getUsername());
-        activityUpdateVo.setUpdateBy("admin");
-        activityUpdateVo.setUpdateTime(DateUtils.getTime());
+    /**
+     * 修改活动
+     *
+     * @param activityUpdateBo
+     */
+    public void updateActivity(ActivityUpdateBo activityUpdateBo) {
+        BActivityPo activityPo = new ActivityUpdateBOConvert().convert(activityUpdateBo);
 
-        activityMapper.updateActivityByCondition(activityUpdateVo);
+        activityMapper.updateActivityByCondition(activityPo);
     }
 
-    // 删除数据
+    /**
+     * 删除活动
+     *
+     * @param activityId
+     */
     public void patchActivity(Long activityId) {
         activityMapper.patchActivityByCondition(activityId);
     }

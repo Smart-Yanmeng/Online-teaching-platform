@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.system.mapper.online.IComplaintMapper">
-    <select id="selectComplaint" resultType="com.ruoyi.system.domain.view.ComplaintInfoView">
+    <select id="selectComplaint" resultType="com.ruoyi.system.domain.vo.online.ComplaintInfoView">
         SELECT complaint_content, complaint_type, remark
         FROM ms_complaint
         <where>del_flag = 0</where>

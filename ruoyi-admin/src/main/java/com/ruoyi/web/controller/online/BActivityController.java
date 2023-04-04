@@ -1,11 +1,15 @@
 package com.ruoyi.web.controller.online;
 
 import com.github.pagehelper.PageHelper;
-import com.ruoyi.system.domain.view.ActivityInfoView;
-import com.ruoyi.system.domain.view.common.ResultView;
-import com.ruoyi.system.domain.vo.activity.ActivityAddVo;
-import com.ruoyi.system.domain.vo.activity.ActivitySearchVo;
-import com.ruoyi.system.domain.vo.activity.ActivityUpdateVo;
+import com.ruoyi.system.domain.bo.activity.ActivityAddBo;
+import com.ruoyi.system.domain.bo.activity.ActivityUpdateBo;
+import com.ruoyi.system.domain.dto.active.convert.ActivityAddDTOConvert;
+import com.ruoyi.system.domain.dto.active.convert.ActivityUpdateDTOConvert;
+import com.ruoyi.system.domain.vo.online.ActivityInfoVo;
+import com.ruoyi.system.domain.vo.common.ResultVo;
+import com.ruoyi.system.domain.dto.active.ActivityAddDto;
+import com.ruoyi.system.domain.bo.activity.ActivitySearchBo;
+import com.ruoyi.system.domain.dto.active.ActivityUpdateDto;
 import com.ruoyi.system.service.online.ActivityService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -13,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -26,68 +29,69 @@ public class BActivityController {
 
     @ApiOperation("获取活动列表")
     @GetMapping
-    public ResultView<List<ActivityInfoView>> activityInfoList(@RequestParam Integer pageNum, @RequestParam Integer pageSize) {
-        ResultView<List<ActivityInfoView>> resultView = new ResultView<>();
-
+    public ResultVo activityInfoList(@RequestParam Integer pageNum, @RequestParam Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
-        List<ActivityInfoView> activityInfoViews = activityService.selectActivityList();
+        List<ActivityInfoVo> activityInfoVos = activityService.selectActivityList();
 
-        return resultView.querySuccess(activityInfoViews);
+        return ResultVo.querySuccess(activityInfoVos);
     }
 
     @ApiOperation("查询活动")
     @GetMapping("/list")
-    public ResultView activityInfoSearch(@RequestParam String activityTitle, @RequestParam Long isRelease) {
-        ActivitySearchVo activitySearchVo = new ActivitySearchVo();
-        activitySearchVo.setActivityTitle(activityTitle);
-        activitySearchVo.setIsRelease(isRelease);
-        List<ActivityInfoView> activityInfoViews = activityService.queryActivityList(activitySearchVo);
+    public ResultVo activityInfoSearch(@RequestParam String activityTitle, @RequestParam Long isRelease) {
+        ActivitySearchBo activitySearchBo = new ActivitySearchBo();
+        activitySearchBo.setActivityTitle(activityTitle);
+        activitySearchBo.setIsRelease(isRelease);
+        List<ActivityInfoVo> activityInfoVos = activityService.queryActivityList(activitySearchBo);
 
-        return ResultView.querySuccess(activityInfoViews);
+        return ResultVo.querySuccess(activityInfoVos);
     }
 
     @ApiOperation("重置活动列表")
     @GetMapping("/reset")
-    public ResultView activityReset() {
-        List<ActivityInfoView> activityInfoViews = activityService.selectActivityList();
+    public ResultVo activityReset(@RequestParam Integer pageNum, @RequestParam Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<ActivityInfoVo> activityInfoVos = activityService.selectActivityList();
 
-        return ResultView.querySuccess(activityInfoViews);
+        return ResultVo.querySuccess(activityInfoVos);
     }
 
-    @ApiOperation("新增轮播图")
+    @ApiOperation("新增活动")
     @PostMapping("/add")
     @Transactional(rollbackFor = Exception.class)
-    public ResultView bannerAdd(@RequestBody ActivityAddVo activityAddVo) {
-        activityService.insertActivity(activityAddVo);
+    public ResultVo activityAdd(@RequestBody ActivityAddDto activityAddDto) {
+        ActivityAddBo activityAddBo = new ActivityAddDTOConvert().convert(activityAddDto);
+        activityService.insertActivity(activityAddBo);
 
-        return ResultView.insertSuccess(null);
+        return ResultVo.insertSuccess(new ActivityAddDto());
     }
 
     @ApiOperation("修改活动")
-    @PutMapping("/update")
+    @PutMapping("/update/{activityId}")
     @Transactional(rollbackFor = Exception.class)
-    public ResultView<Object> bannerUpdate(@RequestBody ActivityUpdateVo activityUpdateVo) {
-        activityService.updateActivity(activityUpdateVo);
+    public ResultVo activityUpdate(@RequestBody ActivityUpdateDto activityUpdateDto) {
+        ActivityUpdateBo activityUpdateBo = new ActivityUpdateDTOConvert().convert(activityUpdateDto);
+        activityService.updateActivity(activityUpdateBo);
 
-        return ResultView.updateSuccess(null);
+        return ResultVo.updateSuccess(new ActivityUpdateDto());
     }
 
     @ApiOperation("删除活动")
-    @PatchMapping("/{activityId}")
+    @PatchMapping("/delete/{activityId}")
     @Transactional(rollbackFor = Exception.class)
-    public ResultView<Object> activityPatch(@PathVariable Long activityId) {
+    public ResultVo activityPatch(@PathVariable Long activityId) {
         activityService.patchActivity(activityId);
 
-        return ResultView.deleteSuccess();
+        return ResultVo.deleteSuccess();
     }
 
     @ApiOperation("是否发布")
-    @PostMapping("/release")
+    @PostMapping("/release/{activityId}")
     @Transactional(rollbackFor = Exception.class)
-    public ResultView<Object> activityIsRelease(@RequestParam @Valid Long activityId) {
-        Boolean flag = activityService.releaseActivity(activityId);
+    public ResultVo activityIsRelease(@PathVariable Long activityId) {
+        boolean flag = activityService.releaseActivity(activityId);
 
-        if (flag) return ResultView.success("发布成功", null);
-        else return ResultView.success("取消发布成功", null);
+        if (flag) return ResultVo.success("发布成功", null);
+        else return ResultVo.success("取消发布成功", null);
     }
 }

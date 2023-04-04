@@ -1,10 +1,10 @@
 package com.ruoyi.system.service.online;
 
 import com.ruoyi.common.utils.DateUtils;
-import com.ruoyi.system.domain.entity.BChapterEntity;
-import com.ruoyi.system.domain.entity.BClazzEntity;
-import com.ruoyi.system.domain.view.*;
-import com.ruoyi.system.domain.vo.clazz.*;
+import com.ruoyi.system.domain.po.BChapterEntity;
+import com.ruoyi.system.domain.po.BClazzEntity;
+import com.ruoyi.system.domain.bo.clazz.*;
+import com.ruoyi.system.domain.vo.online.*;
 import com.ruoyi.system.mapper.online.IClazzMapper;
 import org.springframework.stereotype.Service;
 

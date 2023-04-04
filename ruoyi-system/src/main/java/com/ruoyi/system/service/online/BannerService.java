@@ -1,12 +1,12 @@
 package com.ruoyi.system.service.online;
 
 import com.ruoyi.common.utils.DateUtils;
-import com.ruoyi.system.domain.vo.banner.BannerAddVo;
-import com.ruoyi.system.domain.vo.banner.BannerSearchVo;
-import com.ruoyi.system.domain.vo.banner.BannerUpdateVo;
+import com.ruoyi.system.domain.bo.banner.BannerAddVo;
+import com.ruoyi.system.domain.bo.banner.BannerSearchVo;
+import com.ruoyi.system.domain.bo.banner.BannerUpdateVo;
 import com.ruoyi.system.mapper.online.IBannerMapper;
-import com.ruoyi.system.domain.entity.BBannerEntity;
-import com.ruoyi.system.domain.view.BannerInfoView;
+import com.ruoyi.system.domain.po.BBannerEntity;
+import com.ruoyi.system.domain.vo.online.BannerInfoView;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

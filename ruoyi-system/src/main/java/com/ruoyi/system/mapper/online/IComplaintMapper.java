@@ -1,7 +1,7 @@
 package com.ruoyi.system.mapper.online;
 
-import com.ruoyi.system.domain.view.ComplaintInfoView;
-import com.ruoyi.system.domain.vo.complaint.ComplaintUpdateVo;
+import com.ruoyi.system.domain.vo.online.ComplaintInfoView;
+import com.ruoyi.system.domain.bo.complaint.ComplaintUpdateVo;
 
 import java.util.List;
 

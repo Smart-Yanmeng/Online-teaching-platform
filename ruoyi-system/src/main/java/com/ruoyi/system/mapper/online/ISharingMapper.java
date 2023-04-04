@@ -1,9 +1,9 @@
 package com.ruoyi.system.mapper.online;
 
-import com.ruoyi.system.domain.entity.BSharingEntity;
-import com.ruoyi.system.domain.vo.sharing.SharingAddVo;
-import com.ruoyi.system.domain.vo.sharing.SharingSearchVo;
-import com.ruoyi.system.domain.vo.sharing.SharingUpdateVo;
+import com.ruoyi.system.domain.po.BSharingEntity;
+import com.ruoyi.system.domain.bo.sharing.SharingAddVo;
+import com.ruoyi.system.domain.bo.sharing.SharingSearchVo;
+import com.ruoyi.system.domain.bo.sharing.SharingUpdateVo;
 
 import java.util.List;
 

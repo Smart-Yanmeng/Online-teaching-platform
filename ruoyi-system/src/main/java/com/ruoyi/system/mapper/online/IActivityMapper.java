@@ -1,8 +1,9 @@
 package com.ruoyi.system.mapper.online;
 
-import com.ruoyi.system.domain.entity.BActivityEntity;
-import com.ruoyi.system.domain.vo.activity.ActivitySearchVo;
-import com.ruoyi.system.domain.vo.activity.ActivityUpdateVo;
+import com.ruoyi.system.domain.bo.activity.ActivityUpdateBo;
+import com.ruoyi.system.domain.po.BActivityPo;
+import com.ruoyi.system.domain.bo.activity.ActivitySearchBo;
+import com.ruoyi.system.domain.dto.active.ActivityUpdateDto;
 
 import java.util.List;
 
@@ -13,13 +14,13 @@ public interface IActivityMapper {
     // 检查 banner 是否发布
     Long checkRelease(Long activityId);
 
-    List<BActivityEntity> selectActivity();
+    List<BActivityPo> selectActivity();
 
-    List<BActivityEntity> queryByCondition(ActivitySearchVo activitySearchVo);
+    List<BActivityPo> queryByCondition(ActivitySearchBo activitySearchBo);
 
-    void insertActivityByCondition(BActivityEntity activityEntity);
+    void insertActivityByCondition(BActivityPo activityPo);
 
-    void updateActivityByCondition(ActivityUpdateVo activityUpdateVo);
+    void updateActivityByCondition(BActivityPo activityPo);
 
     void patchActivityByCondition(Long activityId);
 

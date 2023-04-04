@@ -25,8 +25,8 @@
         FROM ms_employment_info
     </select>
 
-    <select id="selectStudent" parameterType="com.ruoyi.system.domain.entity.BStudentEntity"
-            resultType="com.ruoyi.system.domain.view.StudentInfoView">
+    <select id="selectStudent" parameterType="com.ruoyi.system.domain.po.BStudentEntity"
+            resultType="com.ruoyi.system.domain.vo.online.StudentInfoView">
         SELECT su.nick_name,
         su.user_name,
         mc.class_name,
@@ -45,8 +45,8 @@
         <where>su.del_flag = 0</where>
     </select>
 
-    <select id="queryStudentByCondition" parameterType="com.ruoyi.system.domain.vo.student.StudentSearchVo"
-            resultType="com.ruoyi.system.domain.view.StudentInfoView">
+    <select id="queryStudentByCondition" parameterType="com.ruoyi.system.domain.bo.student.StudentSearchVo"
+            resultType="com.ruoyi.system.domain.vo.online.StudentInfoView">
         SELECT su.nick_name,
                su.user_name,
                mc.class_name,
@@ -70,7 +70,7 @@
           AND direction LIKE CONCAT('%', #{direction}, '%')
     </select>
 
-    <insert id="addStudent" parameterType="com.ruoyi.system.domain.entity.BStudentEntity">
+    <insert id="addStudent" parameterType="com.ruoyi.system.domain.po.BStudentEntity">
         INSERT INTO ms_student(user_id, class_id, birthday, grade, school, major, direction, graduation, worked, prov,
                                city, home_address, current_address, create_by, create_time, update_by, update_time,
                                remark)
@@ -79,7 +79,7 @@
                 #{updateTime}, #{remark})
     </insert>
 
-    <insert id="addUser" parameterType="com.ruoyi.system.domain.entity.BUserEntity">
+    <insert id="addUser" parameterType="com.ruoyi.system.domain.po.BUserEntity">
         INSERT INTO sys_user(user_id, dept_id, user_name, nick_name, user_type, email, phonenumber, sex, avatar,
                              password, status, del_flag, login_ip, login_date, create_by, create_time, update_by,
                              update_time, remark)
@@ -88,17 +88,17 @@
                 #{updateBy}, #{updateTime}, #{remark})
     </insert>
 
-    <insert id="addStudentClazz" parameterType="com.ruoyi.system.domain.entity.BStudentClazzEntity">
+    <insert id="addStudentClazz" parameterType="com.ruoyi.system.domain.po.BStudentClazzEntity">
         INSERT INTO ms_student_class(user_id, class_id, status, create_time)
         VALUES (#{userId}, #{clazzId}, #{status}, #{createTime})
     </insert>
 
-    <insert id="addEmploymentInfo" parameterType="com.ruoyi.system.domain.vo.student.EmploymentAddVo">
+    <insert id="addEmploymentInfo" parameterType="com.ruoyi.system.domain.bo.student.EmploymentAddVo">
         INSERT INTO ms_employment_info(employment_id, user_id, create_by, create_time)
         VALUES (#{employmentId}, #{userId}, #{createBy}, #{createTime})
     </insert>
 
-    <update id="updateStudent" parameterType="com.ruoyi.system.domain.vo.student.StudentUpdateVo">
+    <update id="updateStudent" parameterType="com.ruoyi.system.domain.bo.student.StudentUpdateVo">
         UPDATE ms_student
         <set>
             <if test="birthday != null and birthday != ''">birthday = #{birthday},</if>
@@ -115,7 +115,7 @@
         <where>user_id = #{userId}</where>
     </update>
 
-    <update id="updateUser" parameterType="com.ruoyi.system.domain.vo.student.StudentUpdateVo">
+    <update id="updateUser" parameterType="com.ruoyi.system.domain.bo.student.StudentUpdateVo">
         UPDATE sys_user
         <set>
             <if test="userName != null and userName != ''">user_name = #{userName},</if>
@@ -156,7 +156,7 @@
     </update>
 
     <select id="selectEmployment" parameterType="java.lang.Long"
-            resultType="com.ruoyi.system.domain.view.EmploymentInfoView">
+            resultType="com.ruoyi.system.domain.vo.online.EmploymentInfoView">
         SELECT su.nick_name, mei.city, mei.company, mei.salary, mei.position, mei.remark
         FROM sys_user AS su,
         ms_employment_info AS mei
@@ -166,7 +166,7 @@
         </where>
     </select>
 
-    <update id="updateEmployment" parameterType="com.ruoyi.system.domain.vo.student.EmploymentUpdateVo">
+    <update id="updateEmployment" parameterType="com.ruoyi.system.domain.bo.student.EmploymentUpdateVo">
         UPDATE ms_employment_info
         <set>
             <if test="city != null and city != ''">city = #{city},</if>
