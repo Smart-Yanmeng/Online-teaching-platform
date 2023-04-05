@@ -1,8 +1,8 @@
 package com.ruoyi.system.mapper.online;
 
 import com.ruoyi.system.domain.po.BBannerPo;
-import com.ruoyi.system.domain.bo.banner.BannerSearchVo;
-import com.ruoyi.system.domain.bo.banner.BannerUpdateVo;
+import com.ruoyi.system.domain.bo.banner.BannerSearchBo;
+import com.ruoyi.system.domain.dto.banner.BannerUpdateDto;
 
 import java.util.List;
 
@@ -15,11 +15,11 @@ public interface IBannerMapper {
 
     List<BBannerPo> selectBanner();
 
-    List<BBannerPo> queryBannerByCondition(BannerSearchVo bannerSearchVo);
+    List<BBannerPo> queryBannerByCondition(BannerSearchBo bannerSearchBo);
 
-    void insertBannerByCondition(BBannerPo bannerEntity);
+    void insertBannerByCondition(BBannerPo bannerPo);
 
-    void updateBannerByCondition(BannerUpdateVo bannerUpdateVo);
+    void updateBannerByCondition(BBannerPo bannerPo);
 
     void patchBannerByCondition(Long bannerId);
 

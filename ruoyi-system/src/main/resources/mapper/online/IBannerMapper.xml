@@ -18,11 +18,12 @@
             resultType="com.ruoyi.system.domain.po.BBannerPo">
         SELECT *
         FROM ms_banner
+        WHERE del_flag = 0
         ORDER BY banner_sort ASC
     </select>
 
     <select id="queryBannerByCondition"
-            parameterType="com.ruoyi.system.domain.bo.banner.BannerSearchVo"
+            parameterType="com.ruoyi.system.domain.bo.banner.BannerSearchBo"
             resultType="com.ruoyi.system.domain.po.BBannerPo">
         SELECT *
         FROM ms_banner
@@ -39,7 +40,7 @@
                 #{createBy}, #{createTime}, #{updateBy}, #{updateTime}, #{remark})
     </insert>
 
-    <update id="updateBannerByCondition" parameterType="com.ruoyi.system.domain.bo.banner.BannerUpdateVo">
+    <update id="updateBannerByCondition" parameterType="com.ruoyi.system.domain.po.BBannerPo">
         UPDATE ms_banner
         <set>
             <if test="bannerTitle != null and bannerTitle != ''">banner_title = #{bannerTitle},</if>

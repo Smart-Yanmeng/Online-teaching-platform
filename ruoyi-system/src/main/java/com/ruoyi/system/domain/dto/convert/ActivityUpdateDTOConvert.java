@@ -1,4 +1,4 @@
-package com.ruoyi.system.domain.dto.active.convert;
+package com.ruoyi.system.domain.dto.convert;
 
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.bean.BeanUtils;

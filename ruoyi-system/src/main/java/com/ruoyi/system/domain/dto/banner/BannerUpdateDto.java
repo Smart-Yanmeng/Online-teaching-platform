@@ -1,10 +1,10 @@
-package com.ruoyi.system.domain.bo.banner;
+package com.ruoyi.system.domain.dto.banner;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Data
-public class BannerUpdateVo {
+public class BannerUpdateDto {
     @ApiModelProperty("轮播图ID")
     private Long bannerId;
 

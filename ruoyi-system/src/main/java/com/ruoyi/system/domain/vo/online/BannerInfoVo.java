@@ -21,11 +21,4 @@ public class BannerInfoVo {
 
     @ApiModelProperty("备注")
     private String remark;
-
-    // entity -> view
-    public BannerInfoVo transfer(BBannerPo bannerEntity) {
-        BeanUtils.copyProperties(bannerEntity, this);
-
-        return this;
-    }
 }

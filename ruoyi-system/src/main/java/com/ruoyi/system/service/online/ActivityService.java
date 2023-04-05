@@ -34,7 +34,7 @@ public class ActivityService {
     /**
      * 查询活动
      *
-     * @param activitySearchBo
+     * @param activitySearchBo 查询活动条件
      * @return List<ActivityInfoVo>
      */
     public List<ActivityInfoVo> queryActivityList(ActivitySearchBo activitySearchBo) {
@@ -46,7 +46,7 @@ public class ActivityService {
     /**
      * 新增活动
      *
-     * @param activityAddBo
+     * @param activityAddBo 增加活动参数
      */
     public void insertActivity(ActivityAddBo activityAddBo) {
         BActivityPo activityPo = new ActivityAddBOConvert().convert(activityAddBo);
@@ -56,9 +56,20 @@ public class ActivityService {
     }
 
     /**
+     * 批量删除活动
+     *
+     * @param activityArr 活动 ID 数组
+     */
+    public void patchActivityAll(Long[] activityArr) {
+        for (Long item : activityArr) {
+            activityMapper.patchActivityByCondition(item);
+        }
+    }
+
+    /**
      * 修改活动
      *
-     * @param activityUpdateBo
+     * @param activityUpdateBo 修改活动参数
      */
     public void updateActivity(ActivityUpdateBo activityUpdateBo) {
         BActivityPo activityPo = new ActivityUpdateBOConvert().convert(activityUpdateBo);
@@ -69,7 +80,7 @@ public class ActivityService {
     /**
      * 删除活动
      *
-     * @param activityId
+     * @param activityId 活动 ID
      */
     public void patchActivity(Long activityId) {
         activityMapper.patchActivityByCondition(activityId);
@@ -78,7 +89,7 @@ public class ActivityService {
     /**
      * 发布 / 取消发布活动
      *
-     * @param activityId
+     * @param activityId 活动 ID
      */
     public boolean releaseActivity(Long activityId) {
         if (activityMapper.checkRelease(activityId) == 1) {

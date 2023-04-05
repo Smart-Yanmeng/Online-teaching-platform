@@ -3,8 +3,8 @@ package com.ruoyi.web.controller.online;
 import com.github.pagehelper.PageHelper;
 import com.ruoyi.system.domain.bo.activity.ActivityAddBo;
 import com.ruoyi.system.domain.bo.activity.ActivityUpdateBo;
-import com.ruoyi.system.domain.dto.active.convert.ActivityAddDTOConvert;
-import com.ruoyi.system.domain.dto.active.convert.ActivityUpdateDTOConvert;
+import com.ruoyi.system.domain.dto.convert.ActivityAddDTOConvert;
+import com.ruoyi.system.domain.dto.convert.ActivityUpdateDTOConvert;
 import com.ruoyi.system.domain.vo.online.ActivityInfoVo;
 import com.ruoyi.system.domain.vo.common.ResultVo;
 import com.ruoyi.system.domain.dto.active.ActivityAddDto;
@@ -66,6 +66,15 @@ public class BActivityController {
         activityService.insertActivity(activityAddBo);
 
         return ResultVo.insertSuccess(new ActivityAddDto());
+    }
+
+    @ApiOperation("批量删除活动")
+    @PatchMapping
+    @Transactional(rollbackFor = Exception.class)
+    public ResultVo activityPatchAll(@RequestParam Long[] activityIdArr) {
+        activityService.patchActivityAll(activityIdArr);
+
+        return ResultVo.deleteSuccess();
     }
 
     @ApiOperation("修改活动")

@@ -1,13 +1,13 @@
-package com.ruoyi.system.domain.bo.activity;
+package com.ruoyi.system.domain.bo.banner;
 
-import com.ruoyi.system.domain.dto.active.ActivityAddDto;
+import com.ruoyi.system.domain.dto.banner.BannerAddDto;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class ActivityAddBo extends ActivityAddDto {
+public class BannerAddBo extends BannerAddDto {
     @ApiModelProperty("创建时间")
     private String createTime;
 

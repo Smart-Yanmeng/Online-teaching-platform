@@ -4,7 +4,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Data
-public class BannerSearchVo {
+public class BannerSearchBo {
     @ApiModelProperty("轮播图标题")
     private String bannerTitle;
 

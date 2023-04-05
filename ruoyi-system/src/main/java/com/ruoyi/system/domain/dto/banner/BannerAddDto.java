@@ -1,4 +1,4 @@
-package com.ruoyi.system.domain.bo.banner;
+package com.ruoyi.system.domain.dto.banner;
 
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.bean.BeanUtils;
@@ -7,7 +7,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Data
-public class BannerAddVo {
+public class BannerAddDto {
     @ApiModelProperty("轮播图标题")
     private String bannerTitle;
 
