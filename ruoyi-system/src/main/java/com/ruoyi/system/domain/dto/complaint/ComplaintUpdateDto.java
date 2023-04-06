@@ -1,10 +1,10 @@
-package com.ruoyi.system.domain.bo.complaint;
+package com.ruoyi.system.domain.dto.complaint;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Data
-public class ComplaintUpdateVo {
+public class ComplaintUpdateDto {
     @ApiModelProperty("投诉ID")
     private Long complaintId;
 
