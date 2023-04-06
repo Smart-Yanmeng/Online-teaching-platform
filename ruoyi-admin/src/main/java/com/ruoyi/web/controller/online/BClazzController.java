@@ -21,7 +21,7 @@ public class BClazzController {
     @Resource
     ClazzService clazzService;
 
-    @ApiOperation("刷新班级列表")
+    @ApiOperation("获取班级列表")
     @GetMapping
     public ResultVo clazzInfoList(@RequestParam @Valid Integer pageNum,
                                   @RequestParam @Valid Integer pageSize) {

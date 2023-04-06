@@ -1,14 +1,10 @@
 package com.ruoyi.system.mapper.online;
 
-import com.ruoyi.system.domain.po.BStudentClazzEntity;
-import com.ruoyi.system.domain.po.BStudentEntity;
-import com.ruoyi.system.domain.po.BUserEntity;
-import com.ruoyi.system.domain.vo.online.EmploymentInfoView;
-import com.ruoyi.system.domain.vo.online.StudentInfoView;
-import com.ruoyi.system.domain.bo.student.EmploymentAddVo;
+import com.ruoyi.system.domain.bo.student.EmploymentUpdateBo;
+import com.ruoyi.system.domain.po.*;
+import com.ruoyi.system.domain.vo.online.EmploymentInfoVo;
 import com.ruoyi.system.domain.bo.student.EmploymentUpdateVo;
-import com.ruoyi.system.domain.bo.student.StudentSearchVo;
-import com.ruoyi.system.domain.bo.student.StudentUpdateVo;
+import com.ruoyi.system.domain.bo.student.StudentSearchBo;
 
 import java.util.List;
 
@@ -25,21 +21,21 @@ public interface IStudentMapper {
     // 获取 employmentId
     Long countEmployment();
 
-    List<StudentInfoView> selectStudent();
+    List<BStudentInfoPo> selectStudent();
 
-    List<StudentInfoView> queryStudentByCondition(StudentSearchVo studentSearchVo);
+    List<BStudentInfoPo> queryStudentByCondition(StudentSearchBo studentSearchBo);
 
-    void addStudent(BStudentEntity studentEntity);
+    void addStudent(BStudentPo studentPo);
 
-    void addUser(BUserEntity userEntity);
+    void addUser(BUserPo userPo);
 
-    void addStudentClazz(BStudentClazzEntity studentClazzEntity);
+    void addStudentClazz(BStudentClazzPo studentClazzPo);
 
-    void addEmploymentInfo(EmploymentAddVo employmentAddVo);
+    void addEmploymentInfo(BEmploymentPo employmentPo);
 
-    void updateStudent(StudentUpdateVo studentUpdateVo);
+    void updateStudent(BStudentPo studentPo);
 
-    void updateUser(StudentUpdateVo studentUpdateVo);
+    void updateUser(BUserPo userPo);
 
     void updateStudentClazz(Long clazzId);
 
@@ -49,7 +45,7 @@ public interface IStudentMapper {
 
     void changeEmploymentInfoDelFlag(Long userId);
 
-    EmploymentInfoView selectEmployment(Long userId);
+    EmploymentInfoVo selectEmployment(Long userId);
 
-    void updateEmployment(EmploymentUpdateVo employmentUpdateVo);
+    void updateEmployment(EmploymentUpdateBo employmentUpdateBo);
 }

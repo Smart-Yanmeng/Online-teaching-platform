@@ -28,7 +28,7 @@ public class BBannerController {
     private BannerService bannerService;
 
     @ApiOperation("获取轮播图列表")
-    @GetMapping()
+    @GetMapping
     public ResultVo bannerInfoList(@RequestParam @Valid Integer pageNum,
                                    @RequestParam @Valid Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);

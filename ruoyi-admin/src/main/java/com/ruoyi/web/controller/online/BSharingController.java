@@ -10,7 +10,6 @@ import com.ruoyi.system.domain.vo.common.ResultVo;
 import com.ruoyi.system.domain.vo.online.SharingInfoVo;
 import com.ruoyi.system.domain.dto.sharing.SharingAddDto;
 import com.ruoyi.system.domain.bo.sharing.SharingSearchBo;
-import com.ruoyi.system.domain.bo.sharing.SharingUpdateVo;
 import com.ruoyi.system.service.online.SharingService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

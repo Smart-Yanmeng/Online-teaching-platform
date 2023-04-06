@@ -1,18 +1,17 @@
 package com.ruoyi.system.service.online;
 
-import com.ruoyi.common.utils.DateUtils;
-import com.ruoyi.common.utils.SecurityUtils;
-import com.ruoyi.system.domain.po.BStudentClazzEntity;
-import com.ruoyi.system.domain.po.BStudentEntity;
-import com.ruoyi.system.domain.po.BUserEntity;
-import com.ruoyi.system.domain.vo.online.EmploymentInfoView;
-import com.ruoyi.system.domain.vo.online.StudentInfoView;
+import com.ruoyi.system.domain.bo.convert.*;
+import com.ruoyi.system.domain.po.*;
+import com.ruoyi.system.domain.po.convert.StudentInfoPOConvert;
+import com.ruoyi.system.domain.vo.online.EmploymentInfoVo;
+import com.ruoyi.system.domain.vo.online.StudentInfoVo;
 import com.ruoyi.system.domain.bo.student.*;
 import com.ruoyi.system.mapper.online.IStudentMapper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class StudentService {
@@ -22,119 +21,90 @@ public class StudentService {
     /**
      * 刷新 - 重置学生列表
      *
-     * @return
+     * @return List<StudentInfoVo>
      */
-    public List<StudentInfoView> selectStudentList() {
-        List<StudentInfoView> studentInfoViews = studentMapper.selectStudent();
+    public List<StudentInfoVo> selectStudentList() {
+        List<BStudentInfoPo> studentInfoPos = studentMapper.selectStudent();
 
-        return studentInfoViews;
+        return studentInfoPos.stream().map(item -> new StudentInfoPOConvert().convert(item)).collect(Collectors.toList());
     }
 
     /**
      * 查询学生
      *
-     * @param studentSearchVo
+     * @param studentSearchBo 学生查询信息
      */
-    public List<StudentInfoView> queryStudentList(StudentSearchVo studentSearchVo) {
-        List<StudentInfoView> studentInfoViews = studentMapper.queryStudentByCondition(studentSearchVo);
+    public List<StudentInfoVo> queryStudentList(StudentSearchBo studentSearchBo) {
+        List<BStudentInfoPo> studentInfoPos = studentMapper.queryStudentByCondition(studentSearchBo);
 
-        return studentInfoViews;
+        return studentInfoPos.stream().map(item -> new StudentInfoPOConvert().convert(item)).collect(Collectors.toList());
     }
 
     /**
      * 新增学生
      *
-     * @param studentAddVo
+     * @param studentAddBo 新增学生信息
      */
-    public void addStudent(StudentAddVo studentAddVo) {
+    public void addStudent(StudentAddBo studentAddBo) {
         // 获取 userId
         Long userId = studentMapper.countUser() + 1;
-        // 获取创建时间
-        String createTime = DateUtils.getTime();
-        // 获取创建人
-//        String createBy = SecurityUtils.getUsername();
-        String createBy = "Admin";
         // 获取班级 ID
-        Long clazzId = studentMapper.selectClazzId(studentAddVo.getClazzName());
-        // 加密密码
-        String password = SecurityUtils.encryptPassword(studentAddVo.getPassword());
+        Long clazzId = studentMapper.selectClazzId(studentAddBo.getClazzName());
         // 获取 employmentId
         Long employmentId = studentMapper.countEmployment() + 1;
 
         // 插入 ms_student 表
-        BStudentEntity studentEntity = studentAddVo.transferToStudentEntity(new BStudentEntity());
-        studentEntity.setUserId(userId);
-        studentEntity.setClazzId(clazzId);
-        studentEntity.setCreateBy(createBy);
-        studentEntity.setCreateTime(createTime);
-        studentEntity.setUpdateBy(createBy);
-        studentEntity.setUpdateTime(createTime);
+        BStudentPo studentPo = new StudentAddBOConvert().convert(studentAddBo);
+        studentPo.setUserId(userId);
+        studentPo.setClazzId(clazzId);
 
-        studentMapper.addStudent(studentEntity);
+        studentMapper.addStudent(studentPo);
 
         // 插入 sys_user 表
-        BUserEntity userEntity = studentAddVo.transferToUserEntity(new BUserEntity());
-        userEntity.setUserId(userId);
-        userEntity.setPassword(password);
-        userEntity.setStatus('0');
-        userEntity.setDelFlag('0');
-        userEntity.setCreateBy(createBy);
-        userEntity.setCreateTime(createTime);
-        userEntity.setUpdateBy(createBy);
-        userEntity.setUpdateTime(createTime);
+        BUserPo userPo = new UserAddBOConvert().convert(studentAddBo);
+        userPo.setUserId(userId);
 
-        studentMapper.addUser(userEntity);
+        studentMapper.addUser(userPo);
 
         // 插入 ms_student_class 表
-        BStudentClazzEntity studentClazzEntity = studentAddVo.transferToStudentClazzEntity(new BStudentClazzEntity());
-        studentClazzEntity.setUserId(userId);
-        studentClazzEntity.setClazzId(clazzId);
-        studentClazzEntity.setStatus('0');
-        studentClazzEntity.setCreateTime(createTime);
+        BStudentClazzPo studentClazzPo = new StudentClazzAddBOConvert().convert(studentAddBo);
+        studentClazzPo.setUserId(userId);
+        studentClazzPo.setClazzId(clazzId);
 
-        studentMapper.addStudentClazz(studentClazzEntity);
+        studentMapper.addStudentClazz(studentClazzPo);
 
         // 插入 ms_employment_info 表
-        EmploymentAddVo employmentAddVo = new EmploymentAddVo();
-        employmentAddVo.setEmploymentId(employmentId);
-        employmentAddVo.setUserId(userId);
-        employmentAddVo.setCreateBy(createBy);
-        employmentAddVo.setCreateTime(createTime);
+        BEmploymentPo employmentPo = new EmploymentAddBOConvert().convert(studentAddBo);
+        employmentPo.setUserId(userId);
+        employmentPo.setEmploymentId(employmentId);
 
-        studentMapper.addEmploymentInfo(employmentAddVo);
+        studentMapper.addEmploymentInfo(employmentPo);
     }
 
     /**
      * 修改学生信息
      *
-     * @param studentUpdateVo
+     * @param studentUpdateBo 学生修改信息
      */
-    public void updateStudent(StudentUpdateVo studentUpdateVo) {
-        // 获取更新时间
-        String updateTime = DateUtils.getTime();
-        // 获取更新者
-//        String createBy = SecurityUtils.getUsername();
-        String updateBy = "Admin";
-
-        studentUpdateVo.setUpdateTime(updateTime);
-        studentUpdateVo.setUpdateBy(updateBy);
-
+    public void updateStudent(StudentUpdateBo studentUpdateBo) {
         // 修改 ms_student 表
-        studentMapper.updateStudent(studentUpdateVo);
+        BStudentPo studentPo = new StudentUpdateBOConvert().convert(studentUpdateBo);
+        studentMapper.updateStudent(studentPo);
 
         // 修改 sys_user 表
-        studentMapper.updateUser(studentUpdateVo);
+        BUserPo userPo = new UserUpdateBOConvert().convert(studentUpdateBo);
+        studentMapper.updateUser(userPo);
 
         // 修改 ms_student_class 表 ( 如果 clazzName 被修改了 )
-        if (studentUpdateVo.getClazzName() != studentMapper.selectClazzName(studentUpdateVo.getUserId())) {
-            studentMapper.updateStudentClazz(studentMapper.selectClazzId(studentUpdateVo.getClazzName()));
+        if (studentUpdateBo.getClazzName() != studentMapper.selectClazzName(studentUpdateBo.getUserId())) {
+            studentMapper.updateStudentClazz(studentMapper.selectClazzId(studentUpdateBo.getClazzName()));
         }
     }
 
     /**
      * 删除学生
      *
-     * @param userId
+     * @param userId 用户 ID
      */
     public void patchStudent(Long userId) {
         // 移出学生
@@ -150,21 +120,21 @@ public class StudentService {
     /**
      * 刷新结业信息
      *
-     * @param userId
-     * @return
+     * @param userId 用户 ID
+     * @return EmploymentInfoVo
      */
-    public EmploymentInfoView selectEmploymentInfo(Long userId) {
-        studentMapper.selectEmployment(userId);
+    public EmploymentInfoVo selectEmploymentInfo(Long userId) {
+        EmploymentInfoVo employmentInfoVo = studentMapper.selectEmployment(userId);
 
-        return new EmploymentInfoView();
+        return employmentInfoVo;
     }
 
     /**
      * 修改就业信息
      *
-     * @param employmentUpdateVo
+     * @param employmentUpdateBo
      */
-    public void updateEmployment(EmploymentUpdateVo employmentUpdateVo) {
-        studentMapper.updateEmployment(employmentUpdateVo);
+    public void updateEmployment(EmploymentUpdateBo employmentUpdateBo) {
+        studentMapper.updateEmployment(employmentUpdateBo);
     }
 }

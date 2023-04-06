@@ -1,10 +1,10 @@
-package com.ruoyi.system.domain.vo.online;
+package com.ruoyi.system.domain.po;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Data
-public class    StudentInfoView {
+public class BStudentInfoPo {
     @ApiModelProperty("学生姓名")
     private String nickName;
 

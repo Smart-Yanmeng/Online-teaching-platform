@@ -1,4 +1,4 @@
-package com.ruoyi.system.domain.bo.student;
+package com.ruoyi.system.domain.dto.student;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -6,7 +6,7 @@ import lombok.Data;
 import javax.validation.constraints.NotBlank;
 
 @Data
-public class EmploymentUpdateVo {
+public class EmploymentUpdateDto {
     @ApiModelProperty("用户ID")
     private Long userId;
 

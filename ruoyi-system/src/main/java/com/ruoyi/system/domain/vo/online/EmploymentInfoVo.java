@@ -1,12 +1,12 @@
 package com.ruoyi.system.domain.vo.online;
 
 import com.ruoyi.common.utils.bean.BeanUtils;
-import com.ruoyi.system.domain.po.BEmploymentEntity;
+import com.ruoyi.system.domain.po.BEmploymentPo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Data
-public class EmploymentInfoView {
+public class EmploymentInfoVo {
     @ApiModelProperty("用户昵称")
     private String nickName;
 
@@ -26,7 +26,7 @@ public class EmploymentInfoView {
     private String remark;
 
     // entity -> view
-    public EmploymentInfoView transfer(BEmploymentEntity employmentEntity) {
+    public EmploymentInfoVo transfer(BEmploymentPo employmentEntity) {
         BeanUtils.copyProperties(employmentEntity, this);
 
         return this;

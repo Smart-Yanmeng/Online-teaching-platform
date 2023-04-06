@@ -1,16 +1,16 @@
-package com.ruoyi.system.domain.bo.student;
+package com.ruoyi.system.domain.dto.student;
 
 import com.ruoyi.common.utils.bean.BeanUtils;
-import com.ruoyi.system.domain.po.BStudentClazzEntity;
-import com.ruoyi.system.domain.po.BStudentEntity;
-import com.ruoyi.system.domain.po.BUserEntity;
+import com.ruoyi.system.domain.po.BStudentClazzPo;
+import com.ruoyi.system.domain.po.BStudentPo;
+import com.ruoyi.system.domain.po.BUserPo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 
 @Data
-public class StudentAddVo {
+public class StudentAddDto {
     @NotBlank
     @ApiModelProperty("账号")
     private String userName;
@@ -71,21 +71,21 @@ public class StudentAddVo {
     private String remark;
 
     // vo -> studentClazzEntity
-    public BStudentClazzEntity transferToStudentClazzEntity(BStudentClazzEntity studentClazzEntity) {
+    public BStudentClazzPo transferToStudentClazzEntity(BStudentClazzPo studentClazzEntity) {
         BeanUtils.copyProperties(this, studentClazzEntity);
 
         return studentClazzEntity;
     }
 
     // vo -> userEntity
-    public BUserEntity transferToUserEntity(BUserEntity userEntity) {
+    public BUserPo transferToUserEntity(BUserPo userEntity) {
         BeanUtils.copyProperties(this, userEntity);
 
         return userEntity;
     }
 
     // vo -> studentEntity
-    public BStudentEntity transferToStudentEntity(BStudentEntity studentEntity) {
+    public BStudentPo transferToStudentEntity(BStudentPo studentEntity) {
         BeanUtils.copyProperties(this, studentEntity);
 
         return studentEntity;

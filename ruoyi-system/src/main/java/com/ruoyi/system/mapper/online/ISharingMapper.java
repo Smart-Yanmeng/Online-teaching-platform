@@ -1,10 +1,8 @@
 package com.ruoyi.system.mapper.online;
 
-import com.ruoyi.system.domain.bo.sharing.SharingUpdateBo;
 import com.ruoyi.system.domain.po.BSharingPo;
 import com.ruoyi.system.domain.dto.sharing.SharingAddDto;
 import com.ruoyi.system.domain.bo.sharing.SharingSearchBo;
-import com.ruoyi.system.domain.bo.sharing.SharingUpdateVo;
 
 import java.util.List;
 
