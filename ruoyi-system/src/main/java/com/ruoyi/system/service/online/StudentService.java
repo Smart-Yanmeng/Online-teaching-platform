@@ -132,7 +132,7 @@ public class StudentService {
     /**
      * 修改就业信息
      *
-     * @param employmentUpdateBo
+     * @param employmentUpdateBo 就业信息修改信息
      */
     public void updateEmployment(EmploymentUpdateBo employmentUpdateBo) {
         studentMapper.updateEmployment(employmentUpdateBo);
