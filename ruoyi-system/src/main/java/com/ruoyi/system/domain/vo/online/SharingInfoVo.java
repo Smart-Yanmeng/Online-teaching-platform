@@ -1,13 +1,10 @@
-package com.ruoyi.system.domain.po;
+package com.ruoyi.system.domain.vo.online;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Data
-public class BSharingEntity {
-    @ApiModelProperty("知识分享ID")
-    private Long sharingId;
-
+public class SharingInfoVo {
     @ApiModelProperty("知识分享标题")
     private String sharingTitle;
 
@@ -40,21 +37,6 @@ public class BSharingEntity {
 
     @ApiModelProperty("作者")
     private String author;
-
-    @ApiModelProperty("删除标志(0代表存在，2代表删除)")
-    private Character delFlag;
-
-    @ApiModelProperty("创建者")
-    private String createBy;
-
-    @ApiModelProperty("创建时间")
-    private String createTime;
-
-    @ApiModelProperty("更新者")
-    private String updateBy;
-
-    @ApiModelProperty("更新时间")
-    private String updateTime;
 
     @ApiModelProperty("备注")
     private String remark;

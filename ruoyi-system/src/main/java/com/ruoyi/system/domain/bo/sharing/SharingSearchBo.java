@@ -4,7 +4,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Data
-public class SharingSearchVo {
+public class SharingSearchBo {
     @ApiModelProperty("标题")
     private String sharingTitle;
 

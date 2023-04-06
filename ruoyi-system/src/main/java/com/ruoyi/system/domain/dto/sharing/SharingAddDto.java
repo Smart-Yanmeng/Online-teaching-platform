@@ -1,15 +1,15 @@
-package com.ruoyi.system.domain.bo.sharing;
+package com.ruoyi.system.domain.dto.sharing;
 
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.bean.BeanUtils;
-import com.ruoyi.system.domain.po.BSharingEntity;
+import com.ruoyi.system.domain.po.BSharingPo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 
 @Data
-public class SharingAddVo {
+public class SharingAddDto {
     @NotBlank
     @ApiModelProperty("知识分享活动标题")
     private String activityTitle;
@@ -50,18 +50,4 @@ public class SharingAddVo {
 
     @ApiModelProperty("备注")
     private String remark;
-
-    // vo -> entity
-    public BSharingEntity transfer(BSharingEntity sharingEntity) {
-        BeanUtils.copyProperties(this, sharingEntity);
-        sharingEntity.setCreateTime(DateUtils.getTime());
-        sharingEntity.setCreateBy("admin");
-//        sharingEntity.setCreateBy(SecurityUtils.getUsername());
-        sharingEntity.setDelFlag('0');
-        sharingEntity.setUpdateTime(DateUtils.getTime());
-        sharingEntity.setUpdateBy("admin");
-//        sharingEntity.setUpdateBy(SecurityUtils.getUsername());
-
-        return sharingEntity;
-    }
 }
