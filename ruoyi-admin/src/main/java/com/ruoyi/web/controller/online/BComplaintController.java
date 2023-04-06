@@ -1,7 +1,7 @@
 package com.ruoyi.web.controller.online;
 
 import com.github.pagehelper.PageHelper;
-import com.ruoyi.system.domain.vo.online.ComplaintInfoView;
+import com.ruoyi.system.domain.vo.online.ComplaintInfoVo;
 import com.ruoyi.system.domain.vo.common.ResultVo;
 import com.ruoyi.system.domain.bo.complaint.ComplaintUpdateVo;
 import com.ruoyi.system.service.online.ComplaintService;
@@ -20,14 +20,13 @@ public class BComplaintController {
     @Resource
     private ComplaintService complaintService;
 
-    @ApiOperation("刷新投诉列表")
+    @ApiOperation("获取投诉列表")
     @GetMapping
     public ResultVo complaintInfoList(@RequestParam Integer pageNum, @RequestParam Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
+        List<ComplaintInfoVo> complaintInfoVos = complaintService.selectComplaintList();
 
-        List<ComplaintInfoView> complaintInfoViews = complaintService.selectComplaintList();
-
-        return ResultVo.querySuccess(complaintInfoViews);
+        return ResultVo.querySuccess(complaintInfoVos);
     }
 
     @ApiOperation("批量删除投诉")

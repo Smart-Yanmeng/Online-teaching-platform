@@ -1,22 +1,25 @@
 package com.ruoyi.system.service.online;
 
-import com.ruoyi.system.domain.vo.online.ComplaintInfoView;
+import com.ruoyi.system.domain.po.BComplaintPo;
+import com.ruoyi.system.domain.po.convert.ComplaintPOConvert;
+import com.ruoyi.system.domain.vo.online.ComplaintInfoVo;
 import com.ruoyi.system.domain.bo.complaint.ComplaintUpdateVo;
 import com.ruoyi.system.mapper.online.IComplaintMapper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ComplaintService {
     @Resource
     IComplaintMapper complaintMapper;
 
-    public List<ComplaintInfoView> selectComplaintList() {
-        List<ComplaintInfoView> complaintInfoViews = complaintMapper.selectComplaint();
+    public List<ComplaintInfoVo> selectComplaintList() {
+        List<BComplaintPo> complaintPos = complaintMapper.selectComplaint();
 
-        return complaintInfoViews;
+        return complaintPos.stream().map(item -> new ComplaintPOConvert().convert(item)).collect(Collectors.toList());
     }
 
     public void patchComplaintAll(Long[] complaintArr) {
