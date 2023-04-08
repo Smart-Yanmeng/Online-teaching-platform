@@ -1,7 +1,5 @@
 package com.ruoyi.system.domain.vo.online;
 
-import com.ruoyi.common.utils.bean.BeanUtils;
-import com.ruoyi.system.domain.po.BEmploymentPo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -24,11 +22,4 @@ public class EmploymentInfoVo {
 
     @ApiModelProperty("备注")
     private String remark;
-
-    // entity -> view
-    public EmploymentInfoVo transfer(BEmploymentPo employmentEntity) {
-        BeanUtils.copyProperties(employmentEntity, this);
-
-        return this;
-    }
 }

@@ -4,7 +4,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Data
-public class BEmploymentPo {
+public class BEmploymentInfoPo {
     @ApiModelProperty("就业ID")
     private Long employmentId;
 

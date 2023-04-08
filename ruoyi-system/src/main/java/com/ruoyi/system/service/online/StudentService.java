@@ -74,7 +74,7 @@ public class StudentService {
         studentMapper.addStudentClazz(studentClazzPo);
 
         // 插入 ms_employment_info 表
-        BEmploymentPo employmentPo = new EmploymentAddBOConvert().convert(studentAddBo);
+        BEmploymentInfoPo employmentPo = new EmploymentAddBOConvert().convert(studentAddBo);
         employmentPo.setUserId(userId);
         employmentPo.setEmploymentId(employmentId);
 
@@ -118,15 +118,13 @@ public class StudentService {
     }
 
     /**
-     * 刷新结业信息
+     * 获取就业信息
      *
      * @param userId 用户 ID
      * @return EmploymentInfoVo
      */
     public EmploymentInfoVo selectEmploymentInfo(Long userId) {
-        EmploymentInfoVo employmentInfoVo = studentMapper.selectEmployment(userId);
-
-        return employmentInfoVo;
+        return (studentMapper.selectEmployment(userId));
     }
 
     /**

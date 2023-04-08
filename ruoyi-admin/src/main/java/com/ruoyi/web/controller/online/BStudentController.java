@@ -82,7 +82,7 @@ public class BStudentController {
         return ResultVo.insertSuccess(new StudentAddDto());
     }
 
-    @ApiOperation("批量修改学生")
+    @ApiOperation("批量删除学生")
     @PatchMapping("/delete")
     @Transactional(rollbackFor = Exception.class)
     public ResultVo studentPatchAll(@RequestParam Long[] studentIdArr) {
@@ -123,7 +123,7 @@ public class BStudentController {
     }
 
     @ApiOperation("修改就业信息")
-    @PutMapping("/update/{userId}")
+    @PutMapping("/employment/update/{userId}")
     @Transactional(rollbackFor = Exception.class)
     public ResultVo employmentUpdate(@PathVariable Long userId,
                                      @RequestBody EmploymentUpdateDto employmentUpdateDto) {
@@ -131,6 +131,6 @@ public class BStudentController {
         EmploymentUpdateBo employmentUpdateBo = new EmploymentUpdateDTOConvert().convert(employmentUpdateDto);
         studentService.updateEmployment(employmentUpdateBo);
 
-        return ResultVo.updateSuccess(null);
+        return ResultVo.updateSuccess(new EmploymentUpdateDto());
     }
 }

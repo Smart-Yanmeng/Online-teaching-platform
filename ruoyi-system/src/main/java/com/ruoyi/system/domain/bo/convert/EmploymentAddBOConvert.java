@@ -2,13 +2,13 @@ package com.ruoyi.system.domain.bo.convert;
 
 import com.ruoyi.common.utils.bean.BeanUtils;
 import com.ruoyi.system.domain.bo.student.StudentAddBo;
-import com.ruoyi.system.domain.po.BEmploymentPo;
+import com.ruoyi.system.domain.po.BEmploymentInfoPo;
 import com.ruoyi.system.tool.intf.ClassConvertTool;
 
-public class EmploymentAddBOConvert implements ClassConvertTool<StudentAddBo, BEmploymentPo> {
+public class EmploymentAddBOConvert implements ClassConvertTool<StudentAddBo, BEmploymentInfoPo> {
     @Override
-    public BEmploymentPo convert(StudentAddBo studentAddBo) {
-        BEmploymentPo employmentPo = new BEmploymentPo();
+    public BEmploymentInfoPo convert(StudentAddBo studentAddBo) {
+        BEmploymentInfoPo employmentPo = new BEmploymentInfoPo();
         BeanUtils.copyProperties(studentAddBo, employmentPo);
 
         return employmentPo;
