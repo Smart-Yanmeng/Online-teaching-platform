@@ -4,7 +4,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Data
-public class BClazzEntity {
+public class BClazzPo {
     @ApiModelProperty("班级ID")
     private Long clazzId;
 

@@ -4,7 +4,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Data
-public class CoursewareInfoView {
+public class CoursewareInfoVo {
     @ApiModelProperty("目录名称")
     private String catalogueName;
 

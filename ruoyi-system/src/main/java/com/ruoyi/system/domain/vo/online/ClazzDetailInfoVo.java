@@ -6,7 +6,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class ClazzDetailInfoView {
+public class ClazzDetailInfoVo {
     @ApiModelProperty("章节ID")
     private Long chapterId;
 

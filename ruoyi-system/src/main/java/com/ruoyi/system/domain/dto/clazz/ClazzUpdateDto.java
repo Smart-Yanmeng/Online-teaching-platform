@@ -1,15 +1,15 @@
-package com.ruoyi.system.domain.bo.clazz;
+package com.ruoyi.system.domain.dto.clazz;
 
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.bean.BeanUtils;
-import com.ruoyi.system.domain.po.BClazzEntity;
+import com.ruoyi.system.domain.po.BClazzPo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 
 @Data
-public class ClazzAddVo {
+public class ClazzUpdateDto {
     @ApiModelProperty("班级封面")
     private String clazzCover;
 
@@ -42,17 +42,4 @@ public class ClazzAddVo {
 
     @ApiModelProperty("备注")
     private String remark;
-
-    public BClazzEntity transfer(BClazzEntity clazzEntity) {
-        BeanUtils.copyProperties(this, clazzEntity);
-        clazzEntity.setDelFlag('0');
-        clazzEntity.setCreateTime(DateUtils.getTime());
-        clazzEntity.setCreateBy("admin");
-//        clazzEntity.setCreateBy(SecurityUtils.getUsername());
-        clazzEntity.setUpdateTime(DateUtils.getTime());
-        clazzEntity.setUpdateBy("admin");
-//        clazzEntity.setUpdateBy(SecurityUtils.getUsername());
-
-        return new BClazzEntity();
-    }
 }

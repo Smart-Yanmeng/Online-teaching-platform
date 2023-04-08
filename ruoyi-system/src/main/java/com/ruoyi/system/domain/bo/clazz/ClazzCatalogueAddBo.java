@@ -1,21 +1,18 @@
 package com.ruoyi.system.domain.bo.clazz;
 
+import com.ruoyi.system.domain.dto.clazz.ClazzCatalogueAddDto;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
-public class ClazzCatalogueAddVo {
+@EqualsAndHashCode(callSuper = true)
+public class ClazzCatalogueAddBo extends ClazzCatalogueAddDto {
     @ApiModelProperty("目录ID")
     private Long catalogueId;
 
     @ApiModelProperty("章节ID")
     private Long chapterId;
-
-    @ApiModelProperty("目录名称")
-    private String catalogueName;
-
-    @ApiModelProperty("排序")
-    private Integer catalogueSort;
 
     @ApiModelProperty("删除标志(0代表存在，2代表删除)")
     private Character delFlag;
