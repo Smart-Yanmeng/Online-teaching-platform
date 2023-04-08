@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -24,7 +25,8 @@ public class BComplaintController {
 
     @ApiOperation("获取投诉列表")
     @GetMapping("/list")
-    public ResultVo complaintInfoList(@RequestParam Integer pageNum, @RequestParam Integer pageSize) {
+    public ResultVo complaintInfoList(@RequestParam(defaultValue = "1") @Valid Integer pageNum,
+                                      @RequestParam(defaultValue = "10") @Valid Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         List<ComplaintInfoVo> complaintInfoVos = complaintService.selectComplaintList();
 

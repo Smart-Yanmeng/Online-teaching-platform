@@ -30,8 +30,8 @@ public class BStudentController {
 
     @ApiOperation("刷新学生列表")
     @GetMapping()
-    public ResultVo studentInfo(@RequestParam @Valid Integer pageNum,
-                                @RequestParam @Valid Integer pageSize) {
+    public ResultVo studentInfo(@RequestParam(defaultValue = "1") @Valid Integer pageNum,
+                                @RequestParam(defaultValue = "10") @Valid Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         List<StudentInfoVo> studentInfoVos = studentService.selectStudentList();
 
@@ -40,8 +40,8 @@ public class BStudentController {
 
     @ApiOperation("查询学生")
     @GetMapping("/list")
-    public ResultVo studentInfoSearchList(@RequestParam @Valid Integer pageNum,
-                                          @RequestParam @Valid Integer pageSize,
+    public ResultVo studentInfoSearchList(@RequestParam(defaultValue = "1") @Valid Integer pageNum,
+                                          @RequestParam(defaultValue = "10") @Valid Integer pageSize,
                                           @RequestParam String nickName,
                                           @RequestParam String userName,
                                           @RequestParam String grade,
@@ -64,8 +64,8 @@ public class BStudentController {
 
     @ApiOperation("重置学生列表")
     @GetMapping("/reset")
-    public ResultVo studentReset(@RequestParam @Valid Integer pageNum,
-                                 @RequestParam @Valid Integer pageSize) {
+    public ResultVo studentReset(@RequestParam(defaultValue = "1") @Valid Integer pageNum,
+                                 @RequestParam(defaultValue = "10") @Valid Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         List<StudentInfoVo> studentInfoVos = studentService.selectStudentList();
 

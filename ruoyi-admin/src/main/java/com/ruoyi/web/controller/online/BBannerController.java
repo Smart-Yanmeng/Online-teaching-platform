@@ -29,8 +29,8 @@ public class BBannerController {
 
     @ApiOperation("获取轮播图列表")
     @GetMapping
-    public ResultVo bannerInfoList(@RequestParam @Valid Integer pageNum,
-                                   @RequestParam @Valid Integer pageSize) {
+    public ResultVo bannerInfoList(@RequestParam(defaultValue = "1") @Valid Integer pageNum,
+                                   @RequestParam(defaultValue = "10") @Valid Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         List<BannerInfoVo> bannerInfoVos = bannerService.selectBannerList();
 
@@ -40,10 +40,13 @@ public class BBannerController {
     @ApiOperation("查询轮播图")
     @GetMapping("/list")
     public ResultVo bannerInfoSearchList(@RequestParam("bannerTitle") String bannerTitle,
-                                         @RequestParam("isRelease") Long isRelease) {
+                                         @RequestParam("isRelease") Long isRelease,
+                                         @RequestParam(defaultValue = "1") @Valid Integer pageNum,
+                                         @RequestParam(defaultValue = "10") @Valid Integer pageSize) {
         BannerSearchBo bannerSearchBo = new BannerSearchBo();
         bannerSearchBo.setBannerTitle(bannerTitle);
         bannerSearchBo.setIsRelease(isRelease);
+        PageHelper.startPage(pageNum, pageSize);
         List<BannerInfoVo> bannerInfoVos = bannerService.queryBannerList(bannerSearchBo);
 
         return ResultVo.querySuccess(bannerInfoVos);
@@ -51,8 +54,8 @@ public class BBannerController {
 
     @ApiOperation("重置轮播图列表")
     @GetMapping("/reset")
-    public ResultVo bannerReset(@RequestParam @Valid Integer pageNum,
-                                @RequestParam @Valid Integer pageSize) {
+    public ResultVo bannerReset(@RequestParam(defaultValue = "1") @Valid Integer pageNum,
+                                @RequestParam(defaultValue = "10") @Valid Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         List<BannerInfoVo> bannerInfoVos = bannerService.selectBannerList();
 

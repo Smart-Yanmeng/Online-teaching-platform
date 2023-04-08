@@ -29,8 +29,8 @@ public class BSharingController {
 
     @ApiOperation("获取分享列表")
     @GetMapping()
-    public ResultVo bannerInfo(@RequestParam @Valid Integer pageNum,
-                               @RequestParam @Valid Integer pageSize) {
+    public ResultVo bannerInfo(@RequestParam(defaultValue = "1") @Valid Integer pageNum,
+                               @RequestParam(defaultValue = "10") @Valid Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         List<SharingInfoVo> sharingInfoVos = sharingService.selectSharingList();
 
@@ -43,7 +43,9 @@ public class BSharingController {
                                           @RequestParam("sharingSubtitle") String sharingSubtitle,
                                           @RequestParam("honouredGuest") String honouredGuest,
                                           @RequestParam("isRelease") Character isRelease,
-                                          @RequestParam("isLink") Character isLink) {
+                                          @RequestParam("isLink") Character isLink,
+                                          @RequestParam(defaultValue = "1") @Valid Integer pageNum,
+                                          @RequestParam(defaultValue = "10") @Valid Integer pageSize) {
         SharingSearchBo sharingSearchBo = new SharingSearchBo();
         sharingSearchBo.setSharingTitle(sharingTitle);
         sharingSearchBo.setSharingSubtitle(sharingSubtitle);
@@ -51,6 +53,7 @@ public class BSharingController {
         sharingSearchBo.setIsRelease(isRelease);
         sharingSearchBo.setIsLink(isLink);
 
+        PageHelper.startPage(pageNum, pageSize);
         List<SharingInfoVo> sharingInfoVos = sharingService.querySharingList(sharingSearchBo);
 
         return ResultVo.querySuccess(sharingInfoVos);
@@ -58,8 +61,8 @@ public class BSharingController {
 
     @ApiOperation("重置分享列表")
     @GetMapping("/reset")
-    public ResultVo sharingReset(@RequestParam @Valid Integer pageNum,
-                                 @RequestParam @Valid Integer pageSize) {
+    public ResultVo sharingReset(@RequestParam(defaultValue = "1") @Valid Integer pageNum,
+                                 @RequestParam(defaultValue = "10") @Valid Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         List<SharingInfoVo> sharingInfoVos = sharingService.selectSharingList();
 

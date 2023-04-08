@@ -31,8 +31,8 @@ public class BActivityController {
 
     @ApiOperation("获取活动列表")
     @GetMapping
-    public ResultVo activityInfoList(@RequestParam @Valid Integer pageNum,
-                                     @RequestParam @Valid Integer pageSize) {
+    public ResultVo activityInfoList(@RequestParam(defaultValue = "1") @Valid Integer pageNum,
+                                     @RequestParam(defaultValue = "10") @Valid Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         List<ActivityInfoVo> activityInfoVos = activityService.selectActivityList();
 
@@ -53,8 +53,8 @@ public class BActivityController {
 
     @ApiOperation("重置活动列表")
     @GetMapping("/reset")
-    public ResultVo activityReset(@RequestParam Integer pageNum,
-                                  @RequestParam Integer pageSize) {
+    public ResultVo activityReset(@RequestParam(defaultValue = "1") @Valid Integer pageNum,
+                                  @RequestParam(defaultValue = "10") @Valid Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         List<ActivityInfoVo> activityInfoVos = activityService.selectActivityList();
 
