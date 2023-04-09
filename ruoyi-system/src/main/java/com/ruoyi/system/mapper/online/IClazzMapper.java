@@ -1,10 +1,10 @@
 package com.ruoyi.system.mapper.online;
 
+import com.ruoyi.system.domain.bo.clazz.ClazzCatalogueTaskAddBo;
+import com.ruoyi.system.domain.bo.clazz.ClazzCatalogueUpdateBo;
 import com.ruoyi.system.domain.po.BCataloguePo;
 import com.ruoyi.system.domain.po.BChapterPo;
 import com.ruoyi.system.domain.po.BClazzPo;
-import com.ruoyi.system.domain.dto.clazz.ClazzCatalogueTaskAddDto;
-import com.ruoyi.system.domain.dto.clazz.ClazzCatalogueUpdateDto;
 import com.ruoyi.system.domain.bo.clazz.ClazzSearchBo;
 import com.ruoyi.system.domain.vo.online.*;
 
@@ -27,7 +27,7 @@ public interface IClazzMapper {
 
     List<ClazzInfoVo> queryClazzListByCondition(ClazzSearchBo clazzSearchBo);
 
-    void insertClazzByCondition(BClazzPo clazzEntity);
+    void insertClazzByCondition(BClazzPo clazzPo);
 
     ClazzInfoVo queryClazzByCondition(Long clazzId);
 
@@ -41,9 +41,9 @@ public interface IClazzMapper {
 
     CoursewareInfoVo selectCoursewareByCondition(Long catalogueId);
 
-    void updateClazzCatalogueByCondition(ClazzCatalogueUpdateDto clazzCatalogueUpdateDto);
+    void updateClazzCatalogueByCondition(ClazzCatalogueUpdateBo clazzCatalogueUpdateBo);
 
-    void insertChapterByCondition(BChapterPo chapterEntity);
+    void insertChapterByCondition(BChapterPo chapterPo);
 
     void insertCatalogueByCondition(BCataloguePo cataloguePo);
 
@@ -51,17 +51,17 @@ public interface IClazzMapper {
 
     void patchCatalogueByCondition(Long catalogueId);
 
-    void insertTaskByCondition(ClazzCatalogueTaskAddDto clazzCatalogueTaskAddDto);
+    void insertTaskByCondition(ClazzCatalogueTaskAddBo clazzCatalogueTaskAddBo);
 
-    List<TaskSubmitInfoView> selectTaskByCondition(Long catalogueId);
+    List<TaskSubmitInfoVo> selectTaskByCondition(Long catalogueId);
 
     String selectTaskFileUrlByCondition(Long taskId);
 
     String selectTaskFileNameByCondition(Long taskId);
 
-    List<CommentInfoView> selectParentCommentByCondition(Long catalogueId);
+    List<CommentInfoVo> selectParentCommentByCondition(Long catalogueId);
 
-    List<CommentInfoView> selectChildrenCommentByCondition(Long commentId);
+    List<CommentInfoVo> selectChildrenCommentByCondition(Long commentId);
 
     void patchCommentByCondition(Long commentId);
 }

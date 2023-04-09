@@ -213,30 +213,30 @@ public class BClazzController {
     public ResultVo taskInfoList(@PathVariable Long clazzId,
                                  @PathVariable Long chapterId,
                                  @PathVariable Long catalogueId) {
-        List<TaskSubmitInfoView> taskSubmitInfoViews = clazzService.selectTaskList(catalogueId);
+        List<TaskSubmitInfoVo> taskSubmitInfoVos = clazzService.selectTaskList(catalogueId);
 
-        return ResultVo.querySuccess(taskSubmitInfoViews);
+        return ResultVo.querySuccess(taskSubmitInfoVos);
     }
 
-    @ApiOperation("下载学生作业")
-    @GetMapping("/{clazzId}/detail/{chapterId}/{catalogueId}/{taskId}")
-    public ResultVo taskDownload(@PathVariable Long clazzId,
-                                 @PathVariable Long chapterId,
-                                 @PathVariable Long catalogueId,
-                                 @PathVariable Long taskId) {
-        clazzService.downloadTask(taskId);
-
-        return ResultVo.success("下载成功", null);
-    }
+//    @ApiOperation("下载学生作业")
+//    @GetMapping("/{clazzId}/detail/{chapterId}/{catalogueId}/{taskId}")
+//    public ResultVo taskDownload(@PathVariable Long clazzId,
+//                                 @PathVariable Long chapterId,
+//                                 @PathVariable Long catalogueId,
+//                                 @PathVariable Long taskId) {
+//        clazzService.downloadTask(taskId);
+//
+//        return ResultVo.success("下载成功", null);
+//    }
 
     @ApiOperation("获取评论列表")
     @GetMapping("/{clazzId}/detail/{chapterId}/{catalogueId}/comment")
     public ResultVo commentInfoList(@PathVariable Long clazzId,
                                     @PathVariable Long chapterId,
                                     @PathVariable Long catalogueId) {
-        List<CommentInfoView> commentInfoViews = clazzService.selectComment(catalogueId);
+        List<CommentInfoVo> commentInfoVos = clazzService.selectComment(catalogueId);
 
-        return ResultVo.querySuccess(commentInfoViews);
+        return ResultVo.querySuccess(commentInfoVos);
     }
 
     @ApiOperation("删除评论")

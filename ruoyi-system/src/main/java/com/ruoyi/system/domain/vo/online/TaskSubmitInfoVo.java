@@ -4,7 +4,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Data
-public class TaskSubmitInfoView {
+public class TaskSubmitInfoVo {
     @ApiModelProperty("学生姓名")
     private String nickName;
 

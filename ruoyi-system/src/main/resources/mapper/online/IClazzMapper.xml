@@ -74,7 +74,7 @@
         </where>
     </select>
 
-    <insert id="insertClazzByCondition" parameterType="com.ruoyi.system.domain.dto.clazz.ClazzAddDto">
+    <insert id="insertClazzByCondition" parameterType="com.ruoyi.system.domain.po.BClazzPo">
         INSERT INTO ms_class(class_id, teacher_id, headmaster_id, class_name, class_cover, class_type, start_time,
                              finish_time, finish, del_flag, create_by, create_time, update_by, update_time, remark)
         VALUES (#{clazzId}, #{teacherId}, #{headmasterId}, #{clazzName}, #{clazzCover}, #{clazzType}, #{startTime},
@@ -197,7 +197,7 @@
     </update>
 
     <select id="selectTaskByCondition" parameterType="java.lang.Long"
-            resultType="com.ruoyi.system.domain.vo.online.TaskSubmitInfoView">
+            resultType="com.ruoyi.system.domain.vo.online.TaskSubmitInfoVo">
         SELECT su.nick_name, mts.file_name, mts.pass, mts.comment
         FROM ms_task_submit mts
         LEFT JOIN sys_user su ON mts.user_id = su.user_id
@@ -217,7 +217,7 @@
     </select>
 
     <select id="selectParentCommentByCondition" parameterType="java.lang.Long"
-            resultType="com.ruoyi.system.domain.vo.online.CommentInfoView">
+            resultType="com.ruoyi.system.domain.vo.online.CommentInfoVo">
         SELECT mc.comment_id, su.user_name, su.nick_name, mc.comment_content, mc.create_time
         FROM ms_comment mc
         LEFT JOIN sys_user su ON mc.user_id = su.user_id
@@ -229,7 +229,7 @@
     </select>
 
     <select id="selectChildrenCommentByCondition" parameterType="java.lang.Long"
-            resultType="com.ruoyi.system.domain.vo.online.CommentInfoView">
+            resultType="com.ruoyi.system.domain.vo.online.CommentInfoVo">
         SELECT mc.comment_id, su.user_name, su.nick_name, mc.comment_content, mc.create_time
         FROM ms_comment mc
         LEFT JOIN sys_user su ON mc.user_id = su.user_id

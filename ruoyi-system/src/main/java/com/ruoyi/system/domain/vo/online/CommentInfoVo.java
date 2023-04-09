@@ -6,7 +6,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class CommentInfoView {
+public class CommentInfoVo {
     @ApiModelProperty("评论ID")
     private Long commentId;
 
@@ -23,5 +23,5 @@ public class CommentInfoView {
     private String createTime;
 
     @ApiModelProperty("子评论")
-    private List<CommentInfoView> children;
+    private List<CommentInfoVo> children;
 }
