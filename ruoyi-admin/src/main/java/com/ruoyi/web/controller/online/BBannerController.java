@@ -72,7 +72,7 @@ public class BBannerController {
     @ApiOperation("批量删除轮播图")
     @PatchMapping
     @Transactional(rollbackFor = Exception.class)
-    public ResultVo patchBannerAll(@RequestParam Long[] bannerIdArr) {
+    public ResultVo patchBannerAll(@RequestParam("bannerIdArr") Long[] bannerIdArr) {
         bannerService.patchBannerAll(bannerIdArr);
 
         return ResultVo.deleteSuccess();
