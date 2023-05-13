@@ -1,11 +1,11 @@
 package com.ruoyi.system.mapper.online;
 
-import com.ruoyi.system.domain.po.BChapterEntity;
-import com.ruoyi.system.domain.po.BClazzEntity;
-import com.ruoyi.system.domain.bo.clazz.ClazzCatalogueAddVo;
-import com.ruoyi.system.domain.bo.clazz.ClazzCatalogueTaskAddVo;
-import com.ruoyi.system.domain.bo.clazz.ClazzCatalogueUpdateVo;
-import com.ruoyi.system.domain.bo.clazz.ClazzSearchVo;
+import com.ruoyi.system.domain.bo.clazz.ClazzCatalogueTaskAddBo;
+import com.ruoyi.system.domain.bo.clazz.ClazzCatalogueUpdateBo;
+import com.ruoyi.system.domain.po.BCataloguePo;
+import com.ruoyi.system.domain.po.BChapterPo;
+import com.ruoyi.system.domain.po.BClazzPo;
+import com.ruoyi.system.domain.bo.clazz.ClazzSearchBo;
 import com.ruoyi.system.domain.vo.online.*;
 
 import java.util.List;
@@ -23,45 +23,45 @@ public interface IClazzMapper {
     // 查询是否有子评论
     Long countComment(Long commentId);
 
-    List<ClazzInfoView> selectClazz();
+    List<ClazzInfoVo> selectClazz();
 
-    List<ClazzInfoView> queryClazzListByCondition(ClazzSearchVo clazzSearchVo);
+    List<ClazzInfoVo> queryClazzListByCondition(ClazzSearchBo clazzSearchBo);
 
-    void insertClazzByCondition(BClazzEntity clazzEntity);
+    void insertClazzByCondition(BClazzPo clazzPo);
 
-    ClazzInfoView queryClazzByCondition(Long clazzId);
+    ClazzInfoVo queryClazzByCondition(Long clazzId);
 
-    void updateClazzByCondition(BClazzEntity clazzEntity);
+    void updateClazzByCondition(BClazzPo clazzPo);
 
     void patchClazzByCondition(Long clazzId);
 
-    List<ClazzDetailInfoView> selectChapterByCondition(Long clazzId);
+    List<ClazzDetailInfoVo> selectChapterByCondition(Long clazzId);
 
     List<String> selectCatalogueByCondition(Long chapterId);
 
-    CoursewareInfoView selectCoursewareByCondition(Long catalogueId);
+    CoursewareInfoVo selectCoursewareByCondition(Long catalogueId);
 
-    void updateClazzCatalogueByCondition(ClazzCatalogueUpdateVo clazzCatalogueUpdateVo);
+    void updateClazzCatalogueByCondition(ClazzCatalogueUpdateBo clazzCatalogueUpdateBo);
 
-    void insertChapterByCondition(BChapterEntity chapterEntity);
+    void insertChapterByCondition(BChapterPo chapterPo);
 
-    void insertCatalogueByCondition(ClazzCatalogueAddVo clazzCatalogueAddVo);
+    void insertCatalogueByCondition(BCataloguePo cataloguePo);
 
     void deleteChapterByCondition(Long chapterId);
 
     void patchCatalogueByCondition(Long catalogueId);
 
-    void insertTaskByCondition(ClazzCatalogueTaskAddVo clazzCatalogueTaskAddVo);
+    void insertTaskByCondition(ClazzCatalogueTaskAddBo clazzCatalogueTaskAddBo);
 
-    List<TaskSubmitInfoView> selectTaskByCondition(Long catalogueId);
+    List<TaskSubmitInfoVo> selectTaskByCondition(Long catalogueId);
 
     String selectTaskFileUrlByCondition(Long taskId);
 
     String selectTaskFileNameByCondition(Long taskId);
 
-    List<CommentInfoView> selectParentCommentByCondition(Long catalogueId);
+    List<CommentInfoVo> selectParentCommentByCondition(Long catalogueId);
 
-    List<CommentInfoView> selectChildrenCommentByCondition(Long commentId);
+    List<CommentInfoVo> selectChildrenCommentByCondition(Long commentId);
 
     void patchCommentByCondition(Long commentId);
 }

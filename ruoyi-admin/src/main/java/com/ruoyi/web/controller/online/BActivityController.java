@@ -12,6 +12,7 @@ import com.ruoyi.system.domain.bo.activity.ActivitySearchBo;
 import com.ruoyi.system.domain.dto.active.ActivityUpdateDto;
 import com.ruoyi.system.service.online.ActivityService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -30,8 +31,8 @@ public class BActivityController {
 
     @ApiOperation("获取活动列表")
     @GetMapping
-    public ResultVo activityInfoList(@RequestParam @Valid Integer pageNum,
-                                     @RequestParam @Valid Integer pageSize) {
+    public ResultVo activityInfoList(@RequestParam(defaultValue = "1") @Valid Integer pageNum,
+                                     @RequestParam(defaultValue = "10") @Valid Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         List<ActivityInfoVo> activityInfoVos = activityService.selectActivityList();
 
@@ -40,7 +41,8 @@ public class BActivityController {
 
     @ApiOperation("查询活动")
     @GetMapping("/list")
-    public ResultVo activityInfoSearch(@RequestParam String activityTitle, @RequestParam Long isRelease) {
+    public ResultVo activityInfoSearch(@RequestParam String activityTitle,
+                                       @RequestParam Long isRelease) {
         ActivitySearchBo activitySearchBo = new ActivitySearchBo();
         activitySearchBo.setActivityTitle(activityTitle);
         activitySearchBo.setIsRelease(isRelease);
@@ -51,7 +53,8 @@ public class BActivityController {
 
     @ApiOperation("重置活动列表")
     @GetMapping("/reset")
-    public ResultVo activityReset(@RequestParam Integer pageNum, @RequestParam Integer pageSize) {
+    public ResultVo activityReset(@RequestParam(defaultValue = "1") @Valid Integer pageNum,
+                                  @RequestParam(defaultValue = "10") @Valid Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         List<ActivityInfoVo> activityInfoVos = activityService.selectActivityList();
 

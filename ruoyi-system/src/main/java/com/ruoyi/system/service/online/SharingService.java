@@ -1,11 +1,13 @@
 package com.ruoyi.system.service.online;
 
-import com.ruoyi.common.utils.DateUtils;
-import com.ruoyi.system.domain.po.BSharingEntity;
-import com.ruoyi.system.domain.vo.online.SharingInfoView;
-import com.ruoyi.system.domain.bo.sharing.SharingAddVo;
-import com.ruoyi.system.domain.bo.sharing.SharingSearchVo;
-import com.ruoyi.system.domain.bo.sharing.SharingUpdateVo;
+import com.ruoyi.system.domain.bo.convert.SharingAddBOConvert;
+import com.ruoyi.system.domain.bo.convert.SharingBOConvert;
+import com.ruoyi.system.domain.bo.sharing.SharingAddBo;
+import com.ruoyi.system.domain.bo.sharing.SharingUpdateBo;
+import com.ruoyi.system.domain.po.BSharingPo;
+import com.ruoyi.system.domain.po.convert.SharingPOConvert;
+import com.ruoyi.system.domain.vo.online.SharingInfoVo;
+import com.ruoyi.system.domain.bo.sharing.SharingSearchBo;
 import com.ruoyi.system.mapper.online.ISharingMapper;
 import org.springframework.stereotype.Service;
 
@@ -21,43 +23,42 @@ public class SharingService {
     /**
      * 刷新 - 重置分享
      *
-     * @return
+     * @return List<SharingInfoVo>
      */
-    public List<SharingInfoView> selectSharingList() {
-        List<BSharingEntity> sharingEntities = sharingMapper.selectSharing();
+    public List<SharingInfoVo> selectSharingList() {
+        List<BSharingPo> bSharingPos = sharingMapper.selectSharing();
 
-        return sharingEntities.stream().map(item -> new SharingInfoView().transfer(item)).collect(Collectors.toList());
+        return bSharingPos.stream().map(item -> new SharingPOConvert().convert(item)).collect(Collectors.toList());
     }
 
     /**
      * 查询分享
      *
-     * @param sharingSearchVo
-     * @return
+     * @param sharingSearchBo 查询分享条件
+     * @return List<SharingInfoVo>
      */
-    public List<SharingInfoView> querySharingList(SharingSearchVo sharingSearchVo) {
-        List<BSharingEntity> sharingEntities = sharingMapper.querySharingByCondition(sharingSearchVo);
+    public List<SharingInfoVo> querySharingList(SharingSearchBo sharingSearchBo) {
+        List<BSharingPo> sharingPos = sharingMapper.querySharingByCondition(sharingSearchBo);
 
-        return sharingEntities.stream().map(item -> new SharingInfoView().transfer(item)).collect(Collectors.toList());
+        return sharingPos.stream().map(item -> new SharingPOConvert().convert(item)).collect(Collectors.toList());
     }
 
     /**
      * 新增分享
      *
-     * @param sharingAddVo
+     * @param sharingAddBo 新增分享信息
      */
-    public void insertSharing(SharingAddVo sharingAddVo) {
-        BSharingEntity sharingEntity = new BSharingEntity();
-        sharingEntity = sharingAddVo.transfer(sharingEntity);
-        sharingEntity.setSharingId(sharingMapper.countSharing() + 1);
+    public void insertSharing(SharingAddBo sharingAddBo) {
+        BSharingPo sharingPo = new SharingAddBOConvert().convert(sharingAddBo);
+        sharingPo.setSharingId(sharingMapper.countSharing() + 1);
 
-        sharingMapper.insertSharingByCondition(sharingEntity);
+        sharingMapper.insertSharingByCondition(sharingPo);
     }
 
     /**
      * 批量删除分享
      *
-     * @param sharingIdArr
+     * @param sharingIdArr 分享 ID 集合
      */
     public void patchSharingAll(Long[] sharingIdArr) {
         for (Long item : sharingIdArr) {
@@ -68,20 +69,17 @@ public class SharingService {
     /**
      * 修改分享
      *
-     * @param sharingUpdateVo
+     * @param sharingUpdateBo 修改分享信息
      */
-    public void updateSharing(SharingUpdateVo sharingUpdateVo) {
-//        sharingUpdateVo.setUpdateBy(SecurityUtils.getUsername());
-        sharingUpdateVo.setUpdateBy("admin");
-        sharingUpdateVo.setUpdateTime(DateUtils.getTime());
-
-        sharingMapper.updateSharingByCondition(sharingUpdateVo);
+    public void updateSharing(SharingUpdateBo sharingUpdateBo) {
+        BSharingPo sharingPo = new SharingBOConvert().convert(sharingUpdateBo);
+        sharingMapper.updateSharingByCondition(sharingPo);
     }
 
     /**
      * 删除分享
      *
-     * @param sharingId
+     * @param sharingId 分享 ID
      */
     public void patchSharing(Long sharingId) {
         sharingMapper.patchSharingByCondition(sharingId);
@@ -90,7 +88,7 @@ public class SharingService {
     /**
      * 发布分享
      *
-     * @param sharingId
+     * @param sharingId 分享 ID
      */
     public Boolean releaseSharing(Long sharingId) {
         if (sharingMapper.checkRelease(sharingId) == 1) {

@@ -15,7 +15,7 @@
         <where>complaint_id = #{complaintId}</where>
     </update>
 
-    <update id="updateComplaint" parameterType="java.lang.Long">
+    <update id="updateComplaint" parameterType="com.ruoyi.system.domain.bo.complaint.ComplaintUpdateBo">
         UPDATE ms_complaint
         <set>remark = #{remark}</set>
         <where>complaint_id = #{complaintId}</where>

@@ -24,8 +24,9 @@
         <where>parent_id = #{commentId}</where>
     </select>
 
-    <select id="selectClazz" resultType="com.ruoyi.system.domain.vo.online.ClazzInfoView">
-        SELECT mc.class_cover,
+    <select id="selectClazz" resultType="com.ruoyi.system.domain.vo.online.ClazzInfoVo">
+        SELECT mc.class_id AS clazz_id,
+        mc.class_cover,
         tn.nick_name AS teacher_name,
         hn.nick_name AS headmaster_name,
         mc.class_name,
@@ -40,8 +41,8 @@
         <where>mc.del_flag = 0</where>
     </select>
 
-    <select id="queryClazzListByCondition" parameterType="com.ruoyi.system.domain.bo.clazz.ClazzSearchVo"
-            resultType="com.ruoyi.system.domain.vo.online.ClazzInfoView">
+    <select id="queryClazzListByCondition" parameterType="com.ruoyi.system.domain.bo.clazz.ClazzSearchBo"
+            resultType="com.ruoyi.system.domain.vo.online.ClazzInfoVo">
         SELECT mc.class_cover AS clazz_cover,
         tn.nick_name AS teacher_name,
         hn.nick_name AS headmaster_name,
@@ -73,7 +74,7 @@
         </where>
     </select>
 
-    <insert id="insertClazzByCondition" parameterType="com.ruoyi.system.domain.bo.clazz.ClazzAddVo">
+    <insert id="insertClazzByCondition" parameterType="com.ruoyi.system.domain.po.BClazzPo">
         INSERT INTO ms_class(class_id, teacher_id, headmaster_id, class_name, class_cover, class_type, start_time,
                              finish_time, finish, del_flag, create_by, create_time, update_by, update_time, remark)
         VALUES (#{clazzId}, #{teacherId}, #{headmasterId}, #{clazzName}, #{clazzCover}, #{clazzType}, #{startTime},
@@ -81,7 +82,7 @@
     </insert>
 
     <select id="queryClazzByCondition" parameterType="java.lang.Long"
-            resultType="com.ruoyi.system.domain.vo.online.ClazzInfoView">
+            resultType="com.ruoyi.system.domain.vo.online.ClazzInfoVo">
         SELECT mc.class_cover AS clazz_cover,
         tn.nick_name AS teacher_name,
         hn.nick_name AS headmaster_name,
@@ -97,7 +98,7 @@
         <where>mc.class_id = #{clazzId}</where>
     </select>
 
-    <update id="updateClazzByCondition" parameterType="com.ruoyi.system.domain.po.BClazzEntity">
+    <update id="updateClazzByCondition" parameterType="com.ruoyi.system.domain.po.BClazzPo">
         UPDATE ms_class
         <set>
             <if test="teacherId != null and teacherId != ''">teacher_id = #{teacherId},</if>
@@ -121,7 +122,7 @@
     </update>
 
     <select id="selectChapterByCondition" parameterType="java.lang.Long"
-            resultType="com.ruoyi.system.domain.vo.online.ClazzDetailInfoView">
+            resultType="com.ruoyi.system.domain.vo.online.ClazzDetailInfoVo">
         SELECT chapter_id, chapter_name
         FROM ms_chapter
         <where>class_id = #{clazzId}</where>
@@ -136,14 +137,14 @@
     </select>
 
     <select id="selectCoursewareByCondition" parameterType="java.lang.Long"
-            resultType="com.ruoyi.system.domain.vo.online.CoursewareInfoView">
+            resultType="com.ruoyi.system.domain.vo.online.CoursewareInfoVo">
         SELECT catalogue_name, play_url, courseware_url, catalogue_sort, last
         FROM ms_catalogue
         <where>catalogue_id = #{catalogueId}</where>
     </select>
 
     <update id="updateClazzCatalogueByCondition"
-            parameterType="com.ruoyi.system.domain.bo.clazz.ClazzCatalogueUpdateVo">
+            parameterType="com.ruoyi.system.domain.dto.clazz.ClazzCatalogueUpdateDto">
         UPDATE ms_catalogue
         <set>
             <if test="catalogueName != null and catalogueName != ''">catalogue_name = #{catalogueName},</if>
@@ -160,14 +161,14 @@
         <where>catalogue_id = #{catalogueId}</where>
     </update>
 
-    <insert id="insertChapterByCondition" parameterType="com.ruoyi.system.domain.bo.clazz.ClazzChapterAddVo">
+    <insert id="insertChapterByCondition" parameterType="com.ruoyi.system.domain.po.BChapterPo">
         INSERT INTO ms_chapter(chapter_id, class_id, chapter_name, chapter_sort, del_flag, create_by, create_time,
                                update_by, update_time, remark)
         VALUES (#{chapterId}, #{clazzId}, #{chapterName}, #{chapterSort}, #{delFlag}, #{createBy}, #{createTime},
                 #{updateBy}, #{updateTime}, #{remark})
     </insert>
 
-    <insert id="insertCatalogueByCondition" parameterType="com.ruoyi.system.domain.bo.clazz.ClazzCatalogueAddVo">
+    <insert id="insertCatalogueByCondition" parameterType="com.ruoyi.system.domain.po.BCataloguePo">
         INSERT INTO ms_catalogue(catalogue_id, chapter_id, catalogue_name, catalogue_sort, create_by, create_time,
                                  update_by, update_time)
         VALUES (#{catalogueId}, #{chapterId}, #{catalogueName}, #{catalogueSort}, #{createBy}, #{createTime},
@@ -186,7 +187,7 @@
         <where>catalogue_id = #{catalogueId}</where>
     </update>
 
-    <update id="insertTaskByCondition" parameterType="com.ruoyi.system.domain.bo.clazz.ClazzCatalogueTaskAddVo">
+    <update id="insertTaskByCondition" parameterType="com.ruoyi.system.domain.dto.clazz.ClazzCatalogueTaskAddDto">
         UPDATE ms_catalogue
         <set>
             <if test="task != null and task != ''">task = #{task},</if>
@@ -196,7 +197,7 @@
     </update>
 
     <select id="selectTaskByCondition" parameterType="java.lang.Long"
-            resultType="com.ruoyi.system.domain.vo.online.TaskSubmitInfoView">
+            resultType="com.ruoyi.system.domain.vo.online.TaskSubmitInfoVo">
         SELECT su.nick_name, mts.file_name, mts.pass, mts.comment
         FROM ms_task_submit mts
         LEFT JOIN sys_user su ON mts.user_id = su.user_id
@@ -216,7 +217,7 @@
     </select>
 
     <select id="selectParentCommentByCondition" parameterType="java.lang.Long"
-            resultType="com.ruoyi.system.domain.vo.online.CommentInfoView">
+            resultType="com.ruoyi.system.domain.vo.online.CommentInfoVo">
         SELECT mc.comment_id, su.user_name, su.nick_name, mc.comment_content, mc.create_time
         FROM ms_comment mc
         LEFT JOIN sys_user su ON mc.user_id = su.user_id
@@ -228,7 +229,7 @@
     </select>
 
     <select id="selectChildrenCommentByCondition" parameterType="java.lang.Long"
-            resultType="com.ruoyi.system.domain.vo.online.CommentInfoView">
+            resultType="com.ruoyi.system.domain.vo.online.CommentInfoVo">
         SELECT mc.comment_id, su.user_name, su.nick_name, mc.comment_content, mc.create_time
         FROM ms_comment mc
         LEFT JOIN sys_user su ON mc.user_id = su.user_id

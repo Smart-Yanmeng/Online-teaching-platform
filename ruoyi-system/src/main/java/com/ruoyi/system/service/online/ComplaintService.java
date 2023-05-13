@@ -1,9 +1,11 @@
 package com.ruoyi.system.service.online;
 
+import com.ruoyi.system.domain.bo.complaint.ComplaintUpdateBo;
+import com.ruoyi.system.domain.dto.convert.ComplaintUpdateDTOConvert;
 import com.ruoyi.system.domain.po.BComplaintPo;
 import com.ruoyi.system.domain.po.convert.ComplaintPOConvert;
 import com.ruoyi.system.domain.vo.online.ComplaintInfoVo;
-import com.ruoyi.system.domain.bo.complaint.ComplaintUpdateVo;
+import com.ruoyi.system.domain.dto.complaint.ComplaintUpdateDto;
 import com.ruoyi.system.mapper.online.IComplaintMapper;
 import org.springframework.stereotype.Service;
 
@@ -16,23 +18,43 @@ public class ComplaintService {
     @Resource
     IComplaintMapper complaintMapper;
 
+    /**
+     * 获取投诉列表
+     *
+     * @return List<ComplaintInfoVo>
+     */
     public List<ComplaintInfoVo> selectComplaintList() {
         List<BComplaintPo> complaintPos = complaintMapper.selectComplaint();
 
         return complaintPos.stream().map(item -> new ComplaintPOConvert().convert(item)).collect(Collectors.toList());
     }
 
+    /**
+     * 批量删除投诉
+     *
+     * @param complaintArr 投诉 ID 集合
+     */
     public void patchComplaintAll(Long[] complaintArr) {
         for (Long item : complaintArr) {
             complaintMapper.patchComplaintByCondition(item);
         }
     }
 
+    /**
+     * 删除投诉
+     *
+     * @param complaintId 投诉 ID
+     */
     public void deleteComplaint(Long complaintId) {
         complaintMapper.patchComplaintByCondition(complaintId);
     }
 
-    public void updateComplaint(ComplaintUpdateVo complaintUpdateVo) {
-        complaintMapper.updateComplaint(complaintUpdateVo);
+    /**
+     * 修改备注
+     *
+     * @param complaintUpdateBo 备注信息
+     */
+    public void updateComplaint(ComplaintUpdateBo complaintUpdateBo) {
+        complaintMapper.updateComplaint(complaintUpdateBo);
     }
 }

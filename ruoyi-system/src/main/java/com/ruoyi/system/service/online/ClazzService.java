@@ -1,18 +1,18 @@
 package com.ruoyi.system.service.online;
 
-import com.ruoyi.common.utils.DateUtils;
-import com.ruoyi.system.domain.po.BChapterEntity;
-import com.ruoyi.system.domain.po.BClazzEntity;
+import com.ruoyi.system.domain.bo.convert.ClazzAddBOCovert;
+import com.ruoyi.system.domain.bo.convert.ClazzCatalogueAddBOConvert;
+import com.ruoyi.system.domain.bo.convert.ClazzChapterAddBOConvert;
+import com.ruoyi.system.domain.bo.convert.ClazzUpdateBOConvert;
+import com.ruoyi.system.domain.po.BCataloguePo;
+import com.ruoyi.system.domain.po.BChapterPo;
+import com.ruoyi.system.domain.po.BClazzPo;
 import com.ruoyi.system.domain.bo.clazz.*;
 import com.ruoyi.system.domain.vo.online.*;
 import com.ruoyi.system.mapper.online.IClazzMapper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.List;
 
 @Service
@@ -23,70 +23,61 @@ public class ClazzService {
     /**
      * 刷新 - 重置班级信息
      *
-     * @return
+     * @return List<ClazzInfoVo>
      */
-    public List<ClazzInfoView> selectClazzList() {
-        List<ClazzInfoView> clazzInfoViews = clazzMapper.selectClazz();
-
-        return clazzInfoViews;
+    public List<ClazzInfoVo> selectClazzList() {
+        return clazzMapper.selectClazz();
     }
 
     /**
      * 查询班级列表
      *
-     * @param clazzSearchVo
-     * @return
+     * @param clazzSearchBo 班级查询条件
+     * @return List<ClazzInfoVo>
      */
-    public List<ClazzInfoView> queryClazzList(ClazzSearchVo clazzSearchVo) {
-        List<ClazzInfoView> clazzInfoViews = clazzMapper.queryClazzListByCondition(clazzSearchVo);
-
-        return clazzInfoViews;
+    public List<ClazzInfoVo> queryClazzList(ClazzSearchBo clazzSearchBo) {
+        return clazzMapper.queryClazzListByCondition(clazzSearchBo);
     }
 
     /**
      * 插入班级
      *
-     * @param clazzAddVo
+     * @param clazzAddBo 班级插入数据
      */
-    public void insertClazz(ClazzAddVo clazzAddVo) {
-        BClazzEntity clazzEntity = new BClazzEntity();
-        clazzAddVo.transfer(clazzEntity);
-        clazzEntity.setClazzId(clazzMapper.countClazz() + 1);
+    public void insertClazz(ClazzAddBo clazzAddBo) {
+        clazzAddBo.setClazzId(clazzMapper.countClazz() + 1);
+        BClazzPo clazzPo = new ClazzAddBOCovert().convert(clazzAddBo);
 
-        clazzMapper.insertClazzByCondition(clazzEntity);
+        clazzMapper.insertClazzByCondition(clazzPo);
     }
 
     /**
      * 查询班级
      *
-     * @param clazzId
-     * @return
+     * @param clazzId 班级 ID
+     * @return clazzInfoVo
      */
-    public ClazzInfoView queryClazz(Long clazzId) {
-        ClazzInfoView clazzInfoView = clazzMapper.queryClazzByCondition(clazzId);
-
-        return clazzInfoView;
-    }
+//    public ClazzInfoVo queryClazz(Long clazzId) {
+//        ClazzInfoVo clazzInfoVo = clazzMapper.queryClazzByCondition(clazzId);
+//
+//        return clazzInfoVo;
+//    }
 
     /**
      * 修改班级
      *
-     * @param clazzUpdateVo
+     * @param clazzUpdateBo 修改班级数据
      */
-    public void updateClazz(ClazzUpdateVo clazzUpdateVo) {
-        BClazzEntity clazzEntity = new BClazzEntity();
-        clazzEntity = clazzUpdateVo.transfer(clazzEntity);
-//        clazzEntity.setUpdateBy(SecurityUtils.getUsername());
-        clazzEntity.setUpdateBy("admin");
-        clazzEntity.setUpdateTime(DateUtils.getTime());
+    public void updateClazz(ClazzUpdateBo clazzUpdateBo) {
+        BClazzPo clazzPo = new ClazzUpdateBOConvert().convert(clazzUpdateBo);
 
-        clazzMapper.updateClazzByCondition(clazzEntity);
+        clazzMapper.updateClazzByCondition(clazzPo);
     }
 
     /**
      * 删除班级
      *
-     * @param clazzId
+     * @param clazzId 班级 ID
      */
     public void patchClazz(Long clazzId) {
         clazzMapper.patchClazzByCondition(clazzId);
@@ -95,7 +86,7 @@ public class ClazzService {
     /**
      * 批量删除班级
      *
-     * @param clazzIdArr
+     * @param clazzIdArr 班级 ID 集合
      */
     public void patchClazzAll(Long[] clazzIdArr) {
         for (Long item : clazzIdArr) {
@@ -104,74 +95,61 @@ public class ClazzService {
     }
 
     /**
-     * 刷新班级章节信息
+     * 获取班级章节信息
      *
-     * @param clazzId
-     * @return
+     * @param clazzId 班级 ID
+     * @return List<ClazzDetailInfoVo>
      */
-    public List<ClazzDetailInfoView> selectChapterList(Long clazzId) {
-        List<ClazzDetailInfoView> clazzDetailInfoViews = clazzMapper.selectChapterByCondition(clazzId);
-        for (ClazzDetailInfoView item : clazzDetailInfoViews) {
+    public List<ClazzDetailInfoVo> selectChapterList(Long clazzId) {
+        List<ClazzDetailInfoVo> clazzDetailInfoVos = clazzMapper.selectChapterByCondition(clazzId);
+        for (ClazzDetailInfoVo item : clazzDetailInfoVos) {
             item.setCatalogueNameArr(clazzMapper.selectCatalogueByCondition(item.getChapterId()));
         }
 
-        return clazzDetailInfoViews;
+        return clazzDetailInfoVos;
     }
 
     /**
      * 刷新目录信息
      *
-     * @param catalogueId
-     * @return
+     * @param catalogueId 目录 ID
+     * @return CoursewareInfoVo
      */
-    public CoursewareInfoView selectCourseware(Long catalogueId) {
-        CoursewareInfoView coursewareInfoView = clazzMapper.selectCoursewareByCondition(catalogueId);
-
-        return coursewareInfoView;
+    public CoursewareInfoVo selectCourseware(Long catalogueId) {
+        return clazzMapper.selectCoursewareByCondition(catalogueId);
     }
 
     /**
      * 修改目录信息
      *
-     * @param clazzCatalogueUpdateVo
+     * @param clazzCatalogueUpdateBo 目录修改条件
      */
-    public void updateClazzCatalogue(ClazzCatalogueUpdateVo clazzCatalogueUpdateVo) {
-//        clazzCatalogueUpdateVo.setUpdateBy(SecurityUtils.getUsername());
-        clazzCatalogueUpdateVo.setUpdateBy("admin");
-        clazzCatalogueUpdateVo.setUpdateTime(DateUtils.getTime());
-
-        clazzMapper.updateClazzCatalogueByCondition(clazzCatalogueUpdateVo);
+    public void updateClazzCatalogue(ClazzCatalogueUpdateBo clazzCatalogueUpdateBo) {
+        clazzMapper.updateClazzCatalogueByCondition(clazzCatalogueUpdateBo);
     }
 
     /**
      * 插入章
      *
-     * @param clazzChapterAddVo
+     * @param clazzChapterAddBo 插入章数据
      */
-    public void insertChapter(ClazzChapterAddVo clazzChapterAddVo) {
-        BChapterEntity chapterEntity = new BChapterEntity();
-        chapterEntity = clazzChapterAddVo.transfer(chapterEntity);
-        chapterEntity.setChapterId(clazzMapper.countChapter() + 1);
+    public void insertChapter(ClazzChapterAddBo clazzChapterAddBo) {
+        clazzChapterAddBo.setChapterId(clazzMapper.countChapter() + 1);
+        BChapterPo chapterPo = new ClazzChapterAddBOConvert().convert(clazzChapterAddBo);
 
-        clazzMapper.insertChapterByCondition(chapterEntity);
+        clazzMapper.insertChapterByCondition(chapterPo);
     }
 
     /**
      * 插入节
      *
-     * @param clazzCatalogueAddVo
+     * @param clazzCatalogueAddBo 插入节数据
      */
-    public void insertCatalogue(ClazzCatalogueAddVo clazzCatalogueAddVo) {
-        clazzCatalogueAddVo.setCatalogueId(clazzMapper.countCatalogue() + 1);
-        clazzCatalogueAddVo.setDelFlag('0');
-//        clazzCatalogueAddVo.setCreateBy(SecurityUtils.getUsername());
-        clazzCatalogueAddVo.setCreateBy("admin");
-        clazzCatalogueAddVo.setCreateTime(DateUtils.getTime());
-//        clazzCatalogueAddVo.setUpdateBy(SecurityUtils.getUsername());
-        clazzCatalogueAddVo.setUpdateBy("admin");
-        clazzCatalogueAddVo.setUpdateTime(DateUtils.getTime());
+    public void insertCatalogue(ClazzCatalogueAddBo clazzCatalogueAddBo) {
+        clazzCatalogueAddBo.setCatalogueId(clazzMapper.countCatalogue() + 1);
+        BCataloguePo cataloguePo = new ClazzCatalogueAddBOConvert().convert(clazzCatalogueAddBo);
 
-        clazzMapper.insertCatalogueByCondition(clazzCatalogueAddVo);
+        clazzMapper.insertCatalogueByCondition(cataloguePo);
     }
 
     /**
@@ -186,7 +164,7 @@ public class ClazzService {
     /**
      * 删除节
      *
-     * @param catalogueId
+     * @param catalogueId 目录 ID
      */
     public void patchCatalogue(Long catalogueId) {
         clazzMapper.patchCatalogueByCondition(catalogueId);
@@ -195,87 +173,85 @@ public class ClazzService {
     /**
      * 发布作业
      *
-     * @param clazzCatalogueTaskAddVo
+     * @param clazzCatalogueTaskAddBo 作业发布数据
      */
-    public void insertTask(ClazzCatalogueTaskAddVo clazzCatalogueTaskAddVo) {
-        clazzMapper.insertTaskByCondition(clazzCatalogueTaskAddVo);
+    public void insertTask(ClazzCatalogueTaskAddBo clazzCatalogueTaskAddBo) {
+        clazzMapper.insertTaskByCondition(clazzCatalogueTaskAddBo);
     }
-
 
     /**
      * 刷新学生作业列表
      *
-     * @param catalogueId
-     * @return
+     * @param catalogueId 目录 ID
+     * @return List<TaskSubmitInfoView>
      */
-    public List<TaskSubmitInfoView> selectTaskList(Long catalogueId) {
-        List<TaskSubmitInfoView> taskSubmitInfoViews = clazzMapper.selectTaskByCondition(catalogueId);
-
-        return taskSubmitInfoViews;
+    public List<TaskSubmitInfoVo> selectTaskList(Long catalogueId) {
+        return clazzMapper.selectTaskByCondition(catalogueId);
     }
 
-    /**
-     * 下载学生作业
-     *
-     * @param taskId
-     */
-    public void downloadTask(Long taskId) {
-        String saveDir = "C:\\Downloads\\";
-        String fileUrl = clazzMapper.selectTaskFileUrlByCondition(taskId);
-        String fileName = clazzMapper.selectTaskFileNameByCondition(taskId);
-
-        try {
-            URL url = new URL(fileUrl);
-            HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
-            int responseCode = httpConn.getResponseCode();
-
-            // 检查是否连接成功
-            if (responseCode == HttpURLConnection.HTTP_OK) {
-                // 打开输入输出流
-                InputStream inputStream = httpConn.getInputStream();
-                FileOutputStream outputStream = new FileOutputStream(saveDir + fileName);
-
-                int bytesRead = -1;
-                byte[] buffer = new byte[4096];
-                while ((bytesRead = inputStream.read(buffer)) != -1) {
-                    outputStream.write(buffer, 0, bytesRead);
-                }
-
-                outputStream.close();
-                inputStream.close();
-
-                System.out.println("File download successfully!");
-            } else {
-                System.out.println("File download failed, Server replied HTTP code: " + responseCode);
-            }
-            httpConn.disconnect();
-        } catch (Exception e) {
-            System.out.println("Error while downloading file: " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
+//    /**
+//     * 下载学生作业
+//     *
+//     * @param taskId 作业ID
+//     */
+//    public void downloadTask(Long taskId) {
+//        String saveDir = "C:\\Downloads\\";
+//        String fileUrl = clazzMapper.selectTaskFileUrlByCondition(taskId);
+//        String fileName = clazzMapper.selectTaskFileNameByCondition(taskId);
+//
+//        try {
+//            URL url = new URL(fileUrl);
+//            HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
+//            int responseCode = httpConn.getResponseCode();
+//
+//            // 检查是否连接成功
+//            if (responseCode == HttpURLConnection.HTTP_OK) {
+//                // 打开输入输出流
+//                InputStream inputStream = httpConn.getInputStream();
+//                FileOutputStream outputStream = new FileOutputStream(saveDir + fileName);
+//
+//                int bytesRead = -1;
+//                byte[] buffer = new byte[4096];
+//                while ((bytesRead = inputStream.read(buffer)) != -1) {
+//                    outputStream.write(buffer, 0, bytesRead);
+//                }
+//
+//                outputStream.close();
+//                inputStream.close();
+//
+//                System.out.println("File download successfully!");
+//            } else {
+//                System.out.println("File download failed, Server replied HTTP code: " + responseCode);
+//            }
+//            httpConn.disconnect();
+//        } catch (Exception e) {
+//            System.out.println("Error while downloading file: " + e.getMessage());
+//            e.printStackTrace();
+//        }
+//    }
 
     /**
      * 查询评论信息
      *
-     * @param catalogueId
-     * @return
+     * @param catalogueId 目录 ID
+     * @return List<CommentInfoVo>
      */
-    public List<CommentInfoView> selectComment(Long catalogueId) {
+    public List<CommentInfoVo> selectComment(Long catalogueId) {
         // 原始评论
-        List<CommentInfoView> commentInfoViews = clazzMapper.selectParentCommentByCondition(catalogueId);
+        List<CommentInfoVo> commentInfoVos = clazzMapper.selectParentCommentByCondition(catalogueId);
         // 添加子评论
-        addChildren(commentInfoViews);
+        addChildren(commentInfoVos);
 
-        return commentInfoViews;
+        return commentInfoVos;
     }
 
-    public void addChildren(List<CommentInfoView> parentComment) {
-        for (CommentInfoView item : parentComment) {
+    // 添加子评论实现
+    public void addChildren(List<CommentInfoVo> parentComment) {
+        for (CommentInfoVo item : parentComment) {
             Long parentCommentId = item.getCommentId();
             if (clazzMapper.countComment(parentCommentId) == 0) break;
             else {
-                List<CommentInfoView> childrenComment = clazzMapper.selectChildrenCommentByCondition(parentCommentId);
+                List<CommentInfoVo> childrenComment = clazzMapper.selectChildrenCommentByCondition(parentCommentId);
 
                 item.setChildren(childrenComment);
             }
@@ -285,7 +261,7 @@ public class ClazzService {
     /**
      * 删除评论
      *
-     * @param commentId
+     * @param commentId 评论 ID
      */
     public void patchComment(Long commentId) {
         clazzMapper.patchCommentByCondition(commentId);

@@ -19,7 +19,7 @@
         FROM ms_activity
     </select>
 
-    <select id="queryByCondition" parameterType="com.ruoyi.system.domain.bo.activity.ActivitySearchBo"
+    <select id="queryByCondition" parameterType="com.ruoyi.system.domain.po.BActivityPo"
             resultType="com.ruoyi.system.domain.po.BActivityPo">
         SELECT *
         FROM ms_activity
@@ -37,7 +37,7 @@
                 #{remark})
     </insert>
 
-    <update id="updateActivityByCondition" parameterType="com.ruoyi.system.domain.dto.active.ActivityUpdateDto">
+    <update id="updateActivityByCondition" parameterType="com.ruoyi.system.domain.po.BActivityPo">
         UPDATE ms_activity
         <set>
             <if test="activityTitle != null and activityTitle != ''">activity_title = #{activityTitle},</if>

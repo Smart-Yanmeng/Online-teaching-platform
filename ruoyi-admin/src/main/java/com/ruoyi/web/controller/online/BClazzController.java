@@ -1,6 +1,8 @@
 package com.ruoyi.web.controller.online;
 
 import com.github.pagehelper.PageHelper;
+import com.ruoyi.system.domain.dto.clazz.*;
+import com.ruoyi.system.domain.dto.convert.*;
 import com.ruoyi.system.domain.vo.common.ResultVo;
 import com.ruoyi.system.domain.bo.clazz.*;
 import com.ruoyi.system.domain.vo.online.*;
@@ -21,15 +23,14 @@ public class BClazzController {
     @Resource
     ClazzService clazzService;
 
-    @ApiOperation("刷新班级列表")
+    @ApiOperation("获取班级列表")
     @GetMapping
-    public ResultVo clazzInfoList(@RequestParam @Valid Integer pageNum,
-                                  @RequestParam @Valid Integer pageSize) {
+    public ResultVo clazzInfoList(@RequestParam(defaultValue = "1") @Valid Integer pageNum,
+                                  @RequestParam(defaultValue = "10") @Valid Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
+        List<ClazzInfoVo> clazzInfoVos = clazzService.selectClazzList();
 
-        List<ClazzInfoView> clazzInfoViews = clazzService.selectClazzList();
-
-        return ResultVo.querySuccess(clazzInfoViews);
+        return ResultVo.querySuccess(clazzInfoVos);
     }
 
     @ApiOperation("查询班级列表")
@@ -39,62 +40,67 @@ public class BClazzController {
                                         @RequestParam("clazzName") String clazzName,
                                         @RequestParam("startTime") String startTime,
                                         @RequestParam("finishTime") String finishTime,
-                                        @RequestParam("finish") Character finish) {
-        ClazzSearchVo clazzSearchVo = new ClazzSearchVo();
-        clazzSearchVo.setTeacherName(teacherName);
-        clazzSearchVo.setHeadmasterName(headmasterName);
-        clazzSearchVo.setClazzName(clazzName);
-        clazzSearchVo.setStartTime(startTime);
-        clazzSearchVo.setFinishTime(finishTime);
-        clazzSearchVo.setFinish(finish);
+                                        @RequestParam("finish") Character finish,
+                                        @RequestParam(defaultValue = "1") @Valid Integer pageNum,
+                                        @RequestParam(defaultValue = "10") @Valid Integer pageSize) {
+        ClazzSearchBo clazzSearchBo = new ClazzSearchBo();
+        clazzSearchBo.setTeacherName(teacherName);
+        clazzSearchBo.setHeadmasterName(headmasterName);
+        clazzSearchBo.setClazzName(clazzName);
+        clazzSearchBo.setStartTime(startTime);
+        clazzSearchBo.setFinishTime(finishTime);
+        clazzSearchBo.setFinish(finish);
 
-        List<ClazzInfoView> clazzInfoViews = clazzService.queryClazzList(clazzSearchVo);
+        PageHelper.startPage(pageNum, pageSize);
+        List<ClazzInfoVo> clazzInfoVos = clazzService.queryClazzList(clazzSearchBo);
 
-        return ResultVo.querySuccess(clazzInfoViews);
+        return ResultVo.querySuccess(clazzInfoVos);
     }
 
     @ApiOperation("重置班级列表")
     @GetMapping("/reset")
     public ResultVo clazzReset() {
-        List<ClazzInfoView> clazzInfoViews = clazzService.selectClazzList();
+        List<ClazzInfoVo> clazzInfoVos = clazzService.selectClazzList();
 
-        return ResultVo.querySuccess(clazzInfoViews);
+        return ResultVo.querySuccess(clazzInfoVos);
     }
 
     @ApiOperation("新增班级")
     @PostMapping("/add")
     @Transactional(rollbackFor = Exception.class)
-    public ResultVo clazzAdd(@RequestBody ClazzAddVo clazzAddVo) {
-        clazzService.insertClazz(clazzAddVo);
+    public ResultVo clazzAdd(@RequestBody ClazzAddDto clazzAddDto) {
+        ClazzAddBo clazzAddBo = new ClazzAddDTOConvert().convert(clazzAddDto);
+        clazzService.insertClazz(clazzAddBo);
 
-        return ResultVo.insertSuccess(null);
+        return ResultVo.insertSuccess(new ClazzAddDto());
     }
 
-    @ApiOperation("查询班级")
-    @GetMapping("/{clazzId}")
-    @Transactional(rollbackFor = Exception.class)
-    public ResultVo clazzInfo(@PathVariable Long clazzId) {
-        ClazzInfoView clazzInfoView = clazzService.queryClazz(clazzId);
-
-        ResultVo<ClazzInfoView> resultVo = new ResultVo<>();
-        resultVo.setData(clazzInfoView);
-
-        return ResultVo.querySuccess(clazzInfoView);
-    }
+//    @ApiOperation("查询班级")
+//    @GetMapping("/{clazzId}")
+//    @Transactional(rollbackFor = Exception.class)
+//    public ResultVo clazzInfo(@PathVariable Long clazzId) {
+//        ClazzInfoVo clazzInfoVo = clazzService.queryClazz(clazzId);
+//
+//        ResultVo<ClazzInfoVo> resultVo = new ResultVo<>();
+//        resultVo.setData(clazzInfoVo);
+//
+//        return ResultVo.querySuccess(clazzInfoVo);
+//    }
 
     @ApiOperation("修改班级")
-    @PutMapping("/{clazzId}/update")
+    @PutMapping("/update/{clazzId}")
     @Transactional(rollbackFor = Exception.class)
     public ResultVo clazzUpdate(@PathVariable Long clazzId,
-                                @RequestBody ClazzUpdateVo clazzUpdateVo) {
-        clazzUpdateVo.setClazzId(clazzId);
-        clazzService.updateClazz(clazzUpdateVo);
+                                @RequestBody ClazzUpdateDto clazzUpdateDto) {
+        ClazzUpdateBo clazzUpdateBo = new ClazzUpdateDTOConvert().convert(clazzUpdateDto);
+        clazzUpdateBo.setClazzId(clazzId);
+        clazzService.updateClazz(clazzUpdateBo);
 
-        return ResultVo.updateSuccess(null);
+        return ResultVo.updateSuccess(new ClazzUpdateDto());
     }
 
     @ApiOperation("删除班级")
-    @PatchMapping("/{clazzId}")
+    @PatchMapping("/delete/{clazzId}")
     @Transactional(rollbackFor = Exception.class)
     public ResultVo clazzPatch(@PathVariable Long clazzId) {
         clazzService.patchClazz(clazzId);
@@ -103,7 +109,7 @@ public class BClazzController {
     }
 
     @ApiOperation("批量删除班级")
-    @PatchMapping
+    @PatchMapping("/delete")
     @Transactional(rollbackFor = Exception.class)
     public ResultVo clazzDeleteAll(@RequestParam Long[] clazzIdArr) {
         clazzService.patchClazzAll(clazzIdArr);
@@ -111,21 +117,21 @@ public class BClazzController {
         return ResultVo.deleteSuccess();
     }
 
-    @ApiOperation("获取班级详情")
+    @ApiOperation("获取班级章节")
     @GetMapping("/{clazzId}/detail")
     public ResultVo clazzDetailInfoList(@PathVariable Long clazzId) {
-        List<ClazzDetailInfoView> clazzDetailInfoViews = clazzService.selectChapterList(clazzId);
+        List<ClazzDetailInfoVo> clazzDetailInfoVos = clazzService.selectChapterList(clazzId);
 
-        return ResultVo.querySuccess(clazzDetailInfoViews);
+        return ResultVo.querySuccess(clazzDetailInfoVos);
     }
 
     @ApiOperation("获取目录课件")
     @GetMapping("/{clazzId}/detail/{catalogueId}")
     public ResultVo clazzCatalogueInfo(@PathVariable Long clazzId,
                                        @PathVariable Long catalogueId) {
-        CoursewareInfoView coursewareInfoView = clazzService.selectCourseware(catalogueId);
+        CoursewareInfoVo coursewareInfoVo = clazzService.selectCourseware(catalogueId);
 
-        return ResultVo.querySuccess(coursewareInfoView);
+        return ResultVo.querySuccess(coursewareInfoVo);
     }
 
     @ApiOperation("修改目录课件")
@@ -133,22 +139,24 @@ public class BClazzController {
     public ResultVo clazzCatalogueUpdate(@PathVariable Long chapterId,
                                          @PathVariable Long clazzId,
                                          @PathVariable Long catalogueId,
-                                         @RequestBody ClazzCatalogueUpdateVo clazzCatalogueUpdateVo) {
-        clazzCatalogueUpdateVo.setCatalogueId(catalogueId);
-        clazzService.updateClazzCatalogue(clazzCatalogueUpdateVo);
+                                         @RequestBody ClazzCatalogueUpdateDto clazzCatalogueUpdateDto) {
+        ClazzCatalogueUpdateBo clazzCatalogueUpdateBo = new ClazzCatalogueUpdateDTOConvert().convert(clazzCatalogueUpdateDto);
+        clazzCatalogueUpdateBo.setCatalogueId(catalogueId);
+        clazzService.updateClazzCatalogue(clazzCatalogueUpdateBo);
 
-        return ResultVo.updateSuccess(null);
+        return ResultVo.updateSuccess(new ClazzCatalogueUpdateDto());
     }
 
     @ApiOperation("新增章")
     @PostMapping("/{clazzId}/detail/add")
     @Transactional(rollbackFor = Exception.class)
     public ResultVo clazzChapterAdd(@PathVariable Long clazzId,
-                                    @RequestBody ClazzChapterAddVo clazzChapterAddVo) {
-        clazzChapterAddVo.setClazzId(clazzId);
-        clazzService.insertChapter(clazzChapterAddVo);
+                                    @RequestBody ClazzChapterAddDto clazzChapterAddDto) {
+        ClazzChapterAddBo clazzChapterAddBo = new ClazzChapterAddDTOConvert().convert(clazzChapterAddDto);
+        clazzChapterAddBo.setClazzId(clazzId);
+        clazzService.insertChapter(clazzChapterAddBo);
 
-        return ResultVo.insertSuccess(null);
+        return ResultVo.insertSuccess(new ClazzChapterAddDto());
     }
 
     @ApiOperation("新增节")
@@ -156,11 +164,12 @@ public class BClazzController {
     @Transactional(rollbackFor = Exception.class)
     public ResultVo clazzCatalogueAdd(@PathVariable Long clazzId,
                                       @PathVariable Long chapterId,
-                                      @RequestBody ClazzCatalogueAddVo clazzCatalogueAddVo) {
-        clazzCatalogueAddVo.setChapterId(chapterId);
-        clazzService.insertCatalogue(clazzCatalogueAddVo);
+                                      @RequestBody ClazzCatalogueAddDto clazzCatalogueAddDto) {
+        ClazzCatalogueAddBo clazzCatalogueAddBo = new ClazzCatalogueAddDTOConvert().convert(clazzCatalogueAddDto);
+        clazzCatalogueAddBo.setChapterId(chapterId);
+        clazzService.insertCatalogue(clazzCatalogueAddBo);
 
-        return ResultVo.insertSuccess(null);
+        return ResultVo.insertSuccess(new ClazzChapterAddDto());
     }
 
     @ApiOperation("删除章")
@@ -190,11 +199,13 @@ public class BClazzController {
     public ResultVo clazzCatalogueTaskAdd(@PathVariable Long clazzId,
                                           @PathVariable Long chapterId,
                                           @PathVariable Long catalogueId,
-                                          @RequestBody ClazzCatalogueTaskAddVo clazzCatalogueTaskAddVo) {
-        clazzCatalogueTaskAddVo.setCatalogueId(catalogueId);
-        clazzService.insertTask(clazzCatalogueTaskAddVo);
+                                          @RequestBody ClazzCatalogueTaskAddDto clazzCatalogueTaskAddDto) {
+        ClazzCatalogueTaskAddBo clazzCatalogueTaskAddBo = new ClazzCatalogueTaskAddDTOConvert().convert(clazzCatalogueTaskAddDto);
+        clazzCatalogueTaskAddBo.setCatalogueId(catalogueId);
+        clazzCatalogueTaskAddBo.setHasTask('1');
+        clazzService.insertTask(clazzCatalogueTaskAddBo);
 
-        return ResultVo.insertSuccess(null);
+        return ResultVo.insertSuccess(new ClazzCatalogueTaskAddDto());
     }
 
     @ApiOperation("刷新作业提交列表")
@@ -202,30 +213,30 @@ public class BClazzController {
     public ResultVo taskInfoList(@PathVariable Long clazzId,
                                  @PathVariable Long chapterId,
                                  @PathVariable Long catalogueId) {
-        List<TaskSubmitInfoView> taskSubmitInfoViews = clazzService.selectTaskList(catalogueId);
+        List<TaskSubmitInfoVo> taskSubmitInfoVos = clazzService.selectTaskList(catalogueId);
 
-        return ResultVo.querySuccess(taskSubmitInfoViews);
+        return ResultVo.querySuccess(taskSubmitInfoVos);
     }
 
-    @ApiOperation("下载学生作业")
-    @GetMapping("/{clazzId}/detail/{chapterId}/{catalogueId}/{taskId}")
-    public ResultVo taskDownload(@PathVariable Long clazzId,
-                                 @PathVariable Long chapterId,
-                                 @PathVariable Long catalogueId,
-                                 @PathVariable Long taskId) {
-        clazzService.downloadTask(taskId);
-
-        return ResultVo.success("下载成功", null);
-    }
+//    @ApiOperation("下载学生作业")
+//    @GetMapping("/{clazzId}/detail/{chapterId}/{catalogueId}/{taskId}")
+//    public ResultVo taskDownload(@PathVariable Long clazzId,
+//                                 @PathVariable Long chapterId,
+//                                 @PathVariable Long catalogueId,
+//                                 @PathVariable Long taskId) {
+//        clazzService.downloadTask(taskId);
+//
+//        return ResultVo.success("下载成功", null);
+//    }
 
     @ApiOperation("获取评论列表")
     @GetMapping("/{clazzId}/detail/{chapterId}/{catalogueId}/comment")
     public ResultVo commentInfoList(@PathVariable Long clazzId,
                                     @PathVariable Long chapterId,
                                     @PathVariable Long catalogueId) {
-        List<CommentInfoView> commentInfoViews = clazzService.selectComment(catalogueId);
+        List<CommentInfoVo> commentInfoVos = clazzService.selectComment(catalogueId);
 
-        return ResultVo.querySuccess(commentInfoViews);
+        return ResultVo.querySuccess(commentInfoVos);
     }
 
     @ApiOperation("删除评论")

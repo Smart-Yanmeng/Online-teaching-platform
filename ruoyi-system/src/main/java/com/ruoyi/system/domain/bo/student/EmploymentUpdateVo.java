@@ -26,10 +26,6 @@ public class EmploymentUpdateVo {
     @ApiModelProperty("岗位")
     private String position;
 
-    private String updateBy;
-
-    private String updateTime;
-
     @ApiModelProperty("备注")
     private String remark;
 }
