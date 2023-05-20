@@ -5,11 +5,14 @@ import lombok.Data;
 
 @Data
 public class BStudentInfoPo {
+    @ApiModelProperty("学生ID")
+    private Long studentId;
+
     @ApiModelProperty("学生姓名")
     private String nickName;
 
-    @ApiModelProperty("账号")
-    private String userName;
+    @ApiModelProperty("电话")
+    private String phoneNumber;
 
     @ApiModelProperty("班级")
     private String clazzName;

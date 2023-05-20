@@ -42,10 +42,14 @@ public class BActivityController {
     @ApiOperation("查询活动")
     @GetMapping("/list")
     public ResultVo activityInfoSearch(@RequestParam(required = false) String activityTitle,
-                                       @RequestParam(required = false) Long isRelease) {
+                                       @RequestParam(required = false) Long isRelease,
+                                       @RequestParam(required = false) String activityIntroduce,
+                                       @RequestParam(required = false) Character isLink) {
         ActivitySearchBo activitySearchBo = new ActivitySearchBo();
         activitySearchBo.setActivityTitle(activityTitle);
         activitySearchBo.setIsRelease(isRelease);
+        activitySearchBo.setActivityIntroduce(activityIntroduce);
+        activitySearchBo.setIsLink(isLink);
         List<ActivityInfoVo> activityInfoVos = activityService.queryActivityList(activitySearchBo);
 
         return ResultVo.querySuccess(activityInfoVos);

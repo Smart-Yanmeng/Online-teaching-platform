@@ -39,11 +39,11 @@ public class BSharingController {
 
     @ApiOperation("查询分享列表")
     @GetMapping("/list")
-    public ResultVo sharingInfoSearchList(@RequestParam("sharingTitle") String sharingTitle,
-                                          @RequestParam("sharingSubtitle") String sharingSubtitle,
-                                          @RequestParam("honouredGuest") String honouredGuest,
-                                          @RequestParam("isRelease") Character isRelease,
-                                          @RequestParam("isLink") Character isLink,
+    public ResultVo sharingInfoSearchList(@RequestParam(required = false) String sharingTitle,
+                                          @RequestParam(required = false) String sharingSubtitle,
+                                          @RequestParam(required = false) String honouredGuest,
+                                          @RequestParam Character isRelease,
+                                          @RequestParam Character isLink,
                                           @RequestParam(defaultValue = "1") @Valid Integer pageNum,
                                           @RequestParam(defaultValue = "10") @Valid Integer pageSize) {
         SharingSearchBo sharingSearchBo = new SharingSearchBo();

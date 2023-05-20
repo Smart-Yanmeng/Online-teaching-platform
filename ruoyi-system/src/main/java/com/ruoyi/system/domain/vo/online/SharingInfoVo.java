@@ -5,6 +5,9 @@ import lombok.Data;
 
 @Data
 public class SharingInfoVo {
+    @ApiModelProperty("知识分享ID")
+    private Long sharingId;
+
     @ApiModelProperty("知识分享标题")
     private String sharingTitle;
 

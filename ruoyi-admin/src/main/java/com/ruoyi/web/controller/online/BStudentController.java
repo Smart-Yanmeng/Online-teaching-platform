@@ -42,15 +42,15 @@ public class BStudentController {
     @GetMapping("/list")
     public ResultVo studentInfoSearchList(@RequestParam(defaultValue = "1") @Valid Integer pageNum,
                                           @RequestParam(defaultValue = "10") @Valid Integer pageSize,
-                                          @RequestParam String nickName,
-                                          @RequestParam String userName,
-                                          @RequestParam String grade,
-                                          @RequestParam String school,
-                                          @RequestParam String major,
-                                          @RequestParam Character direction) {
+                                          @RequestParam(required = false) String nickName,
+                                          @RequestParam(required = false) String phoneNumber,
+                                          @RequestParam(required = false) String grade,
+                                          @RequestParam(required = false) String school,
+                                          @RequestParam(required = false) String major,
+                                          @RequestParam(required = false) Character direction) {
         StudentSearchBo studentSearchBo = new StudentSearchBo();
         studentSearchBo.setNickName(nickName);
-        studentSearchBo.setUserName(userName);
+        studentSearchBo.setPhoneNumber(phoneNumber);
         studentSearchBo.setGrade(grade);
         studentSearchBo.setSchool(school);
         studentSearchBo.setMajor(major);

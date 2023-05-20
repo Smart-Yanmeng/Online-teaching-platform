@@ -5,6 +5,9 @@ import lombok.Data;
 
 @Data
 public class ComplaintInfoVo {
+    @ApiModelProperty("投诉ID")
+    private Long complaintId;
+
     @ApiModelProperty("投诉类型")
     private String complaintType;
 
