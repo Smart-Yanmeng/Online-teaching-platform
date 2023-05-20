@@ -1,12 +1,13 @@
 package com.ruoyi.system.domain.vo.online;
 
-import com.ruoyi.common.utils.bean.BeanUtils;
-import com.ruoyi.system.domain.po.BBannerPo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Data
 public class BannerInfoVo {
+    @ApiModelProperty("轮播图ID")
+    private Long bannerId;
+
     @ApiModelProperty("轮播图标题")
     private String bannerTitle;
 
@@ -15,6 +16,9 @@ public class BannerInfoVo {
 
     @ApiModelProperty("排序")
     private String bannerSort;
+
+    @ApiModelProperty("跳转链接")
+    private String link;
 
     @ApiModelProperty("是否发布(0待发布，1发布)")
     private Long isRelease;

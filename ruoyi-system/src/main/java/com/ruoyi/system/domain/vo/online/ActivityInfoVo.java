@@ -1,12 +1,13 @@
 package com.ruoyi.system.domain.vo.online;
 
-import com.ruoyi.common.utils.bean.BeanUtils;
-import com.ruoyi.system.domain.po.BActivityPo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Data
 public class ActivityInfoVo {
+    @ApiModelProperty("活动ID")
+    private Long activityId;
+
     @ApiModelProperty("活动标题")
     private String activityTitle;
 

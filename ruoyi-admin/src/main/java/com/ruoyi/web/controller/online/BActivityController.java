@@ -41,8 +41,8 @@ public class BActivityController {
 
     @ApiOperation("查询活动")
     @GetMapping("/list")
-    public ResultVo activityInfoSearch(@RequestParam String activityTitle,
-                                       @RequestParam Long isRelease) {
+    public ResultVo activityInfoSearch(@RequestParam(required = false) String activityTitle,
+                                       @RequestParam(required = false) Long isRelease) {
         ActivitySearchBo activitySearchBo = new ActivitySearchBo();
         activitySearchBo.setActivityTitle(activityTitle);
         activitySearchBo.setIsRelease(isRelease);
