@@ -3,7 +3,8 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.system.mapper.online.IBannerMapper">
-    <select id="countBanner" resultType="java.lang.Long">
+    <select id="countBanner" parameterType="com.ruoyi.system.domain.bo.banner.BannerSearchBo"
+            resultType="java.lang.Long">
         SELECT COUNT(*)
         FROM ms_banner
     </select>
@@ -22,19 +23,23 @@
         ORDER BY banner_sort ASC
     </select>
 
-    <select id="queryBannerByCondition"
-            parameterType="com.ruoyi.system.domain.bo.banner.BannerSearchBo"
+    <select id="queryBannerByCondition" parameterType="com.ruoyi.system.domain.bo.banner.BannerSearchBo"
             resultType="com.ruoyi.system.domain.po.BBannerPo">
         SELECT *
         FROM ms_banner
-        WHERE banner_title LIKE CONCAT('%', #{bannerTitle}, '%')
-          AND is_release = #{isRelease}
+        WHERE banner_title LIKE CONCAT('%', COALESCE(#{bannerTitle}, ''), '%')
+          AND is_release LIKE CONCAT('%', COALESCE(#{isRelease}, ''), '%')
           AND del_flag = 0
         ORDER BY banner_sort ASC
     </select>
 
-    <select id="countUseBanner" resultType="java.lang.Long">
-        select
+    <select id="countUseBanner" parameterType="com.ruoyi.system.domain.bo.banner.BannerSearchBo"
+            resultType="java.lang.Long">
+        SELECT COUNT(*)
+        FROM ms_banner
+        WHERE banner_title LIKE CONCAT('%', COALESCE(#{bannerTitle}, ''), '%')
+          AND is_release LIKE CONCAT('%', COALESCE(#{isRelease}, ''), '%')
+          AND del_flag = 0
     </select>
 
     <insert id="insertBannerByCondition" parameterType="com.ruoyi.system.domain.po.BBannerPo">

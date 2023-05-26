@@ -37,8 +37,8 @@ public class BannerService {
      *
      * @return Long
      */
-    public Long countUseBanner() {
-        return bannerMapper.countUseBanner();
+    public Long countUseBanner(BannerSearchBo bannerSearchBo) {
+        return bannerMapper.countUseBanner(bannerSearchBo);
     }
 
     /**

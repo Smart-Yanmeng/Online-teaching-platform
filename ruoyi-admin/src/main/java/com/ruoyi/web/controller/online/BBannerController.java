@@ -33,9 +33,15 @@ public class BBannerController {
     public ResultVo bannerInfoList(@RequestParam(defaultValue = "1") @Valid Integer pageNum,
                                    @RequestParam(defaultValue = "10") @Valid Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
-        List<BannerInfo> bannerInfos = bannerService.selectBannerList();
 
-        return ResultVo.querySuccess(bannerInfos);
+        List<BannerInfo> bannerInfos = bannerService.selectBannerList();
+        Long bannerSum = bannerService.countUseBanner(null);
+
+        BannerInfoVo bannerInfoVo = new BannerInfoVo();
+        bannerInfoVo.setList(bannerInfos);
+        bannerInfoVo.setBannerSum(bannerSum);
+
+        return ResultVo.querySuccess(bannerInfoVo);
     }
 
     @ApiOperation("查询轮播图")
@@ -48,9 +54,10 @@ public class BBannerController {
         bannerSearchBo.setBannerTitle(bannerTitle);
         bannerSearchBo.setIsRelease(isRelease);
         PageHelper.startPage(pageNum, pageSize);
-        List<BannerInfo> bannerInfos = bannerService.queryBannerList(bannerSearchBo);
 
-        Long bannerSum = bannerService.countUseBanner();
+        List<BannerInfo> bannerInfos = bannerService.queryBannerList(bannerSearchBo);
+        Long bannerSum = bannerService.countUseBanner(bannerSearchBo);
+
         BannerInfoVo bannerInfoVo = new BannerInfoVo();
         bannerInfoVo.setList(bannerInfos);
         bannerInfoVo.setBannerSum(bannerSum);

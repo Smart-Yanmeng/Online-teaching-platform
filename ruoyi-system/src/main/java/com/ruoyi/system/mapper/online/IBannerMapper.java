@@ -11,7 +11,7 @@ public interface IBannerMapper {
     Long countBanner();
 
     // 查询 banner 可用数量
-    Long countUseBanner();
+    Long countUseBanner(BannerSearchBo bannerSearchBo);
 
     // 检查 banner 是否发布
     Long checkRelease(Long bannerId);
