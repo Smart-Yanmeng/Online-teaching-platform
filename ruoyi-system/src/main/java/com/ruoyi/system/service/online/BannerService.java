@@ -72,7 +72,7 @@ public class BannerService {
      */
     public void updateBanner(BannerUpdateBo bannerUpdateBo) {
         BBannerPo bannerPo = new BannerUpdateBOConvert().convert(bannerUpdateBo);
-        bannerPo.setBannerSort(String.format("%05d", Integer.parseInt(bannerPo.getBannerSort())));
+        bannerPo.setBannerSort(String.format("%10s", bannerPo.getBannerSort()));
 
         bannerMapper.updateBannerByCondition(bannerPo);
     }
