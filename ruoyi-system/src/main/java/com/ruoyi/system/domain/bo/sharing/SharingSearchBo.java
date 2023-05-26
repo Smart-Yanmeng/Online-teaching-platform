@@ -11,6 +11,9 @@ public class SharingSearchBo {
     @ApiModelProperty("副标题")
     private String sharingSubtitle;
 
+    @ApiModelProperty("活动简介")
+    private String sharingIntroduce;
+
     @ApiModelProperty("邀请嘉宾")
     private String honouredGuest;
 

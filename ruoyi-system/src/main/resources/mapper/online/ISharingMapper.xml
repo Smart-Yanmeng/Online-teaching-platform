@@ -25,9 +25,10 @@
         FROM ms_knowledge_sharing
         WHERE sharing_title LIKE CONCAT('%', COALESCE(#{sharingTitle}, ''), '%')
           AND sharing_subtitle LIKE CONCAT('%', COALESCE(#{sharingSubtitle}, ''), '%')
+          AND sharing_introduce LIKE CONCAT('%', COALESCE(#{sharingIntroduce}, ''), '%')
           AND honoured_guest LIKE CONCAT('%', COALESCE(#{honouredGuest}, ''), '%')
-          AND is_release = #{isRelease}
-          AND is_link = #{isLink}
+          AND is_release LIKE CONCAT('%', COALESCE(#{isRelease}, ''), '%')
+          AND is_link LIKE CONCAT('%', COALESCE(#{isLink}, ''), '%')
     </select>
 
     <insert id="insertSharingByCondition" parameterType="com.ruoyi.system.domain.po.BSharingPo">

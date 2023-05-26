@@ -41,6 +41,7 @@ public class BSharingController {
     @GetMapping("/list")
     public ResultVo sharingInfoSearchList(@RequestParam(required = false) String sharingTitle,
                                           @RequestParam(required = false) String sharingSubtitle,
+                                          @RequestParam(required = false) String sharingIntroduce,
                                           @RequestParam(required = false) String honouredGuest,
                                           @RequestParam(required = false) Character isRelease,
                                           @RequestParam(required = false) Character isLink,
@@ -49,6 +50,7 @@ public class BSharingController {
         SharingSearchBo sharingSearchBo = new SharingSearchBo();
         sharingSearchBo.setSharingTitle(sharingTitle);
         sharingSearchBo.setSharingSubtitle(sharingSubtitle);
+        sharingSearchBo.setSharingIntroduce(sharingIntroduce);
         sharingSearchBo.setHonouredGuest(honouredGuest);
         sharingSearchBo.setIsRelease(isRelease);
         sharingSearchBo.setIsLink(isLink);

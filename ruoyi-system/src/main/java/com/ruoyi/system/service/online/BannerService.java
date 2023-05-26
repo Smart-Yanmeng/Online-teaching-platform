@@ -59,7 +59,7 @@ public class BannerService {
      */
     public void insertBanner(BannerAddBo bannerAddBo) {
         BBannerPo bannerPo = new BannerAddBOConvert().convert(bannerAddBo);
-        bannerPo.setBannerSort(String.format("%05d", Integer.parseInt(bannerPo.getBannerSort())));
+        bannerPo.setBannerSort(String.format("%10s", bannerPo.getBannerSort()));
         bannerPo.setBannerId(bannerMapper.countBanner() + 1);
 
         bannerMapper.insertBannerByCondition(bannerPo);

@@ -9,7 +9,7 @@ import javax.validation.constraints.NotBlank;
 public class SharingUpdateDto {
     @NotBlank
     @ApiModelProperty("知识分享活动标题")
-    private String activityTitle;
+    private String sharingTitle;
 
     @NotBlank
     @ApiModelProperty("知识分享活动副标题")
