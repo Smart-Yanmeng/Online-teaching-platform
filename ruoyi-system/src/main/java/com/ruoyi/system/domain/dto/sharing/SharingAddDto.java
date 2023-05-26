@@ -1,8 +1,5 @@
 package com.ruoyi.system.domain.dto.sharing;
 
-import com.ruoyi.common.utils.DateUtils;
-import com.ruoyi.common.utils.bean.BeanUtils;
-import com.ruoyi.system.domain.po.BSharingPo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -12,7 +9,7 @@ import javax.validation.constraints.NotBlank;
 public class SharingAddDto {
     @NotBlank
     @ApiModelProperty("知识分享活动标题")
-    private String activityTitle;
+    private String sharingTitle;
 
     @NotBlank
     @ApiModelProperty("知识分享活动副标题")

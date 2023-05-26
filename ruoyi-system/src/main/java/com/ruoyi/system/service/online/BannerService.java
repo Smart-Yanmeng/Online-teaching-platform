@@ -9,7 +9,6 @@ import com.ruoyi.system.domain.po.convert.BannerPOConvert;
 import com.ruoyi.system.domain.vo.online.BannerInfo;
 import com.ruoyi.system.mapper.online.IBannerMapper;
 import com.ruoyi.system.domain.po.BBannerPo;
-import com.ruoyi.system.domain.vo.online.BannerInfoVo;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -60,6 +59,7 @@ public class BannerService {
      */
     public void insertBanner(BannerAddBo bannerAddBo) {
         BBannerPo bannerPo = new BannerAddBOConvert().convert(bannerAddBo);
+        bannerPo.setBannerSort(String.format("%05d", Integer.parseInt(bannerPo.getBannerSort())));
         bannerPo.setBannerId(bannerMapper.countBanner() + 1);
 
         bannerMapper.insertBannerByCondition(bannerPo);
@@ -72,6 +72,7 @@ public class BannerService {
      */
     public void updateBanner(BannerUpdateBo bannerUpdateBo) {
         BBannerPo bannerPo = new BannerUpdateBOConvert().convert(bannerUpdateBo);
+        bannerPo.setBannerSort(String.format("%05d", Integer.parseInt(bannerPo.getBannerSort())));
 
         bannerMapper.updateBannerByCondition(bannerPo);
     }
