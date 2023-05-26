@@ -17,6 +17,7 @@
     <select id="selectActivity" resultType="com.ruoyi.system.domain.po.BActivityPo">
         SELECT *
         FROM ms_activity
+        WHERE del_flag = 0
     </select>
 
     <select id="queryByCondition" parameterType="com.ruoyi.system.domain.po.BActivityPo"

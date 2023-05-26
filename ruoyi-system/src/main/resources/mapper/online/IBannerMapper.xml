@@ -33,6 +33,10 @@
         ORDER BY banner_sort ASC
     </select>
 
+    <select id="countUseBanner" resultType="java.lang.Long">
+        select
+    </select>
+
     <insert id="insertBannerByCondition" parameterType="com.ruoyi.system.domain.po.BBannerPo">
         INSERT INTO ms_banner(banner_id, banner_title, banner_url, banner_sort, link, is_release, del_flag, create_by,
                               create_time, update_by, update_time, remark)

@@ -42,8 +42,8 @@ public class BSharingController {
     public ResultVo sharingInfoSearchList(@RequestParam(required = false) String sharingTitle,
                                           @RequestParam(required = false) String sharingSubtitle,
                                           @RequestParam(required = false) String honouredGuest,
-                                          @RequestParam Character isRelease,
-                                          @RequestParam Character isLink,
+                                          @RequestParam(required = false) Character isRelease,
+                                          @RequestParam(required = false) Character isLink,
                                           @RequestParam(defaultValue = "1") @Valid Integer pageNum,
                                           @RequestParam(defaultValue = "10") @Valid Integer pageSize) {
         SharingSearchBo sharingSearchBo = new SharingSearchBo();

@@ -7,8 +7,11 @@ import com.ruoyi.system.domain.dto.banner.BannerUpdateDto;
 import java.util.List;
 
 public interface IBannerMapper {
-    // 查询 banner 数量
+    // 查询 banner 总共数量
     Long countBanner();
+
+    // 查询 banner 可用数量
+    Long countUseBanner();
 
     // 检查 banner 是否发布
     Long checkRelease(Long bannerId);

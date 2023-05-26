@@ -9,6 +9,7 @@ import com.ruoyi.system.domain.dto.banner.BannerUpdateDto;
 import com.ruoyi.system.domain.dto.convert.BannerAddDTOConvert;
 import com.ruoyi.system.domain.dto.convert.BannerUpdateDTOConvert;
 import com.ruoyi.system.domain.vo.common.ResultVo;
+import com.ruoyi.system.domain.vo.online.BannerInfo;
 import com.ruoyi.system.domain.vo.online.BannerInfoVo;
 import com.ruoyi.system.service.online.BannerService;
 import io.swagger.annotations.Api;
@@ -32,24 +33,29 @@ public class BBannerController {
     public ResultVo bannerInfoList(@RequestParam(defaultValue = "1") @Valid Integer pageNum,
                                    @RequestParam(defaultValue = "10") @Valid Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
-        List<BannerInfoVo> bannerInfoVos = bannerService.selectBannerList();
+        List<BannerInfo> bannerInfos = bannerService.selectBannerList();
 
-        return ResultVo.querySuccess(bannerInfoVos);
+        return ResultVo.querySuccess(bannerInfos);
     }
 
     @ApiOperation("查询轮播图")
     @GetMapping("/list")
-    public ResultVo bannerInfoSearchList(@RequestParam("bannerTitle") String bannerTitle,
-                                         @RequestParam("isRelease") Long isRelease,
+    public ResultVo bannerInfoSearchList(@RequestParam(value = "bannerTitle", required = false) String bannerTitle,
+                                         @RequestParam(value = "isRelease", required = false) Long isRelease,
                                          @RequestParam(defaultValue = "1") @Valid Integer pageNum,
                                          @RequestParam(defaultValue = "10") @Valid Integer pageSize) {
         BannerSearchBo bannerSearchBo = new BannerSearchBo();
         bannerSearchBo.setBannerTitle(bannerTitle);
         bannerSearchBo.setIsRelease(isRelease);
         PageHelper.startPage(pageNum, pageSize);
-        List<BannerInfoVo> bannerInfoVos = bannerService.queryBannerList(bannerSearchBo);
+        List<BannerInfo> bannerInfos = bannerService.queryBannerList(bannerSearchBo);
 
-        return ResultVo.querySuccess(bannerInfoVos);
+        Long bannerSum = bannerService.countUseBanner();
+        BannerInfoVo bannerInfoVo = new BannerInfoVo();
+        bannerInfoVo.setList(bannerInfos);
+        bannerInfoVo.setBannerSum(bannerSum);
+
+        return ResultVo.querySuccess(bannerInfoVo);
     }
 
     @ApiOperation("重置轮播图列表")
@@ -57,9 +63,9 @@ public class BBannerController {
     public ResultVo bannerReset(@RequestParam(defaultValue = "1") @Valid Integer pageNum,
                                 @RequestParam(defaultValue = "10") @Valid Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
-        List<BannerInfoVo> bannerInfoVos = bannerService.selectBannerList();
+        List<BannerInfo> bannerInfos = bannerService.selectBannerList();
 
-        return ResultVo.querySuccess(bannerInfoVos);
+        return ResultVo.querySuccess(bannerInfos);
     }
 
     @ApiOperation("新增轮播图")

@@ -6,6 +6,7 @@ import com.ruoyi.system.domain.bo.banner.BannerUpdateBo;
 import com.ruoyi.system.domain.bo.convert.BannerAddBOConvert;
 import com.ruoyi.system.domain.bo.convert.BannerUpdateBOConvert;
 import com.ruoyi.system.domain.po.convert.BannerPOConvert;
+import com.ruoyi.system.domain.vo.online.BannerInfo;
 import com.ruoyi.system.mapper.online.IBannerMapper;
 import com.ruoyi.system.domain.po.BBannerPo;
 import com.ruoyi.system.domain.vo.online.BannerInfoVo;
@@ -25,10 +26,19 @@ public class BannerService {
      *
      * @return List<BannerInfoVo>
      */
-    public List<BannerInfoVo> selectBannerList() {
+    public List<BannerInfo> selectBannerList() {
         List<BBannerPo> bannerPos = bannerMapper.selectBanner();
 
         return bannerPos.stream().map(item -> new BannerPOConvert().convert(item)).collect(Collectors.toList());
+    }
+
+    /**
+     * 可用轮播图数量
+     *
+     * @return Long
+     */
+    public Long countUseBanner() {
+        return bannerMapper.countUseBanner();
     }
 
     /**
@@ -37,7 +47,7 @@ public class BannerService {
      * @param bannerSearchBo 查询轮播图条件
      * @return List<BannerInfoVo>
      */
-    public List<BannerInfoVo> queryBannerList(BannerSearchBo bannerSearchBo) {
+    public List<BannerInfo> queryBannerList(BannerSearchBo bannerSearchBo) {
         List<BBannerPo> bannerPos = bannerMapper.queryBannerByCondition(bannerSearchBo);
 
         return bannerPos.stream().map(item -> new BannerPOConvert().convert(item)).collect(Collectors.toList());
