@@ -1,5 +1,6 @@
 package com.ruoyi.system.domain.dto.convert;
 
+import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.bean.BeanUtils;
 import com.ruoyi.system.domain.bo.banner.BannerUpdateBo;
 import com.ruoyi.system.domain.dto.banner.BannerUpdateDto;
@@ -10,6 +11,10 @@ public class BannerUpdateDTOConvert implements ClassConvertTool<BannerUpdateDto,
     public BannerUpdateBo convert(BannerUpdateDto bannerUpdateDto) {
         BannerUpdateBo bannerUpdateBo = new BannerUpdateBo();
         BeanUtils.copyProperties(bannerUpdateDto, bannerUpdateBo);
+
+        // 增加值
+        bannerUpdateBo.setUpdateTime(DateUtils.getTime());
+        bannerUpdateBo.setUpdateBy("admin");
 
         return bannerUpdateBo;
     }

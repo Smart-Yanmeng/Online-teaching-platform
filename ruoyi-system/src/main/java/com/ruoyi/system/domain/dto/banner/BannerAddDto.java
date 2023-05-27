@@ -25,18 +25,4 @@ public class BannerAddDto {
 
     @ApiModelProperty("备注")
     private String remark;
-
-//    // vo -> entity
-//    public BBannerPo transfer(BBannerPo bannerEntity) {
-//        BeanUtils.copyProperties(this, bannerEntity);
-//        bannerEntity.setCreateTime(DateUtils.getTime());
-//        bannerEntity.setCreateBy("admin");
-////        bannerEntity.setCreateBy(SecurityUtils.getUsername());
-//        bannerEntity.setDelFlag('0');
-//        bannerEntity.setUpdateTime(DateUtils.getTime());
-//        bannerEntity.setUpdateBy("admin");
-////        bannerEntity.setUpdateBy(SecurityUtils.getUsername());
-//
-//        return bannerEntity;
-//    }
 }

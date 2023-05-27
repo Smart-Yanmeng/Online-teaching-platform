@@ -17,7 +17,7 @@ public interface ISharingMapper {
 
     List<BSharingPo> querySharingByCondition(SharingSearchBo sharingSearchBo);
 
-    List<SharingAddDto> insertSharingByCondition(BSharingPo sharingPo);
+    void insertSharingByCondition(BSharingPo sharingPo);
 
     void updateSharingByCondition(BSharingPo sharingPo);
 

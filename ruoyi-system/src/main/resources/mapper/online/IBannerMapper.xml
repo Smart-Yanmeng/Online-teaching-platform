@@ -56,7 +56,7 @@
             <if test="bannerUrl != null and bannerUrl != ''">banner_url = #{bannerUrl},</if>
             <if test="link != null and link != ''">link = #{link},</if>
             <if test="bannerSort != null and bannerSort != ''">banner_sort = #{bannerSort},</if>
-            <if test="isRelease != null and isRelease != ''">is_release = #{isRelease},</if>
+            <if test="isRelease != null">is_release = #{isRelease},</if>
             <if test="remark != null and remark != ''">remark = #{remark},</if>
             <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
             <if test="updateTime != null and updateTime != ''">update_time = #{updateTime}</if>

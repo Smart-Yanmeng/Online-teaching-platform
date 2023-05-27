@@ -74,6 +74,8 @@ public class BannerService {
         BBannerPo bannerPo = new BannerUpdateBOConvert().convert(bannerUpdateBo);
         bannerPo.setBannerSort(String.format("%10s", bannerPo.getBannerSort()));
 
+        System.out.println(bannerPo.getIsRelease());
+
         bannerMapper.updateBannerByCondition(bannerPo);
     }
 
