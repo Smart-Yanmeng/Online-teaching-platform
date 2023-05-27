@@ -50,7 +50,7 @@
             <if test="activityContent != null and activityContent != ''">activity_content = #{activityContent},</if>
             <if test="activitySign != null and activitySign != ''">activity_sign = #{activitySign},</if>
             <if test="coverUrl != null and coverUrl != ''">cover_url = #{coverUrl},</if>
-            <if test="isRelease != null and isRelease != ''">is_release = #{isRelease},</if>
+            <if test="isRelease != null">is_release = #{isRelease},</if>
             <if test="isLink != null and isLink != ''">is_link = #{isLink},</if>
             <if test="link != null and link != ''">link = #{link},</if>
             <if test="remark != null and remark != ''">remark = #{remark},</if>

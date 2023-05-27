@@ -1,9 +1,7 @@
 package com.ruoyi.system.mapper.online;
 
-import com.ruoyi.system.domain.bo.activity.ActivityUpdateBo;
 import com.ruoyi.system.domain.po.BActivityPo;
 import com.ruoyi.system.domain.bo.activity.ActivitySearchBo;
-import com.ruoyi.system.domain.dto.active.ActivityUpdateDto;
 
 import java.util.List;
 
