@@ -26,11 +26,11 @@
 
     <select id="selectClazz" resultType="com.ruoyi.system.domain.vo.online.ClazzInfoVo">
         SELECT mc.class_id AS clazz_id,
-        mc.class_cover,
+        mc.class_cover AS clazz_cover,
         tn.nick_name AS teacher_name,
         hn.nick_name AS headmaster_name,
-        mc.class_name,
-        mc.class_type,
+        mc.class_name AS clazz_name,
+        mc.class_type AS clazz_type,
         mc.start_time,
         mc.finish_time,
         mc.finish,

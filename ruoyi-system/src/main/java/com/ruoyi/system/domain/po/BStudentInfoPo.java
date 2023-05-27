@@ -11,6 +11,9 @@ public class BStudentInfoPo {
     @ApiModelProperty("学生姓名")
     private String nickName;
 
+    @ApiModelProperty("账号")
+    private String userName;
+
     @ApiModelProperty("电话")
     private String phoneNumber;
 

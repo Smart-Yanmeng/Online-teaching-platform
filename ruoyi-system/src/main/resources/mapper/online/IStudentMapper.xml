@@ -29,6 +29,7 @@
         SELECT ms.user_id AS student_id,
                su.nick_name,
                su.user_name,
+               su.phonenumber,
                mc.class_name AS clazz_name,
                ms.birthday,
                ms.grade,
