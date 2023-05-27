@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -96,7 +97,7 @@ public class StudentService {
         studentMapper.updateUser(userPo);
 
         // 修改 ms_student_class 表 ( 如果 clazzName 被修改了 )
-        if (studentUpdateBo.getClazzName() != studentMapper.selectClazzName(studentUpdateBo.getUserId())) {
+        if (!Objects.equals(studentUpdateBo.getClazzName(), studentMapper.selectClazzName(studentUpdateBo.getUserId()))) {
             studentMapper.updateStudentClazz(studentMapper.selectClazzId(studentUpdateBo.getClazzName()));
         }
     }

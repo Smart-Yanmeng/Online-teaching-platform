@@ -75,18 +75,6 @@ public class BClazzController {
         return ResultVo.insertSuccess(new ClazzAddDto());
     }
 
-//    @ApiOperation("查询班级")
-//    @GetMapping("/{clazzId}")
-//    @Transactional(rollbackFor = Exception.class)
-//    public ResultVo clazzInfo(@PathVariable Long clazzId) {
-//        ClazzInfoVo clazzInfoVo = clazzService.queryClazz(clazzId);
-//
-//        ResultVo<ClazzInfoVo> resultVo = new ResultVo<>();
-//        resultVo.setData(clazzInfoVo);
-//
-//        return ResultVo.querySuccess(clazzInfoVo);
-//    }
-
     @ApiOperation("修改班级")
     @PutMapping("/update/{clazzId}")
     @Transactional(rollbackFor = Exception.class)
@@ -217,17 +205,6 @@ public class BClazzController {
 
         return ResultVo.querySuccess(taskSubmitInfoVos);
     }
-
-//    @ApiOperation("下载学生作业")
-//    @GetMapping("/{clazzId}/detail/{chapterId}/{catalogueId}/{taskId}")
-//    public ResultVo taskDownload(@PathVariable Long clazzId,
-//                                 @PathVariable Long chapterId,
-//                                 @PathVariable Long catalogueId,
-//                                 @PathVariable Long taskId) {
-//        clazzService.downloadTask(taskId);
-//
-//        return ResultVo.success("下载成功", null);
-//    }
 
     @ApiOperation("获取评论列表")
     @GetMapping("/{clazzId}/detail/{chapterId}/{catalogueId}/comment")

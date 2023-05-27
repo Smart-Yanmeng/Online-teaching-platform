@@ -2,7 +2,6 @@ package com.ruoyi.system.mapper.online;
 
 import com.ruoyi.system.domain.po.BBannerPo;
 import com.ruoyi.system.domain.bo.banner.BannerSearchBo;
-import com.ruoyi.system.domain.dto.banner.BannerUpdateDto;
 
 import java.util.List;
 

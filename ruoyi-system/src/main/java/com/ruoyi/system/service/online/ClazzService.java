@@ -52,18 +52,6 @@ public class ClazzService {
     }
 
     /**
-     * 查询班级
-     *
-     * @param clazzId 班级 ID
-     * @return clazzInfoVo
-     */
-//    public ClazzInfoVo queryClazz(Long clazzId) {
-//        ClazzInfoVo clazzInfoVo = clazzMapper.queryClazzByCondition(clazzId);
-//
-//        return clazzInfoVo;
-//    }
-
-    /**
      * 修改班级
      *
      * @param clazzUpdateBo 修改班级数据
@@ -155,7 +143,7 @@ public class ClazzService {
     /**
      * 删除章
      *
-     * @param chapterId
+     * @param chapterId 章节 ID
      */
     public void deleteChapter(Long chapterId) {
         clazzMapper.deleteChapterByCondition(chapterId);
@@ -188,47 +176,6 @@ public class ClazzService {
     public List<TaskSubmitInfoVo> selectTaskList(Long catalogueId) {
         return clazzMapper.selectTaskByCondition(catalogueId);
     }
-
-//    /**
-//     * 下载学生作业
-//     *
-//     * @param taskId 作业ID
-//     */
-//    public void downloadTask(Long taskId) {
-//        String saveDir = "C:\\Downloads\\";
-//        String fileUrl = clazzMapper.selectTaskFileUrlByCondition(taskId);
-//        String fileName = clazzMapper.selectTaskFileNameByCondition(taskId);
-//
-//        try {
-//            URL url = new URL(fileUrl);
-//            HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
-//            int responseCode = httpConn.getResponseCode();
-//
-//            // 检查是否连接成功
-//            if (responseCode == HttpURLConnection.HTTP_OK) {
-//                // 打开输入输出流
-//                InputStream inputStream = httpConn.getInputStream();
-//                FileOutputStream outputStream = new FileOutputStream(saveDir + fileName);
-//
-//                int bytesRead = -1;
-//                byte[] buffer = new byte[4096];
-//                while ((bytesRead = inputStream.read(buffer)) != -1) {
-//                    outputStream.write(buffer, 0, bytesRead);
-//                }
-//
-//                outputStream.close();
-//                inputStream.close();
-//
-//                System.out.println("File download successfully!");
-//            } else {
-//                System.out.println("File download failed, Server replied HTTP code: " + responseCode);
-//            }
-//            httpConn.disconnect();
-//        } catch (Exception e) {
-//            System.out.println("Error while downloading file: " + e.getMessage());
-//            e.printStackTrace();
-//        }
-//    }
 
     /**
      * 查询评论信息
