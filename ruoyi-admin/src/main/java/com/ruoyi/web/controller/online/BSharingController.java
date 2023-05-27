@@ -93,9 +93,10 @@ public class BSharingController {
     @ApiOperation("修改分享")
     @PutMapping("/update/{sharingId}")
     @Transactional(rollbackFor = Exception.class)
-    public ResultVo sharingUpdate(@PathVariable String sharingId,
+    public ResultVo sharingUpdate(@PathVariable Long sharingId,
                                   @RequestBody SharingUpdateDto sharingUpdateDto) {
         SharingUpdateBo sharingUpdateBo = new SharingUpdateDTOConvert().convert(sharingUpdateDto);
+        sharingUpdateBo.setSharingId(sharingId);
         sharingService.updateSharing(sharingUpdateBo);
 
         return ResultVo.updateSuccess(new SharingUpdateDto());

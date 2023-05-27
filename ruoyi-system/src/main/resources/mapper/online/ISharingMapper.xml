@@ -34,9 +34,10 @@
     <insert id="insertSharingByCondition" parameterType="com.ruoyi.system.domain.po.BSharingPo">
         INSERT INTO ms_knowledge_sharing(sharing_id, sharing_title, sharing_subtitle, sharing_introduce,
                                          sharing_content, sharing_sign, cover_url, honoured_guest, is_release, is_link,
-                                         link, author)
+                                         link, author, del_flag, create_by, create_time, update_by, update_time, remark)
         VALUES (#{sharingId}, #{sharingTitle}, #{sharingSubtitle}, #{sharingIntroduce}, #{sharingContent},
-                #{sharingSign}, #{coverUrl}, #{honouredGuest}, #{isRelease}, #{isLink}, #{link}, #{author})
+                #{sharingSign}, #{coverUrl}, #{honouredGuest}, #{isRelease}, #{isLink}, #{link}, #{author}, #{delFlag},
+                #{createBy}, #{createTime}, #{updateBy}, #{updateTime}, #{remark})
     </insert>
 
     <update id="updateSharingByCondition" parameterType="com.ruoyi.system.domain.po.BSharingPo">
@@ -49,7 +50,7 @@
             <if test="sharingSign != null and sharingSign != ''">sharing_sign = #{sharingSign},</if>
             <if test="coverUrl != null and coverUrl != ''">cover_url = #{coverUrl},</if>
             <if test="honouredGuest != null and honouredGuest != ''">honoured_guest = #{honouredGuest},</if>
-            <if test="isRelease != null and isRelease != ''">is_release = #{isRelease},</if>
+            <if test="isRelease != null">is_release = #{isRelease},</if>
             <if test="isLink != null and isLink != ''">is_link = #{isLink},</if>
             <if test="author != null and author != ''">author = #{author},</if>
             <if test="link != null and link != ''">link = #{link},</if>
