@@ -34,12 +34,9 @@ public class BBannerController {
                                    @RequestParam(defaultValue = "10") @Valid Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
 
-        List<BannerInfo> bannerInfos = bannerService.selectBannerList();
-        Long bannerSum = bannerService.countUseBanner(null);
-
         BannerInfoVo bannerInfoVo = new BannerInfoVo();
-        bannerInfoVo.setList(bannerInfos);
-        bannerInfoVo.setBannerSum(bannerSum);
+        bannerInfoVo.setBannerInfos(bannerService.selectBannerList());
+        bannerInfoVo.setBannerSum(bannerService.countUseBanner(null));
 
         return ResultVo.querySuccess(bannerInfoVo);
     }
@@ -55,12 +52,9 @@ public class BBannerController {
         bannerSearchBo.setIsRelease(isRelease);
         PageHelper.startPage(pageNum, pageSize);
 
-        List<BannerInfo> bannerInfos = bannerService.queryBannerList(bannerSearchBo);
-        Long bannerSum = bannerService.countUseBanner(bannerSearchBo);
-
         BannerInfoVo bannerInfoVo = new BannerInfoVo();
-        bannerInfoVo.setList(bannerInfos);
-        bannerInfoVo.setBannerSum(bannerSum);
+        bannerInfoVo.setBannerInfos(bannerService.queryBannerList(bannerSearchBo));
+        bannerInfoVo.setBannerSum(bannerService.countUseBanner(bannerSearchBo));
 
         return ResultVo.querySuccess(bannerInfoVo);
     }
@@ -70,9 +64,12 @@ public class BBannerController {
     public ResultVo bannerReset(@RequestParam(defaultValue = "1") @Valid Integer pageNum,
                                 @RequestParam(defaultValue = "10") @Valid Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
-        List<BannerInfo> bannerInfos = bannerService.selectBannerList();
 
-        return ResultVo.querySuccess(bannerInfos);
+        BannerInfoVo bannerInfoVo = new BannerInfoVo();
+        bannerInfoVo.setBannerInfos(bannerService.selectBannerList());
+        bannerInfoVo.setBannerSum(bannerService.countUseBanner(null));
+
+        return ResultVo.querySuccess(bannerInfoVo);
     }
 
     @ApiOperation("新增轮播图")

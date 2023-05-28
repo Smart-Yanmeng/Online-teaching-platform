@@ -31,6 +31,17 @@
           AND del_flag = 0
     </select>
 
+    <select id="countUseActivity" parameterType="com.ruoyi.system.domain.bo.activity.ActivitySearchBo"
+            resultType="java.lang.Long">
+        SELECT COUNT(*)
+        FROM ms_activity
+        WHERE activity_title LIKE CONCAT('%', COALESCE(#{activityTitle}, ''), '%')
+          AND is_release LIKE CONCAT('%', COALESCE(#{isRelease}, ''), '%')
+          AND activity_introduce LIKE CONCAT('%', COALESCE(#{activityIntroduce}, ''), '%')
+          AND is_link LIKE CONCAT('%', COALESCE(#{isLink}, ''), '%')
+          AND del_flag = 0
+    </select>
+
     <insert id="insertActivityByCondition" parameterType="com.ruoyi.system.domain.po.BActivityPo">
         INSERT INTO ms_activity(activity_id, activity_title, activity_introduce, activity_content, activity_sign,
                                 cover_url, is_release, is_link, link, del_flag, create_by, create_time, update_by,

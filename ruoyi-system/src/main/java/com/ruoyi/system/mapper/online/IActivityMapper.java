@@ -14,6 +14,8 @@ public interface IActivityMapper {
 
     List<BActivityPo> selectActivity();
 
+    Long countUseActivity(ActivitySearchBo activitySearchBo);
+
     List<BActivityPo> queryByCondition(ActivitySearchBo activitySearchBo);
 
     void insertActivityByCondition(BActivityPo activityPo);

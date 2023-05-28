@@ -5,21 +5,19 @@ import com.ruoyi.system.domain.bo.activity.ActivityAddBo;
 import com.ruoyi.system.domain.bo.activity.ActivityUpdateBo;
 import com.ruoyi.system.domain.dto.convert.ActivityAddDTOConvert;
 import com.ruoyi.system.domain.dto.convert.ActivityUpdateDTOConvert;
-import com.ruoyi.system.domain.vo.online.ActivityInfoVo;
 import com.ruoyi.system.domain.vo.common.ResultVo;
 import com.ruoyi.system.domain.dto.active.ActivityAddDto;
 import com.ruoyi.system.domain.bo.activity.ActivitySearchBo;
 import com.ruoyi.system.domain.dto.active.ActivityUpdateDto;
+import com.ruoyi.system.domain.vo.online.ActivityInfoVo;
 import com.ruoyi.system.service.online.ActivityService;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 @RequestMapping("/homePageManage/activity")
@@ -34,9 +32,12 @@ public class BActivityController {
     public ResultVo activityInfoList(@RequestParam(defaultValue = "1") @Valid Integer pageNum,
                                      @RequestParam(defaultValue = "10") @Valid Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
-        List<ActivityInfoVo> activityInfoVos = activityService.selectActivityList();
 
-        return ResultVo.querySuccess(activityInfoVos);
+        ActivityInfoVo activityInfoVo = new ActivityInfoVo();
+        activityInfoVo.setActivityInfos(activityService.selectActivityList());
+        activityInfoVo.setActivitySum(activityService.activitySum(null));
+
+        return ResultVo.querySuccess(activityInfoVo);
     }
 
     @ApiOperation("查询活动")
@@ -50,9 +51,12 @@ public class BActivityController {
         activitySearchBo.setIsRelease(isRelease);
         activitySearchBo.setActivityIntroduce(activityIntroduce);
         activitySearchBo.setIsLink(isLink);
-        List<ActivityInfoVo> activityInfoVos = activityService.queryActivityList(activitySearchBo);
 
-        return ResultVo.querySuccess(activityInfoVos);
+        ActivityInfoVo activityInfoVo = new ActivityInfoVo();
+        activityInfoVo.setActivityInfos(activityService.queryActivityList(activitySearchBo));
+        activityInfoVo.setActivitySum(activityService.activitySum(activitySearchBo));
+
+        return ResultVo.querySuccess(activityInfoVo);
     }
 
     @ApiOperation("重置活动列表")
@@ -60,9 +64,12 @@ public class BActivityController {
     public ResultVo activityReset(@RequestParam(defaultValue = "1") @Valid Integer pageNum,
                                   @RequestParam(defaultValue = "10") @Valid Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
-        List<ActivityInfoVo> activityInfoVos = activityService.selectActivityList();
 
-        return ResultVo.querySuccess(activityInfoVos);
+        ActivityInfoVo activityInfoVo = new ActivityInfoVo();
+        activityInfoVo.setActivityInfos(activityService.selectActivityList());
+        activityInfoVo.setActivitySum(activityService.activitySum(null));
+
+        return ResultVo.querySuccess(activityInfoVo);
     }
 
     @ApiOperation("新增活动")

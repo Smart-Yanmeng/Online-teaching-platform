@@ -6,7 +6,7 @@ import com.ruoyi.system.domain.po.BActivityPo;
 import com.ruoyi.system.domain.bo.convert.ActivityAddBOConvert;
 import com.ruoyi.system.domain.bo.convert.ActivityUpdateBOConvert;
 import com.ruoyi.system.domain.po.convert.ActivityPOConvert;
-import com.ruoyi.system.domain.vo.online.ActivityInfoVo;
+import com.ruoyi.system.domain.vo.online.ActivityInfo;
 import com.ruoyi.system.domain.bo.activity.ActivitySearchBo;
 import com.ruoyi.system.mapper.online.IActivityMapper;
 import org.springframework.stereotype.Service;
@@ -25,10 +25,20 @@ public class ActivityService {
      *
      * @return List<ActivityInfoVo>
      */
-    public List<ActivityInfoVo> selectActivityList() {
+    public List<ActivityInfo> selectActivityList() {
         List<BActivityPo> activityPos = activityMapper.selectActivity();
 
         return activityPos.stream().map(item -> new ActivityPOConvert().convert(item)).collect(Collectors.toList());
+    }
+
+    /**
+     * 可用活动数量
+     *
+     * @param activitySearchBo 查询条件
+     * @return Long
+     */
+    public Long activitySum(ActivitySearchBo activitySearchBo) {
+        return activityMapper.countUseActivity(activitySearchBo);
     }
 
     /**
@@ -37,7 +47,7 @@ public class ActivityService {
      * @param activitySearchBo 查询活动条件
      * @return List<ActivityInfoVo>
      */
-    public List<ActivityInfoVo> queryActivityList(ActivitySearchBo activitySearchBo) {
+    public List<ActivityInfo> queryActivityList(ActivitySearchBo activitySearchBo) {
         List<BActivityPo> activityEntities = activityMapper.queryByCondition(activitySearchBo);
 
         return activityEntities.stream().map(item -> new ActivityPOConvert().convert(item)).collect(Collectors.toList());
