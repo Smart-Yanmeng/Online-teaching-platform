@@ -1,4 +1,4 @@
-package com.ruoyi.system.domain.vo.online;
+package com.ruoyi.system.domain.vo.online.clazz;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

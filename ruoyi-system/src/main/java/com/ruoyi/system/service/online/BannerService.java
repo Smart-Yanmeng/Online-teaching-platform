@@ -6,7 +6,7 @@ import com.ruoyi.system.domain.bo.banner.BannerUpdateBo;
 import com.ruoyi.system.domain.bo.convert.BannerAddBOConvert;
 import com.ruoyi.system.domain.bo.convert.BannerUpdateBOConvert;
 import com.ruoyi.system.domain.po.convert.BannerPOConvert;
-import com.ruoyi.system.domain.vo.online.BannerInfo;
+import com.ruoyi.system.domain.vo.online.banner.BannerInfo;
 import com.ruoyi.system.mapper.online.IBannerMapper;
 import com.ruoyi.system.domain.po.BBannerPo;
 import org.springframework.stereotype.Service;

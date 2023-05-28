@@ -24,7 +24,7 @@
         <where>parent_id = #{commentId}</where>
     </select>
 
-    <select id="selectClazz" resultType="com.ruoyi.system.domain.vo.online.ClazzInfoVo">
+    <select id="selectClazz" resultType="com.ruoyi.system.domain.vo.online.clazz.ClazzInfo">
         SELECT mc.class_id AS clazz_id,
         mc.class_cover AS clazz_cover,
         tn.nick_name AS teacher_name,
@@ -41,8 +41,33 @@
         <where>mc.del_flag = 0</where>
     </select>
 
+    <select id="countUseClazz" parameterType="com.ruoyi.system.domain.bo.clazz.ClazzSearchBo"
+            resultType="java.lang.Long">
+        SELECT COUNT(*)
+        FROM ms_class mc
+        JOIN sys_user AS tn ON mc.teacher_id = tn.user_id
+        JOIN sys_user AS hn ON mc.headmaster_id = hn.user_id
+        <where>
+            <if test="teacherName != null and teacherName != ''">
+                AND mc.teacher_id IN
+                (SELECT user_id FROM sys_user WHERE nick_name LIKE CONCAT('%', #{teacherName}, '%'))
+            </if>
+            <if test="headmasterName != null and headmasterName != ''">
+                AND mc.headmaster_id IN
+                (SELECT user_id FROM sys_user WHERE nick_name LIKE CONCAT('%', #{headmasterName}, '%'))
+            </if>
+            <if test="clazzName != null and clazzName != ''">
+                AND class_name LIKE CONCAT('%', #{clazzName}, '%')
+            </if>
+            <if test="startTime != null and startTime != ''">AND start_time = #{startTime}</if>
+            <if test="finishTime != null and finishTime != ''">AND finish_time = #{finishTime}</if>
+            <if test="finish != null and finish != ''">AND finish = #{finish}</if>
+            AND del_flag = 0
+        </where>
+    </select>
+
     <select id="queryClazzListByCondition" parameterType="com.ruoyi.system.domain.bo.clazz.ClazzSearchBo"
-            resultType="com.ruoyi.system.domain.vo.online.ClazzInfoVo">
+            resultType="com.ruoyi.system.domain.vo.online.clazz.ClazzInfo">
         SELECT mc.class_cover AS clazz_cover,
         tn.nick_name AS teacher_name,
         hn.nick_name AS headmaster_name,
@@ -82,7 +107,7 @@
     </insert>
 
     <select id="queryClazzByCondition" parameterType="java.lang.Long"
-            resultType="com.ruoyi.system.domain.vo.online.ClazzInfoVo">
+            resultType="com.ruoyi.system.domain.vo.online.clazz.ClazzInfo">
         SELECT mc.class_cover AS clazz_cover,
         tn.nick_name AS teacher_name,
         hn.nick_name AS headmaster_name,
@@ -122,7 +147,7 @@
     </update>
 
     <select id="selectChapterByCondition" parameterType="java.lang.Long"
-            resultType="com.ruoyi.system.domain.vo.online.ClazzDetailInfoVo">
+            resultType="com.ruoyi.system.domain.vo.online.clazz.ClazzDetailInfoVo">
         SELECT chapter_id, chapter_name
         FROM ms_chapter
         <where>class_id = #{clazzId}</where>
@@ -137,7 +162,7 @@
     </select>
 
     <select id="selectCoursewareByCondition" parameterType="java.lang.Long"
-            resultType="com.ruoyi.system.domain.vo.online.CoursewareInfoVo">
+            resultType="com.ruoyi.system.domain.vo.online.clazz.CoursewareInfoVo">
         SELECT catalogue_name, play_url, courseware_url, catalogue_sort, last
         FROM ms_catalogue
         <where>catalogue_id = #{catalogueId}</where>
@@ -197,7 +222,7 @@
     </update>
 
     <select id="selectTaskByCondition" parameterType="java.lang.Long"
-            resultType="com.ruoyi.system.domain.vo.online.TaskSubmitInfoVo">
+            resultType="com.ruoyi.system.domain.vo.online.clazz.TaskSubmitInfoVo">
         SELECT su.nick_name, mts.file_name, mts.pass, mts.comment
         FROM ms_task_submit mts
         LEFT JOIN sys_user su ON mts.user_id = su.user_id
@@ -217,7 +242,7 @@
     </select>
 
     <select id="selectParentCommentByCondition" parameterType="java.lang.Long"
-            resultType="com.ruoyi.system.domain.vo.online.CommentInfoVo">
+            resultType="com.ruoyi.system.domain.vo.online.clazz.CommentInfoVo">
         SELECT mc.comment_id, su.user_name, su.nick_name, mc.comment_content, mc.create_time
         FROM ms_comment mc
         LEFT JOIN sys_user su ON mc.user_id = su.user_id
@@ -229,7 +254,7 @@
     </select>
 
     <select id="selectChildrenCommentByCondition" parameterType="java.lang.Long"
-            resultType="com.ruoyi.system.domain.vo.online.CommentInfoVo">
+            resultType="com.ruoyi.system.domain.vo.online.clazz.CommentInfoVo">
         SELECT mc.comment_id, su.user_name, su.nick_name, mc.comment_content, mc.create_time
         FROM ms_comment mc
         LEFT JOIN sys_user su ON mc.user_id = su.user_id

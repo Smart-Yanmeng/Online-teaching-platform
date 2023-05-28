@@ -1,4 +1,4 @@
-package com.ruoyi.system.domain.vo.online;
+package com.ruoyi.system.domain.vo.online.student;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

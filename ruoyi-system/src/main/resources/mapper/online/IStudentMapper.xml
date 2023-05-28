@@ -158,7 +158,7 @@
     </update>
 
     <select id="selectEmployment" parameterType="java.lang.Long"
-            resultType="com.ruoyi.system.domain.vo.online.EmploymentInfoVo">
+            resultType="com.ruoyi.system.domain.vo.online.student.EmploymentInfoVo">
         SELECT su.nick_name, mei.city, mei.company, mei.salary, mei.position, mei.remark
         FROM sys_user AS su,
              ms_employment_info AS mei

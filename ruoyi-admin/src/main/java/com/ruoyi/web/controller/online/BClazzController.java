@@ -5,7 +5,7 @@ import com.ruoyi.system.domain.dto.clazz.*;
 import com.ruoyi.system.domain.dto.convert.*;
 import com.ruoyi.system.domain.vo.common.ResultVo;
 import com.ruoyi.system.domain.bo.clazz.*;
-import com.ruoyi.system.domain.vo.online.*;
+import com.ruoyi.system.domain.vo.online.clazz.*;
 import com.ruoyi.system.service.online.ClazzService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -28,9 +28,12 @@ public class BClazzController {
     public ResultVo clazzInfoList(@RequestParam(defaultValue = "1") @Valid Integer pageNum,
                                   @RequestParam(defaultValue = "10") @Valid Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
-        List<ClazzInfoVo> clazzInfoVos = clazzService.selectClazzList();
 
-        return ResultVo.querySuccess(clazzInfoVos);
+        ClazzInfoVo clazzInfoVo = new ClazzInfoVo();
+        clazzInfoVo.setClazzInfos(clazzService.selectClazzList());
+        clazzInfoVo.setClazzUseSum(clazzService.countUseClazz(null));
+
+        return ResultVo.querySuccess(clazzInfoVo);
     }
 
     @ApiOperation("查询班级列表")
@@ -52,17 +55,22 @@ public class BClazzController {
         clazzSearchBo.setFinish(finish);
 
         PageHelper.startPage(pageNum, pageSize);
-        List<ClazzInfoVo> clazzInfoVos = clazzService.queryClazzList(clazzSearchBo);
 
-        return ResultVo.querySuccess(clazzInfoVos);
+        ClazzInfoVo clazzInfoVo = new ClazzInfoVo();
+        clazzInfoVo.setClazzInfos(clazzService.queryClazzList(clazzSearchBo));
+        clazzInfoVo.setClazzUseSum(clazzService.countUseClazz(clazzSearchBo));
+
+        return ResultVo.querySuccess(clazzInfoVo);
     }
 
     @ApiOperation("重置班级列表")
     @GetMapping("/reset")
     public ResultVo clazzReset() {
-        List<ClazzInfoVo> clazzInfoVos = clazzService.selectClazzList();
+        ClazzInfoVo clazzInfoVo = new ClazzInfoVo();
+        clazzInfoVo.setClazzInfos(clazzService.selectClazzList());
+        clazzInfoVo.setClazzUseSum(clazzService.countUseClazz(null));
 
-        return ResultVo.querySuccess(clazzInfoVos);
+        return ResultVo.querySuccess(clazzInfoVo);
     }
 
     @ApiOperation("新增班级")

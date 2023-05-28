@@ -6,7 +6,7 @@ import com.ruoyi.system.domain.po.BActivityPo;
 import com.ruoyi.system.domain.bo.convert.ActivityAddBOConvert;
 import com.ruoyi.system.domain.bo.convert.ActivityUpdateBOConvert;
 import com.ruoyi.system.domain.po.convert.ActivityPOConvert;
-import com.ruoyi.system.domain.vo.online.ActivityInfo;
+import com.ruoyi.system.domain.vo.online.activity.ActivityInfo;
 import com.ruoyi.system.domain.bo.activity.ActivitySearchBo;
 import com.ruoyi.system.mapper.online.IActivityMapper;
 import org.springframework.stereotype.Service;

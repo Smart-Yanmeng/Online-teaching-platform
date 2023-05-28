@@ -3,7 +3,7 @@ package com.ruoyi.system.mapper.online;
 import com.ruoyi.system.domain.bo.student.EmploymentUpdateBo;
 import com.ruoyi.system.domain.po.*;
 import com.ruoyi.system.domain.bo.student.StudentSearchBo;
-import com.ruoyi.system.domain.vo.online.EmploymentInfoVo;
+import com.ruoyi.system.domain.vo.online.student.EmploymentInfoVo;
 
 import java.util.List;
 

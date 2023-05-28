@@ -6,7 +6,7 @@ import com.ruoyi.system.domain.po.BCataloguePo;
 import com.ruoyi.system.domain.po.BChapterPo;
 import com.ruoyi.system.domain.po.BClazzPo;
 import com.ruoyi.system.domain.bo.clazz.ClazzSearchBo;
-import com.ruoyi.system.domain.vo.online.*;
+import com.ruoyi.system.domain.vo.online.clazz.*;
 
 import java.util.List;
 
@@ -23,13 +23,15 @@ public interface IClazzMapper {
     // 查询是否有子评论
     Long countComment(Long commentId);
 
-    List<ClazzInfoVo> selectClazz();
+    List<ClazzInfo> selectClazz();
 
-    List<ClazzInfoVo> queryClazzListByCondition(ClazzSearchBo clazzSearchBo);
+    Long countUseClazz(ClazzSearchBo clazzSearchBo);
+
+    List<ClazzInfo> queryClazzListByCondition(ClazzSearchBo clazzSearchBo);
 
     void insertClazzByCondition(BClazzPo clazzPo);
 
-    ClazzInfoVo queryClazzByCondition(Long clazzId);
+    ClazzInfo queryClazzByCondition(Long clazzId);
 
     void updateClazzByCondition(BClazzPo clazzPo);
 

@@ -3,7 +3,7 @@ package com.ruoyi.web.controller.online;
 import com.github.pagehelper.PageHelper;
 import com.ruoyi.system.domain.bo.complaint.ComplaintUpdateBo;
 import com.ruoyi.system.domain.dto.convert.ComplaintUpdateDTOConvert;
-import com.ruoyi.system.domain.vo.online.ComplaintInfoVo;
+import com.ruoyi.system.domain.vo.online.complaint.ComplaintInfoVo;
 import com.ruoyi.system.domain.vo.common.ResultVo;
 import com.ruoyi.system.domain.dto.complaint.ComplaintUpdateDto;
 import com.ruoyi.system.service.online.ComplaintService;

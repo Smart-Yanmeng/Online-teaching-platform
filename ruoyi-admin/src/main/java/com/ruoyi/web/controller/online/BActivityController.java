@@ -9,7 +9,7 @@ import com.ruoyi.system.domain.vo.common.ResultVo;
 import com.ruoyi.system.domain.dto.active.ActivityAddDto;
 import com.ruoyi.system.domain.bo.activity.ActivitySearchBo;
 import com.ruoyi.system.domain.dto.active.ActivityUpdateDto;
-import com.ruoyi.system.domain.vo.online.ActivityInfoVo;
+import com.ruoyi.system.domain.vo.online.activity.ActivityInfoVo;
 import com.ruoyi.system.service.online.ActivityService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

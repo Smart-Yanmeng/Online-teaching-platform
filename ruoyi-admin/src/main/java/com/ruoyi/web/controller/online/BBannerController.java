@@ -9,8 +9,7 @@ import com.ruoyi.system.domain.dto.banner.BannerUpdateDto;
 import com.ruoyi.system.domain.dto.convert.BannerAddDTOConvert;
 import com.ruoyi.system.domain.dto.convert.BannerUpdateDTOConvert;
 import com.ruoyi.system.domain.vo.common.ResultVo;
-import com.ruoyi.system.domain.vo.online.BannerInfo;
-import com.ruoyi.system.domain.vo.online.BannerInfoVo;
+import com.ruoyi.system.domain.vo.online.banner.BannerInfoVo;
 import com.ruoyi.system.service.online.BannerService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 @RequestMapping("/homePageManage/banner")

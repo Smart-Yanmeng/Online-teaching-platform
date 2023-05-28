@@ -3,7 +3,7 @@ package com.ruoyi.system.service.online;
 import com.ruoyi.system.domain.bo.complaint.ComplaintUpdateBo;
 import com.ruoyi.system.domain.po.BComplaintPo;
 import com.ruoyi.system.domain.po.convert.ComplaintPOConvert;
-import com.ruoyi.system.domain.vo.online.ComplaintInfoVo;
+import com.ruoyi.system.domain.vo.online.complaint.ComplaintInfoVo;
 import com.ruoyi.system.mapper.online.IComplaintMapper;
 import org.springframework.stereotype.Service;
 

@@ -8,7 +8,7 @@ import com.ruoyi.system.domain.po.BCataloguePo;
 import com.ruoyi.system.domain.po.BChapterPo;
 import com.ruoyi.system.domain.po.BClazzPo;
 import com.ruoyi.system.domain.bo.clazz.*;
-import com.ruoyi.system.domain.vo.online.*;
+import com.ruoyi.system.domain.vo.online.clazz.*;
 import com.ruoyi.system.mapper.online.IClazzMapper;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +25,7 @@ public class ClazzService {
      *
      * @return List<ClazzInfoVo>
      */
-    public List<ClazzInfoVo> selectClazzList() {
+    public List<ClazzInfo> selectClazzList() {
         return clazzMapper.selectClazz();
     }
 
@@ -35,8 +35,12 @@ public class ClazzService {
      * @param clazzSearchBo 班级查询条件
      * @return List<ClazzInfoVo>
      */
-    public List<ClazzInfoVo> queryClazzList(ClazzSearchBo clazzSearchBo) {
+    public List<ClazzInfo> queryClazzList(ClazzSearchBo clazzSearchBo) {
         return clazzMapper.queryClazzListByCondition(clazzSearchBo);
+    }
+
+    public Long countUseClazz(ClazzSearchBo clazzSearchBo) {
+        return clazzMapper.countUseClazz(clazzSearchBo);
     }
 
     /**

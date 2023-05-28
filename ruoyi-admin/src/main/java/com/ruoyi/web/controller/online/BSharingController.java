@@ -7,7 +7,7 @@ import com.ruoyi.system.domain.dto.convert.SharingAddDTOConvert;
 import com.ruoyi.system.domain.dto.convert.SharingUpdateDTOConvert;
 import com.ruoyi.system.domain.dto.sharing.SharingUpdateDto;
 import com.ruoyi.system.domain.vo.common.ResultVo;
-import com.ruoyi.system.domain.vo.online.SharingInfoVo;
+import com.ruoyi.system.domain.vo.online.sharing.SharingInfoVo;
 import com.ruoyi.system.domain.dto.sharing.SharingAddDto;
 import com.ruoyi.system.domain.bo.sharing.SharingSearchBo;
 import com.ruoyi.system.service.online.SharingService;

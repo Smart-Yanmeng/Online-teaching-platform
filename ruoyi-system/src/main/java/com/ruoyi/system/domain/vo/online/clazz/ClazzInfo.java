@@ -1,10 +1,10 @@
-package com.ruoyi.system.domain.vo.online;
+package com.ruoyi.system.domain.vo.online.clazz;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Data
-public class ClazzInfoVo {
+public class ClazzInfo {
     @ApiModelProperty("班级 ID")
     private Long clazzId;
 

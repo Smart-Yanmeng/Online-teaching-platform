@@ -6,7 +6,7 @@ import com.ruoyi.system.domain.bo.sharing.SharingAddBo;
 import com.ruoyi.system.domain.bo.sharing.SharingUpdateBo;
 import com.ruoyi.system.domain.po.BSharingPo;
 import com.ruoyi.system.domain.po.convert.SharingPOConvert;
-import com.ruoyi.system.domain.vo.online.SharingInfoVo;
+import com.ruoyi.system.domain.vo.online.sharing.SharingInfoVo;
 import com.ruoyi.system.domain.bo.sharing.SharingSearchBo;
 import com.ruoyi.system.mapper.online.ISharingMapper;
 import org.springframework.stereotype.Service;
