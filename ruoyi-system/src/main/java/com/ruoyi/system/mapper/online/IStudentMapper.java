@@ -22,6 +22,8 @@ public interface IStudentMapper {
 
     List<BStudentInfoPo> selectStudent();
 
+    Long countUseStudent(StudentSearchBo studentSearchBo);
+
     List<BStudentInfoPo> queryStudentByCondition(StudentSearchBo studentSearchBo);
 
     void addStudent(BStudentPo studentPo);

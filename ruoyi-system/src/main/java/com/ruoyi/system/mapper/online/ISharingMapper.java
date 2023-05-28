@@ -14,6 +14,8 @@ public interface ISharingMapper {
 
     List<BSharingPo> selectSharing();
 
+    Long countUseSharing(SharingSearchBo sharingSearchBo);
+
     List<BSharingPo> querySharingByCondition(SharingSearchBo sharingSearchBo);
 
     void insertSharingByCondition(BSharingPo sharingPo);

@@ -4,7 +4,7 @@ import com.ruoyi.system.domain.bo.convert.*;
 import com.ruoyi.system.domain.po.*;
 import com.ruoyi.system.domain.po.convert.StudentInfoPOConvert;
 import com.ruoyi.system.domain.vo.online.student.EmploymentInfoVo;
-import com.ruoyi.system.domain.vo.online.student.StudentInfoVo;
+import com.ruoyi.system.domain.vo.online.student.StudentInfo;
 import com.ruoyi.system.domain.bo.student.*;
 import com.ruoyi.system.mapper.online.IStudentMapper;
 import org.springframework.stereotype.Service;
@@ -24,7 +24,7 @@ public class StudentService {
      *
      * @return List<StudentInfoVo>
      */
-    public List<StudentInfoVo> selectStudentList() {
+    public List<StudentInfo> selectStudentList() {
         List<BStudentInfoPo> studentInfoPos = studentMapper.selectStudent();
 
         return studentInfoPos.stream().map(item -> new StudentInfoPOConvert().convert(item)).collect(Collectors.toList());
@@ -35,10 +35,20 @@ public class StudentService {
      *
      * @param studentSearchBo 学生查询信息
      */
-    public List<StudentInfoVo> queryStudentList(StudentSearchBo studentSearchBo) {
+    public List<StudentInfo> queryStudentList(StudentSearchBo studentSearchBo) {
         List<BStudentInfoPo> studentInfoPos = studentMapper.queryStudentByCondition(studentSearchBo);
 
         return studentInfoPos.stream().map(item -> new StudentInfoPOConvert().convert(item)).collect(Collectors.toList());
+    }
+
+    /**
+     * 学生数量
+     *
+     * @param studentSearchBo 学生查询信息
+     * @return Long
+     */
+    public Long countUseStudent(StudentSearchBo studentSearchBo) {
+        return studentMapper.countUseStudent(studentSearchBo);
     }
 
     /**

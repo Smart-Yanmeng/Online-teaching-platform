@@ -7,9 +7,9 @@ import com.ruoyi.system.domain.dto.convert.SharingAddDTOConvert;
 import com.ruoyi.system.domain.dto.convert.SharingUpdateDTOConvert;
 import com.ruoyi.system.domain.dto.sharing.SharingUpdateDto;
 import com.ruoyi.system.domain.vo.common.ResultVo;
-import com.ruoyi.system.domain.vo.online.sharing.SharingInfoVo;
 import com.ruoyi.system.domain.dto.sharing.SharingAddDto;
 import com.ruoyi.system.domain.bo.sharing.SharingSearchBo;
+import com.ruoyi.system.domain.vo.online.sharing.SharingInfoVo;
 import com.ruoyi.system.service.online.SharingService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 @RequestMapping("/homePageManage/sharing")
@@ -32,9 +31,12 @@ public class BSharingController {
     public ResultVo bannerInfo(@RequestParam(defaultValue = "1") @Valid Integer pageNum,
                                @RequestParam(defaultValue = "10") @Valid Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
-        List<SharingInfoVo> sharingInfoVos = sharingService.selectSharingList();
 
-        return ResultVo.querySuccess(sharingInfoVos);
+        SharingInfoVo sharingInfoVo = new SharingInfoVo();
+        sharingInfoVo.setSharingInfos(sharingService.selectSharingList());
+        sharingInfoVo.setSharingUseSum(sharingService.countUseSharing(null));
+
+        return ResultVo.querySuccess(sharingInfoVo);
     }
 
     @ApiOperation("查询分享列表")
@@ -56,9 +58,12 @@ public class BSharingController {
         sharingSearchBo.setIsLink(isLink);
 
         PageHelper.startPage(pageNum, pageSize);
-        List<SharingInfoVo> sharingInfoVos = sharingService.querySharingList(sharingSearchBo);
 
-        return ResultVo.querySuccess(sharingInfoVos);
+        SharingInfoVo sharingInfoVo = new SharingInfoVo();
+        sharingInfoVo.setSharingInfos(sharingService.querySharingList(sharingSearchBo));
+        sharingInfoVo.setSharingUseSum(sharingService.countUseSharing(sharingSearchBo));
+
+        return ResultVo.querySuccess(sharingInfoVo);
     }
 
     @ApiOperation("重置分享列表")
@@ -66,9 +71,12 @@ public class BSharingController {
     public ResultVo sharingReset(@RequestParam(defaultValue = "1") @Valid Integer pageNum,
                                  @RequestParam(defaultValue = "10") @Valid Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
-        List<SharingInfoVo> sharingInfoVos = sharingService.selectSharingList();
 
-        return ResultVo.querySuccess(sharingInfoVos);
+        SharingInfoVo sharingInfoVo = new SharingInfoVo();
+        sharingInfoVo.setSharingInfos(sharingService.selectSharingList());
+        sharingInfoVo.setSharingUseSum(sharingService.countUseSharing(null));
+
+        return ResultVo.querySuccess(sharingInfoVo);
     }
 
     @ApiOperation("新增分享")

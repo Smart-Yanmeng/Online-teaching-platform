@@ -8,6 +8,8 @@ import java.util.List;
 public interface IComplaintMapper {
     List<BComplaintPo> selectComplaint();
 
+    Long countUseComplaint();
+
     void patchComplaintByCondition(Long complaintId);
 
     void updateComplaint(ComplaintUpdateBo complaintUpdateBo);

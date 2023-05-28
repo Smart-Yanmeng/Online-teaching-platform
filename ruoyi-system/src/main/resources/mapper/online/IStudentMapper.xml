@@ -26,7 +26,7 @@
     </select>
 
     <select id="selectStudent" resultType="com.ruoyi.system.domain.po.BStudentInfoPo">
-        SELECT ms.user_id AS student_id,
+        SELECT ms.user_id    AS student_id,
                su.nick_name,
                su.user_name,
                su.phonenumber,
@@ -44,6 +44,21 @@
                  LEFT JOIN ms_student_class msc ON ms.user_id = msc.user_id
                  LEFT JOIN ms_class mc on ms.class_id = mc.class_id
         WHERE su.del_flag = 0
+    </select>
+
+    <select id="countUseStudent" parameterType="com.ruoyi.system.domain.bo.student.StudentSearchBo"
+            resultType="java.lang.Long">
+        SELECT COUNT(*)
+        FROM ms_student AS ms
+                 LEFT JOIN sys_user AS su ON ms.user_id = su.user_id
+                 LEFT JOIN ms_student_class msc ON ms.user_id = msc.user_id
+                 LEFT JOIN ms_class mc on ms.class_id = mc.class_id
+        WHERE nick_name LIKE CONCAT('%', COALESCE(#{nickName}, ''), '%')
+          AND phonenumber LIKE CONCAT('%', COALESCE(#{phoneNumber}, ''), '%')
+          AND grade LIKE CONCAT('%', COALESCE(#{grade}, ''), '%')
+          AND school LIKE CONCAT('%', COALESCE(#{school}, ''), '%')
+          AND major LIKE CONCAT('%', COALESCE(#{major}, ''), '%')
+          AND direction LIKE CONCAT('%', COALESCE(#{direction}, ''), '%')
     </select>
 
     <select id="queryStudentByCondition" parameterType="com.ruoyi.system.domain.bo.student.StudentSearchBo"

@@ -3,9 +3,9 @@ package com.ruoyi.web.controller.online;
 import com.github.pagehelper.PageHelper;
 import com.ruoyi.system.domain.bo.complaint.ComplaintUpdateBo;
 import com.ruoyi.system.domain.dto.convert.ComplaintUpdateDTOConvert;
-import com.ruoyi.system.domain.vo.online.complaint.ComplaintInfoVo;
 import com.ruoyi.system.domain.vo.common.ResultVo;
 import com.ruoyi.system.domain.dto.complaint.ComplaintUpdateDto;
+import com.ruoyi.system.domain.vo.online.complaint.ComplaintInfoVo;
 import com.ruoyi.system.service.online.ComplaintService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 @RequestMapping("/homePageManage/complaint")
@@ -28,9 +27,12 @@ public class BComplaintController {
     public ResultVo complaintInfoList(@RequestParam(defaultValue = "1") @Valid Integer pageNum,
                                       @RequestParam(defaultValue = "10") @Valid Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
-        List<ComplaintInfoVo> complaintInfoVos = complaintService.selectComplaintList();
 
-        return ResultVo.querySuccess(complaintInfoVos);
+        ComplaintInfoVo complaintInfoVo = new ComplaintInfoVo();
+        complaintInfoVo.setComplaintInfos(complaintService.selectComplaintList());
+        complaintInfoVo.setComplaintUseSum(complaintService.countUseComplaint());
+
+        return ResultVo.querySuccess(complaintInfoVo);
     }
 
     @ApiOperation("批量删除投诉")

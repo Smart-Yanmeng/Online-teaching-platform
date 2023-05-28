@@ -3,7 +3,7 @@ package com.ruoyi.system.service.online;
 import com.ruoyi.system.domain.bo.complaint.ComplaintUpdateBo;
 import com.ruoyi.system.domain.po.BComplaintPo;
 import com.ruoyi.system.domain.po.convert.ComplaintPOConvert;
-import com.ruoyi.system.domain.vo.online.complaint.ComplaintInfoVo;
+import com.ruoyi.system.domain.vo.online.complaint.ComplaintInfo;
 import com.ruoyi.system.mapper.online.IComplaintMapper;
 import org.springframework.stereotype.Service;
 
@@ -21,10 +21,19 @@ public class ComplaintService {
      *
      * @return List<ComplaintInfoVo>
      */
-    public List<ComplaintInfoVo> selectComplaintList() {
+    public List<ComplaintInfo> selectComplaintList() {
         List<BComplaintPo> complaintPos = complaintMapper.selectComplaint();
 
         return complaintPos.stream().map(item -> new ComplaintPOConvert().convert(item)).collect(Collectors.toList());
+    }
+
+    /**
+     * 投诉数量
+     *
+     * @return
+     */
+    public Long countUseComplaint() {
+        return complaintMapper.countUseComplaint();
     }
 
     /**

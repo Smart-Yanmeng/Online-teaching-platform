@@ -2,15 +2,15 @@ package com.ruoyi.system.domain.po.convert;
 
 import com.ruoyi.common.utils.bean.BeanUtils;
 import com.ruoyi.system.domain.po.BStudentInfoPo;
-import com.ruoyi.system.domain.vo.online.student.StudentInfoVo;
+import com.ruoyi.system.domain.vo.online.student.StudentInfo;
 import com.ruoyi.system.tool.intf.ClassConvertTool;
 
-public class StudentInfoPOConvert implements ClassConvertTool<BStudentInfoPo, StudentInfoVo> {
+public class StudentInfoPOConvert implements ClassConvertTool<BStudentInfoPo, StudentInfo> {
     @Override
-    public StudentInfoVo convert(BStudentInfoPo bStudentInfoPo) {
-        StudentInfoVo studentInfoVo = new StudentInfoVo();
-        BeanUtils.copyProperties(bStudentInfoPo, studentInfoVo);
+    public StudentInfo convert(BStudentInfoPo bStudentInfoPo) {
+        StudentInfo studentInfo = new StudentInfo();
+        BeanUtils.copyProperties(bStudentInfoPo, studentInfo);
 
-        return studentInfoVo;
+        return studentInfo;
     }
 }

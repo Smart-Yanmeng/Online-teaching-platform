@@ -9,6 +9,12 @@
         <where>del_flag = 0</where>
     </select>
 
+    <select id="countUseComplaint" resultType="java.lang.Long">
+        SELECT COUNT(*)
+        FROM ms_complaint
+        <where>del_flag = 0</where>
+    </select>
+
     <update id="patchComplaintByCondition" parameterType="java.lang.Long">
         UPDATE ms_complaint
         <set>del_flag = 2</set>

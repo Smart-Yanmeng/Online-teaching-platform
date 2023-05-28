@@ -6,7 +6,7 @@ import com.ruoyi.system.domain.bo.sharing.SharingAddBo;
 import com.ruoyi.system.domain.bo.sharing.SharingUpdateBo;
 import com.ruoyi.system.domain.po.BSharingPo;
 import com.ruoyi.system.domain.po.convert.SharingPOConvert;
-import com.ruoyi.system.domain.vo.online.sharing.SharingInfoVo;
+import com.ruoyi.system.domain.vo.online.sharing.SharingInfo;
 import com.ruoyi.system.domain.bo.sharing.SharingSearchBo;
 import com.ruoyi.system.mapper.online.ISharingMapper;
 import org.springframework.stereotype.Service;
@@ -25,7 +25,7 @@ public class SharingService {
      *
      * @return List<SharingInfoVo>
      */
-    public List<SharingInfoVo> selectSharingList() {
+    public List<SharingInfo> selectSharingList() {
         List<BSharingPo> bSharingPos = sharingMapper.selectSharing();
 
         return bSharingPos.stream().map(item -> new SharingPOConvert().convert(item)).collect(Collectors.toList());
@@ -37,10 +37,14 @@ public class SharingService {
      * @param sharingSearchBo 查询分享条件
      * @return List<SharingInfoVo>
      */
-    public List<SharingInfoVo> querySharingList(SharingSearchBo sharingSearchBo) {
+    public List<SharingInfo> querySharingList(SharingSearchBo sharingSearchBo) {
         List<BSharingPo> sharingPos = sharingMapper.querySharingByCondition(sharingSearchBo);
 
         return sharingPos.stream().map(item -> new SharingPOConvert().convert(item)).collect(Collectors.toList());
+    }
+
+    public Long countUseSharing(SharingSearchBo sharingSearchBo) {
+        return sharingMapper.countUseSharing(sharingSearchBo);
     }
 
     /**

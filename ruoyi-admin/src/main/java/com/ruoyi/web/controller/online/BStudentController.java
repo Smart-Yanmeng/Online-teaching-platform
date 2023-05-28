@@ -8,9 +8,10 @@ import com.ruoyi.system.domain.dto.convert.StudentUpdateDTOConvert;
 import com.ruoyi.system.domain.dto.student.EmploymentUpdateDto;
 import com.ruoyi.system.domain.vo.online.student.EmploymentInfoVo;
 import com.ruoyi.system.domain.vo.common.ResultVo;
-import com.ruoyi.system.domain.vo.online.student.StudentInfoVo;
+import com.ruoyi.system.domain.vo.online.student.StudentInfo;
 import com.ruoyi.system.domain.dto.student.StudentAddDto;
 import com.ruoyi.system.domain.dto.student.StudentUpdateDto;
+import com.ruoyi.system.domain.vo.online.student.StudentInfoVo;
 import com.ruoyi.system.service.online.StudentService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -33,9 +34,12 @@ public class BStudentController {
     public ResultVo studentInfo(@RequestParam(defaultValue = "1") @Valid Integer pageNum,
                                 @RequestParam(defaultValue = "10") @Valid Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
-        List<StudentInfoVo> studentInfoVos = studentService.selectStudentList();
 
-        return ResultVo.querySuccess(studentInfoVos);
+        StudentInfoVo studentInfoVo = new StudentInfoVo();
+        studentInfoVo.setStudentInfos(studentService.selectStudentList());
+        studentInfoVo.setStudentUseSum(studentService.countUseStudent(null));
+
+        return ResultVo.querySuccess(studentInfoVo);
     }
 
     @ApiOperation("查询学生")
@@ -57,9 +61,12 @@ public class BStudentController {
         studentSearchBo.setDirection(direction);
 
         PageHelper.startPage(pageNum, pageSize);
-        List<StudentInfoVo> studentInfoVos = studentService.queryStudentList(studentSearchBo);
 
-        return ResultVo.querySuccess(studentInfoVos);
+        StudentInfoVo studentInfoVo = new StudentInfoVo();
+        studentInfoVo.setStudentInfos(studentService.queryStudentList(studentSearchBo));
+        studentInfoVo.setStudentUseSum(studentService.countUseStudent(studentSearchBo));
+
+        return ResultVo.querySuccess(studentInfoVo);
     }
 
     @ApiOperation("重置学生列表")
@@ -67,9 +74,12 @@ public class BStudentController {
     public ResultVo studentReset(@RequestParam(defaultValue = "1") @Valid Integer pageNum,
                                  @RequestParam(defaultValue = "10") @Valid Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
-        List<StudentInfoVo> studentInfoVos = studentService.selectStudentList();
 
-        return ResultVo.querySuccess(studentInfoVos);
+        StudentInfoVo studentInfoVo = new StudentInfoVo();
+        studentInfoVo.setStudentInfos(studentService.selectStudentList());
+        studentInfoVo.setStudentUseSum(studentService.countUseStudent(null));
+
+        return ResultVo.querySuccess(studentInfoVo);
     }
 
     @ApiOperation("新增学生")
